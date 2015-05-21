@@ -2,9 +2,21 @@ FROM ubuntu:14.04
 MAINTAINER TAGOMORI Satoshi <tagomoris@gmail.com>
 LABEL Description="Fluentd docker image" Vendor="Fluent Organization" Version="0.12.9"
 
-RUN apt-get update -y
-RUN apt-get install -y git curl
-RUN apt-get install -y autoconf bison build-essential libssl-dev libyaml-dev libreadline6-dev zlib1g-dev libncurses5-dev libffi-dev libgdbm3 libgdbm-dev
+RUN apt-get update -y && apt-get install -y \
+              autoconf \
+              bison \
+              build-essential \
+              curl \      
+              git \
+              libffi-dev \              
+              libgdbm3 \
+              libgdbm-dev \
+              libncurses5-dev \
+              libreadline6-dev \              
+              libssl-dev \
+              libyaml-dev \
+              zlib1g-dev \              
+        && rm -rf /var/lib/apt/lists/*
 
 RUN useradd ubuntu -d /home/ubuntu -m -U
 RUN chown -R ubuntu:ubuntu /home/ubuntu
