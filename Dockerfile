@@ -1,6 +1,6 @@
 FROM ubuntu:14.04
 MAINTAINER TAGOMORI Satoshi <tagomoris@gmail.com>
-LABEL Description="Fluentd docker image" Vendor="Fluent Organization" Version="0.12.9"
+LABEL Description="Fluentd docker image" Vendor="Fluent Organization" Version="1.0"
 
 RUN apt-get update -y && apt-get install -y \
               autoconf \
@@ -51,5 +51,5 @@ ENV FLUENTD_CONF="fluent.conf"
 
 EXPOSE 24224
 
-### docker run -p 24224 -v `pwd`/log: -v `pwd`/log:/home/ubuntu/log fluent/fluentd:0.12.9
+### docker run -p 24224 -v `pwd`/log: -v `pwd`/log:/home/ubuntu/log fluent/fluentd:latest
 CMD fluentd -c /fluentd/etc/$FLUENTD_CONF -p /fluentd/plugins $FLUENTD_OPT
