@@ -1,55 +1,41 @@
-FROM ubuntu:14.04
+FROM alpine:latest
 MAINTAINER TAGOMORI Satoshi <tagomoris@gmail.com>
-LABEL Description="Fluentd docker image" Vendor="Fluent Organization" Version="1.0"
+LABEL Description="Fluentd docker image" Vendor="Fluent Organization" Version="1.1"
 
-RUN apt-get update -y && apt-get install -y \
-              autoconf \
-              bison \
-              build-essential \
-              curl \      
-              git \
-              libffi-dev \              
-              libgdbm3 \
-              libgdbm-dev \
-              libncurses5-dev \
-              libreadline6-dev \              
-              libssl-dev \
-              libyaml-dev \
-              zlib1g-dev \              
-        && rm -rf /var/lib/apt/lists/*
+# Do not split this into multiple RUN!
+# Docker creates a layer for every RUN-Statement
+# therefore an 'apk delete build*' has no effect
+RUN apk --no-cache --update add \
+                            build-base \
+                            ca-certificates \
+                            ruby \
+                            ruby-irb \
+                            ruby-dev && \
+    echo 'gem: --no-document' >> /etc/gemrc && \
+    gem install fluentd -v 0.12.17 && \
+    apk del build-base ruby-dev && \
+    rm -rf /tmp/* /var/tmp/* /var/cache/apk/*
 
-RUN useradd ubuntu -d /home/ubuntu -m -U
-RUN chown -R ubuntu:ubuntu /home/ubuntu
+RUN adduser -D -g '' -u 1000 -h /home/fluent fluent
+RUN chown -R fluent:fluent /home/fluent
 
 # for log storage (maybe shared with host)
 RUN mkdir -p /fluentd/log
 # configuration/plugins path (default: copied from .)
-RUN mkdir -p /fluentd/etc
-RUN mkdir -p /fluentd/plugins
+RUN mkdir -p /fluentd/etc /fluentd/plugins
 
-RUN chown -R ubuntu:ubuntu /fluentd
+RUN chown -R fluent:fluent /fluentd
 
-USER ubuntu
-WORKDIR /home/ubuntu
-
-RUN git clone https://github.com/tagomoris/xbuild.git /home/ubuntu/.xbuild
-RUN /home/ubuntu/.xbuild/ruby-install 2.2.2 /home/ubuntu/ruby
-
-ENV PATH /home/ubuntu/ruby/bin:$PATH
-RUN gem install fluentd -v 0.12.19
-
-# RUN gem install fluent-plugin-webhdfs
+USER fluent
+WORKDIR /home/fluent
 
 COPY fluent.conf /fluentd/etc/
 ONBUILD COPY fluent.conf /fluentd/etc/
 ONBUILD COPY plugins /fluentd/plugins/
-
-WORKDIR /home/ubuntu
 
 ENV FLUENTD_OPT=""
 ENV FLUENTD_CONF="fluent.conf"
 
 EXPOSE 24224
 
-### docker run -p 24224 -v `pwd`/log: -v `pwd`/log:/home/ubuntu/log fluent/fluentd:latest
-CMD exec fluentd -c /fluentd/etc/$FLUENTD_CONF -p /fluentd/plugins $FLUENTD_OPT
+CMD fluentd -c /fluentd/etc/$FLUENTD_CONF -p /fluentd/plugins $FLUENTD_OPT

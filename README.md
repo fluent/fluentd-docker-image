@@ -1,4 +1,9 @@
-### Fluentd docker image
+# Fluentd docker image
+
+[![Docker Stars](https://img.shields.io/docker/stars/fluent/fluentd.svg)](https://hub.docker.com/r/fluent/fluentd/)
+[![Docker Pulls](https://img.shields.io/docker/pulls/fluent/fluentd.svg)](https://hub.docker.com/r/fluent/fluentd/)
+[![ImageLayers Size](https://img.shields.io/imagelayers/image-size/fluent/fluentd/latest.svg)](https://hub.docker.com/r/fluent/fluentd/)
+[![ImageLayers Layers](https://img.shields.io/imagelayers/layers/fluent/fluentd/latest.svg)](https://hub.docker.com/r/fluent/fluentd/)
 
 This container image is to create endpoint to collect logs on your host.
 
@@ -36,9 +41,9 @@ It is very easy to use this image as base image. Write your `Dockerfile` and con
 ```
 FROM fluent/fluentd:latest
 MAINTAINER your_name <...>
-USER ubuntu
-WORKDIR /home/ubuntu
-ENV PATH /home/ubuntu/ruby/bin:$PATH
+USER fluent
+WORKDIR /home/fluent
+ENV PATH /home/fluent/ruby/bin:$PATH
 RUN gem install fluent-plugin-secure-forward
 EXPOSE 24284
 CMD fluentd -c /fluentd/etc/$FLUENTD_CONF -p /fluentd/plugins $FLUENTD_OPT
@@ -48,3 +53,17 @@ Files below are automatically included in build process:
 
 `fluent.conf`: used instead of default file
 `plugins/*`: copied into `/fluentd/plugins` and loaded at runtime
+
+### Testing
+
+```
+docker run --log-driver=fluentd --log-opt fluentd-address=192.168.0.1:24224 ubuntu echo "Hello Fluentd"  
+```
+
+Should produce a log-file with `Hello Fluentd`, depending on you `fluent.conf` file.
+
+### References 
+
+[Docker Logging | fluentd.org](http://www.fluentd.org/guides/recipes/docker-logging)
+
+[Fluentd logging driver - Docker Docs](https://docs.docker.com/engine/reference/logging/fluentd/)
