@@ -57,7 +57,7 @@ Files below are automatically included in build process:
 ### Testing
 
 ```
-docker run --log-driver=fluentd --log-opt fluentd-address=192.168.0.1:24224 ubuntu echo "Hello Fluentd"  
+docker run --log-driver=fluentd --log-opt fluentd-address=192.168.0.1:24224 IMAGE echo "Hello Fluentd"  
 ```
 
 Should produce a log-file with `Hello Fluentd`, depending on you `fluent.conf` file.
