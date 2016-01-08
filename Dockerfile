@@ -29,6 +29,10 @@ RUN chown -R fluent:fluent /fluentd
 USER fluent
 WORKDIR /home/fluent
 
+# Tell ruby to install packages as user
+RUN echo "gem: --user-install --no-document" >> ~/.gemrc
+ENV PATH /home/fluent/.gem/ruby/2.2.0/bin:$PATH
+
 COPY fluent.conf /fluentd/etc/
 ONBUILD COPY fluent.conf /fluentd/etc/
 ONBUILD COPY plugins /fluentd/plugins/
