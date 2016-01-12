@@ -43,4 +43,4 @@ ENV FLUENTD_CONF="fluent.conf"
 
 EXPOSE 24224
 
-CMD fluentd -c /fluentd/etc/$FLUENTD_CONF -p /fluentd/plugins $FLUENTD_OPT
+CMD exec fluentd -c /fluentd/etc/$FLUENTD_CONF -p /fluentd/plugins $FLUENTD_OPT
