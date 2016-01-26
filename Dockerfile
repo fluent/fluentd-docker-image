@@ -12,7 +12,7 @@ RUN apk --no-cache --update add \
                             ruby-irb \
                             ruby-dev && \
     echo 'gem: --no-document' >> /etc/gemrc && \
-    gem install fluentd -v 0.12.19 && \
+    gem install fluentd -v 0.12.20 && \
     apk del build-base ruby-dev && \
     rm -rf /tmp/* /var/tmp/* /var/cache/apk/*
 
