@@ -53,8 +53,10 @@ CMD fluentd -c /fluentd/etc/$FLUENTD_CONF -p /fluentd/plugins $FLUENTD_OPT
 
 Files below are automatically included in build process:
 
-`fluent.conf`: used instead of default file
-`plugins/*`: copied into `/fluentd/plugins` and loaded at runtime
+- `fluent.conf`: used instead of default file
+- `plugins/*`: copied into `/fluentd/plugins` and loaded at runtime
+
+Note: Default image removed several apk packages, build-base and ruby-dev, to keep docker image small. If you want to install the plugin which depends on native extension gems, needs to re-install these packages to build it.
 
 ### Testing
 
