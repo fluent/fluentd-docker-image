@@ -6,16 +6,16 @@ RUN apt-get update -y && apt-get install -y \
               autoconf \
               bison \
               build-essential \
-              curl \      
+              curl \
               git \
-              libffi-dev \              
+              libffi-dev \
               libgdbm3 \
               libgdbm-dev \
               libncurses5-dev \
-              libreadline6-dev \              
+              libreadline6-dev \
               libssl-dev \
               libyaml-dev \
-              zlib1g-dev \              
+              zlib1g-dev \
         && rm -rf /var/lib/apt/lists/*
 
 RUN useradd ubuntu -d /home/ubuntu -m -U
@@ -36,7 +36,7 @@ RUN git clone https://github.com/tagomoris/xbuild.git /home/ubuntu/.xbuild
 RUN /home/ubuntu/.xbuild/ruby-install 2.2.2 /home/ubuntu/ruby
 
 ENV PATH /home/ubuntu/ruby/bin:$PATH
-RUN gem install fluentd -v 0.12.19
+RUN gem install fluentd -v 0.14.0
 
 # RUN gem install fluent-plugin-webhdfs
 
