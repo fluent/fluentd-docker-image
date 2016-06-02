@@ -36,8 +36,6 @@ ENV PATH /home/fluent/.gem/ruby/2.2.0/bin:$PATH
 ENV GEM_PATH /home/fluent/.gem/ruby/2.2.0:$GEM_PATH
 
 COPY fluent.conf /fluentd/etc/
-ONBUILD COPY fluent.conf /fluentd/etc/
-ONBUILD COPY plugins /fluentd/plugins/
 
 ENV FLUENTD_OPT=""
 ENV FLUENTD_CONF="fluent.conf"
