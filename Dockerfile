@@ -9,6 +9,7 @@ RUN apk --no-cache --update add \
                             build-base \
                             ca-certificates \
                             ruby \
+                            ruby-bigdecimal \
                             ruby-irb \
                             ruby-dev && \
     echo 'gem: --no-document' >> /etc/gemrc && \
