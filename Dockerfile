@@ -1,4 +1,4 @@
-FROM alpine:latest
+FROM alpine:3.4
 MAINTAINER TAGOMORI Satoshi <tagomoris@gmail.com>
 LABEL Description="Fluentd docker image" Vendor="Fluent Organization" Version="1.1"
 
