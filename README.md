@@ -17,7 +17,7 @@ Default configurations are to:
 * store logs with tag `docker.**` into `/fluentd/log/docker.*.log` (and symlink `docker.log`)
 * store all other logs into `/fluentd/log/data.*.log` (and symlink data.log)
 
-This image uses Alpine Linux.
+This image uses Alpine Linux. Since v0.12.26, we separate tags into `vX.XX.XX` and `vX.XX.XX-onbuild`.
 
 ### Ubuntu based image
 
