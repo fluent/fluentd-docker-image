@@ -17,7 +17,12 @@ Default configurations are to:
 * store logs with tag `docker.**` into `/fluentd/log/docker.*.log` (and symlink `docker.log`)
 * store all other logs into `/fluentd/log/data.*.log` (and symlink data.log)
 
-This image uses Alpine Linux. If you want to use Ubuntu based image, use `ubuntu-base` tag.
+This image uses Alpine Linux.
+
+### Ubuntu based image
+
+This is deprecated. You can use `ubuntu-base` tag for your build but we don't maintain ubuntu based image with latest fluentd release.
+We recommend to fork `ubuntu/Dockerfile` for your case.
 
 ## Configurable ENV variables
 
