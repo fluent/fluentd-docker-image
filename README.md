@@ -43,14 +43,14 @@ Use this variable to specify other options, like `-v` or `-q`.
 
 ## How to build your own image
 
-It is very easy to use this image as base image. Write your `Dockerfile` and configuration files, and/or your own plugin files if needed.
+It is very easy to use onbuild image as base image. Write your `Dockerfile` and configuration files, and/or your own plugin files if needed.
 
 ```
-FROM fluent/fluentd:latest
+FROM fluent/fluentd:latest-onbuild
 MAINTAINER your_name <...>
 USER fluent
 WORKDIR /home/fluent
-ENV PATH /home/fluent/.gem/ruby/2.2.0/bin:$PATH
+ENV PATH /home/fluent/.gem/ruby/2.3.0/bin:$PATH
 RUN gem install fluent-plugin-secure-forward
 EXPOSE 24284
 CMD fluentd -c /fluentd/etc/$FLUENTD_CONF -p /fluentd/plugins $FLUENTD_OPT
@@ -62,6 +62,8 @@ Files below are automatically included in build process:
 - `plugins/*`: copied into `/fluentd/plugins` and loaded at runtime
 
 Note: Default image removed several apk packages, build-base and ruby-dev, to keep docker image small. If you want to install the plugin which depends on native extension gems, needs to re-install these packages to build it.
+
+Note: If you want to use latest, non onbuild, image, copy fluent.conf and plugins manually.
 
 ### Testing
 
