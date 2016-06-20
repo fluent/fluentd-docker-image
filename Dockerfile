@@ -13,7 +13,7 @@ RUN apk --no-cache --update add \
                             ruby-dev && \
     echo 'gem: --no-document' >> /etc/gemrc && \
     gem install oj && \
-    gem install fluentd -v 0.12.26 && \
+    gem install fluentd -v 0.14.0 && \
     apk del build-base ruby-dev && \
     rm -rf /tmp/* /var/tmp/* /var/cache/apk/*
 
