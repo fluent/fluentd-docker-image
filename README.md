@@ -74,19 +74,24 @@ You can use [Fluentd plugins](http://www.fluentd.org/plugins) by installing them
 
 ```
 FROM fluent/fluentd:latest-onbuild
-MAINTAINER your_name <...>
-USER fluent
+MAINTAINER YOUR_NAME <...@...>
 WORKDIR /home/fluent
 ENV PATH /home/fluent/.gem/ruby/2.3.0/bin:$PATH
 
-# cutomize following "gem install" line as you wish
+# cutomize following "gem install fluent-plugin-..." line as you wish
 
-RUN apk --no-cache --update add build-base && \
-    gem install fluent-plugin-elasticsearch fluent-plugin-record-reformer fluent-plugin-mysql-replicator && \
-    apk del build-base && rm -rf /home/fluent/.gem/ruby/2.3.0/cache/*.gem && gem sources -c
+USER root
+RUN apk --no-cache --update add sudo build-base ruby-dev && \
+
+    sudo -u fluent gem install fluent-plugin-elasticsearch fluent-plugin-record-reformer && \
+
+    rm -rf /home/fluent/.gem/ruby/2.3.0/cache/*.gem && sudo -u fluent gem sources -c && \
+    apk del sudo build-base ruby-dev && rm -rf /var/cache/apk/*
+
 EXPOSE 24284
 
-CMD fluentd -c /fluentd/etc/$FLUENTD_CONF -p /fluentd/plugins $FLUENTD_OPT
+USER fluent
+CMD exec fluentd -c /fluentd/etc/$FLUENTD_CONF -p /fluentd/plugins $FLUENTD_OPT
 ```
 
 Note: This example runs `apk --no-cache --update add build-base` so that you can install Fluentd plugins that contain native extensions. If you're sure that plugins don't include native extensions, you can omit it to make image build faster.
@@ -105,7 +110,7 @@ Once the image is built, it's ready to run. Following command runs Fluentd shari
 
 ```
 mkdir log
-docker run -it --rm --name custom-docker-fluent-logger -v log:/fluentd/log custom-fluentd:latest
+docker run -it --rm --name custom-docker-fluent-logger -v `pwd`/log:/fluentd/log custom-fluentd:latest
 ```
 
 Open another terminal and type following command to inspect IP address of the container. Fluentd is running on this IP address:
@@ -118,6 +123,7 @@ Let's start another docker container and send its logs to Fluentd.
 
 ```
 docker run --log-driver=fluentd --log-opt fluentd-address=FLUENTD.ADD.RE.SS:24224 python:alpine echo "Hello Fluentd"
+docker kill -s USR1 custom-docker-fluent-logger
 ```
 
 (replace `FLUENTD.ADD.RE.SS` with actual IP address you inspected at the previous step)
