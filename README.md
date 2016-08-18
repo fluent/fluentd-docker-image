@@ -94,6 +94,8 @@ USER fluent
 CMD exec fluentd -c /fluentd/etc/$FLUENTD_CONF -p /fluentd/plugins $FLUENTD_OPT
 ```
 
+Note: This example runs `apk add build-base ruby-dev` so that you can install Fluentd plugins that contain native extensions (they are removed immediately after plugin installation). If you're sure that plugins don't include native extensions, you can omit it to make image build faster.
+
 ### 5. Build image
 
 Use `docker build` command to build the image. This example names the image "custom-fluentd:latest":
@@ -121,7 +123,7 @@ Let's try to use another docker container to send its logs to Fluentd.
 
 ```
 docker run --log-driver=fluentd --log-opt fluentd-address=FLUENTD.ADD.RE.SS:24224 python:alpine echo Hello
-docker kill -s USR1 custom-docker-fluent-logger
+docker kill -s USR1 custom-docker-fluent-logger  # force flush buffered logs
 ```
 
 (replace `FLUENTD.ADD.RE.SS` with actual IP address you inspected at the previous step)
