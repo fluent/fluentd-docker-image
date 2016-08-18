@@ -1,0 +1,13 @@
+FROM fluent/fluentd:latest-onbuild
+MAINTAINER your_name <...>
+USER fluent
+WORKDIR /home/fluent
+ENV PATH /home/fluent/.gem/ruby/2.3.0/bin:$PATH
+
+RUN apk --no-cache --update add build-base && \
+    gem install fluent-plugin-secure-forward && \
+    apk del build-base && rm -rf /home/fluent/.gem/ruby/2.3.0/cache/*.gem && gem sources -c
+EXPOSE 24284
+
+RUN apk del build-base && rm -rf /home/fluent/.gem/ruby/2.3.0/cache/*.gem && gem sources -c
+CMD fluentd -c /fluentd/etc/$FLUENTD_CONF -p /fluentd/plugins $FLUENTD_OPT
