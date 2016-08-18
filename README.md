@@ -64,11 +64,11 @@ mkdir plugins
 curl https://raw.githubusercontent.com/fluent/fluentd-docker-image/master/Dockerfile.sample > Dockerfile
 ```
 
-### 3. Customize fluent.conf
+### 2. Customize fluent.conf
 
 Documentation of `fluent.conf` is available at [docs.fluentd.org](http://docs.fluentd.org/).
 
-### 4. Customize Dockerfile to install plugins (optional)
+### 3. Customize Dockerfile to install plugins (optional)
 
 You can use [Fluentd plugins](http://www.fluentd.org/plugins) by installing them using Dockerfile. Sample Dockerfile installs `fluent-plugin-secure-forward`. To add plugins, edit `Dockerfile` as following:
 
@@ -96,7 +96,7 @@ CMD exec fluentd -c /fluentd/etc/$FLUENTD_CONF -p /fluentd/plugins $FLUENTD_OPT
 
 Note: This example runs `apk add build-base ruby-dev` so that you can install Fluentd plugins that contain native extensions (they are removed immediately after plugin installation). If you're sure that plugins don't include native extensions, you can omit it to make image build faster.
 
-### 5. Build image
+### 4. Build image
 
 Use `docker build` command to build the image. This example names the image "custom-fluentd:latest":
 
@@ -104,7 +104,7 @@ Use `docker build` command to build the image. This example names the image "cus
 docker build -t custom-fluentd:latest ./
 ```
 
-### 6. Testing
+### 5. Test it
 
 Once the image is built, it's ready to run. Following commands run Fluentd sharing `./log` directory with the host machine:
 
