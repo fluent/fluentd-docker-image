@@ -68,9 +68,9 @@ curl https://raw.githubusercontent.com/fluent/fluentd-docker-image/master/Docker
 
 Documentation of `fluent.conf` is available at [docs.fluentd.org](http://docs.fluentd.org/).
 
-### 4. Optional: customize Dockerfile to install plugins
+### 4. Customize Dockerfile to install plugins (optional)
 
-You can use [Fluentd plugins](http://www.fluentd.org/plugins) by installing them in Dockerfile. Sample Dockerfile installs `fluent-plugin-secure-forward`. To add plugins, edit `Dockerfile` as following:
+You can use [Fluentd plugins](http://www.fluentd.org/plugins) by installing them using Dockerfile. Sample Dockerfile installs `fluent-plugin-secure-forward`. To add plugins, edit `Dockerfile` as following:
 
 ```
 FROM fluent/fluentd:latest-onbuild
@@ -94,11 +94,9 @@ USER fluent
 CMD exec fluentd -c /fluentd/etc/$FLUENTD_CONF -p /fluentd/plugins $FLUENTD_OPT
 ```
 
-Note: This example runs `apk --no-cache --update add build-base` so that you can install Fluentd plugins that contain native extensions. If you're sure that plugins don't include native extensions, you can omit it to make image build faster.
-
 ### 5. Build image
 
-Use `docker build` command to build the image:
+Use `docker build` command to build the image. This example names the image "custom-fluentd:latest":
 
 ```
 docker build -t custom-fluentd:latest ./
@@ -106,23 +104,23 @@ docker build -t custom-fluentd:latest ./
 
 ### 6. Testing
 
-Once the image is built, it's ready to run. Following command runs Fluentd sharing `./log` directory with the host machine:
+Once the image is built, it's ready to run. Following commands run Fluentd sharing `./log` directory with the host machine:
 
 ```
 mkdir log
 docker run -it --rm --name custom-docker-fluent-logger -v `pwd`/log:/fluentd/log custom-fluentd:latest
 ```
 
-Open another terminal and type following command to inspect IP address of the container. Fluentd is running on this IP address:
+Open another terminal and type following command to inspect IP address. Fluentd is running on this IP address:
 
 ```
 docker inspect -f '{{.NetworkSettings.IPAddress}}' custom-docker-fluent-logger
 ```
 
-Let's start another docker container and send its logs to Fluentd.
+Let's try to use another docker container to send its logs to Fluentd.
 
 ```
-docker run --log-driver=fluentd --log-opt fluentd-address=FLUENTD.ADD.RE.SS:24224 python:alpine echo "Hello Fluentd"
+docker run --log-driver=fluentd --log-opt fluentd-address=FLUENTD.ADD.RE.SS:24224 python:alpine echo Hello
 docker kill -s USR1 custom-docker-fluent-logger
 ```
 
