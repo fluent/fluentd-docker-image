@@ -13,7 +13,7 @@ docker run -d -p 24224:24224 -v /data:/fluentd/log fluent/fluentd
 
 Default configurations are to:
 
-* listen port `24224` for fluentd forward protocol
+* listen port `24224` for Fluentd forward protocol
 * store logs with tag `docker.**` into `/fluentd/log/docker.*.log` (and symlink `docker.log`)
 * store all other logs into `/fluentd/log/data.*.log` (and symlink data.log)
 
@@ -21,7 +21,7 @@ This image uses Alpine Linux. Since v0.12.26, we separate tags into `vX.XX.XX` a
 
 ### Ubuntu based image
 
-This is deprecated. You can use `ubuntu-base` tag for your build but we don't maintain ubuntu based image with latest fluentd release.
+This is deprecated. You can use `ubuntu-base` tag for your build but we don't maintain ubuntu based image with latest Fluentd release.
 We recommend to fork `ubuntu/Dockerfile` for your case.
 
 ## Configurable ENV variables
@@ -43,38 +43,94 @@ Use this variable to specify other options, like `-v` or `-q`.
 
 ## How to build your own image
 
-It is very easy to use onbuild image as base image. Write your `Dockerfile` and configuration files, and/or your own plugin files if needed.
+You can build a customized image based on Fluentd's `onbuild` image. Customized image can include plugins, fluent.conf file, and plugins.
+
+### 1. Create a working directory
+
+We will use this diretory to build a docker image. Type following commands on a terminal to prepate a minimal project first:
+
+```
+# Create project directory.
+mkdir custom-fluentd
+cd custom-fluentd
+
+# Download default fluent.conf. this file will be copied to the new image.
+curl https://raw.githubusercontent.com/fluent/fluentd-docker-image/master/fluent.conf > fluent.conf
+
+# Create plugins directory. plugins scripts put here will be copied to the new image.
+mkdir plugins
+
+# Download sample Dockerfile.
+curl https://raw.githubusercontent.com/fluent/fluentd-docker-image/master/Dockerfile.sample > Dockerfile
+```
+
+### 2. Customize fluent.conf
+
+Documentation of `fluent.conf` is available at [docs.fluentd.org](http://docs.fluentd.org/).
+
+### 3. Customize Dockerfile to install plugins (optional)
+
+You can use [Fluentd plugins](http://www.fluentd.org/plugins) by installing them using Dockerfile. Sample Dockerfile installs `fluent-plugin-secure-forward`. To add plugins, edit `Dockerfile` as following:
 
 ```
 FROM fluent/fluentd:latest-onbuild
-MAINTAINER your_name <...>
-USER fluent
+MAINTAINER YOUR_NAME <...@...>
 WORKDIR /home/fluent
 ENV PATH /home/fluent/.gem/ruby/2.3.0/bin:$PATH
-RUN gem install fluent-plugin-secure-forward
-RUN rm -rf /home/fluent/.gem/ruby/2.3.0/cache/*.gem && gem sources -c
+
+# cutomize following "gem install fluent-plugin-..." line as you wish
+
+USER root
+RUN apk --no-cache --update add sudo build-base ruby-dev && \
+
+    sudo -u fluent gem install fluent-plugin-elasticsearch fluent-plugin-record-reformer && \
+
+    rm -rf /home/fluent/.gem/ruby/2.3.0/cache/*.gem && sudo -u fluent gem sources -c && \
+    apk del sudo build-base ruby-dev && rm -rf /var/cache/apk/*
+
 EXPOSE 24284
-CMD fluentd -c /fluentd/etc/$FLUENTD_CONF -p /fluentd/plugins $FLUENTD_OPT
+
+USER fluent
+CMD exec fluentd -c /fluentd/etc/$FLUENTD_CONF -p /fluentd/plugins $FLUENTD_OPT
 ```
 
-Files below are automatically included in build process:
+Note: This example runs `apk add build-base ruby-dev` so that you can install Fluentd plugins that contain native extensions (they are removed immediately after plugin installation). If you're sure that plugins don't include native extensions, you can omit it to make image build faster.
 
-- `fluent.conf`: used instead of default file
-- `plugins/*`: copied into `/fluentd/plugins` and loaded at runtime
+### 4. Build image
 
-Note: Default image removed several apk packages, build-base and ruby-dev, to keep docker image small. If you want to install the plugin which depends on native extension gems, needs to re-install these packages to build it.
-
-Note: If you want to use latest, non onbuild, image, copy fluent.conf and plugins manually.
-
-### Testing
+Use `docker build` command to build the image. This example names the image "custom-fluentd:latest":
 
 ```
-docker run --log-driver=fluentd --log-opt fluentd-address=192.168.0.1:24224 IMAGE echo "Hello Fluentd"  
+docker build -t custom-fluentd:latest ./
 ```
 
-Should produce a log-file with `Hello Fluentd`, depending on you `fluent.conf` file.
+### 5. Test it
 
-### References 
+Once the image is built, it's ready to run. Following commands run Fluentd sharing `./log` directory with the host machine:
+
+```
+mkdir log
+docker run -it --rm --name custom-docker-fluent-logger -v `pwd`/log:/fluentd/log custom-fluentd:latest
+```
+
+Open another terminal and type following command to inspect IP address. Fluentd is running on this IP address:
+
+```
+docker inspect -f '{{.NetworkSettings.IPAddress}}' custom-docker-fluent-logger
+```
+
+Let's try to use another docker container to send its logs to Fluentd.
+
+```
+docker run --log-driver=fluentd --log-opt fluentd-address=FLUENTD.ADD.RE.SS:24224 python:alpine echo Hello
+docker kill -s USR1 custom-docker-fluent-logger  # force flush buffered logs
+```
+
+(replace `FLUENTD.ADD.RE.SS` with actual IP address you inspected at the previous step)
+
+You will see some logs sent to Fluentd.
+
+### References
 
 [Docker Logging | fluentd.org](http://www.fluentd.org/guides/recipes/docker-logging)
 
