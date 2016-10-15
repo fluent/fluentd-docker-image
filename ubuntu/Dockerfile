@@ -36,7 +36,7 @@ RUN git clone https://github.com/tagomoris/xbuild.git /home/ubuntu/.xbuild
 RUN /home/ubuntu/.xbuild/ruby-install 2.3.1 /home/ubuntu/ruby
 
 ENV PATH /home/ubuntu/ruby/bin:$PATH
-RUN gem install fluentd -v 0.12.26
+RUN gem install fluentd -v 0.12.29
 
 # RUN gem install fluent-plugin-webhdfs
 
