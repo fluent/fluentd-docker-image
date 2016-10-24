@@ -15,8 +15,14 @@ RUN apk --no-cache --update add \
     gem install oj && \
     gem install json && \
     gem install fluentd -v 0.12.29 && \
+    mkdir -p /tmp/jemalloc && \
+    wget http://www.canonware.com/download/jemalloc/jemalloc-4.2.1.tar.bz2 &&\
+    tar -xjf jemalloc-4.2.1.tar.bz2 && cd jemalloc-4.2.1/ && \
+    ./configure && make && \
+    mv lib/libjemalloc.so.2 /usr/lib && cd / && rm -rf /jemalloc && \
     apk del build-base ruby-dev && \
-    rm -rf /tmp/* /var/tmp/* /var/cache/apk/* /usr/lib/ruby/gems/*/cache/*.gem
+    rm -rf /tmp/* /var/tmp/* /var/cache/apk/* /usr/lib/ruby/gems/*/cache/*.gem \
+    /jemalloc-4.2.1 /jemalloc-4.2.1.tar.bz2
 
 RUN adduser -D -g '' -u 1000 -h /home/fluent fluent
 RUN chown -R fluent:fluent /home/fluent
@@ -38,8 +44,10 @@ ENV GEM_PATH /home/fluent/.gem/ruby/2.3.0:$GEM_PATH
 
 COPY fluent.conf /fluentd/etc/
 
+# Environment variables
 ENV FLUENTD_OPT=""
 ENV FLUENTD_CONF="fluent.conf"
+ENV LD_PRELOAD="/usr/lib/libjemalloc.so.2"
 
 EXPOSE 24224 5140
 
