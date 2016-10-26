@@ -15,7 +15,6 @@ RUN apk --no-cache --update add \
     gem install oj && \
     gem install json && \
     gem install fluentd -v 0.12.29 && \
-    mkdir -p /tmp/jemalloc && \
     wget http://www.canonware.com/download/jemalloc/jemalloc-4.2.1.tar.bz2 &&\
     tar -xjf jemalloc-4.2.1.tar.bz2 && cd jemalloc-4.2.1/ && \
     ./configure && make && \
