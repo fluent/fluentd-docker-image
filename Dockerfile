@@ -10,18 +10,19 @@ RUN apk --no-cache --update add \
                             ca-certificates \
                             ruby \
                             ruby-irb \
-                            ruby-dev && \
+                            ruby-dev \
+                            openssl && \
     echo 'gem: --no-document' >> /etc/gemrc && \
     gem install oj && \
     gem install json && \
     gem install fluentd -v 0.12.29 && \
-    wget http://www.canonware.com/download/jemalloc/jemalloc-4.2.1.tar.bz2 &&\
-    tar -xjf jemalloc-4.2.1.tar.bz2 && cd jemalloc-4.2.1/ && \
+    wget -O /tmp/jemalloc-4.3.0.tar.bz2 https://github.com/jemalloc/jemalloc/releases/download/4.3.0/jemalloc-4.3.0.tar.bz2 && \
+    cd /tmp && tar -xjf jemalloc-4.3.0.tar.bz2  && cd jemalloc-4.3.0/ && \
     ./configure && make && \
-    mv lib/libjemalloc.so.2 /usr/lib && cd / && rm -rf /jemalloc && \
-    apk del build-base ruby-dev && \
-    rm -rf /tmp/* /var/tmp/* /var/cache/apk/* /usr/lib/ruby/gems/*/cache/*.gem \
-    /jemalloc-4.2.1 /jemalloc-4.2.1.tar.bz2
+    mv lib/libjemalloc.so.2 /usr/lib && cd / && \
+    apk del build-base ruby-dev openssl && \
+    rm -rf /tmp/* /var/tmp/* /var/cache/apk/* /usr/lib/ruby/gems/*/cache/*.gem
+
 
 RUN adduser -D -g '' -u 1000 -h /home/fluent fluent
 RUN chown -R fluent:fluent /home/fluent
