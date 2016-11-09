@@ -10,13 +10,19 @@ RUN apk --no-cache --update add \
                             ca-certificates \
                             ruby \
                             ruby-irb \
-                            ruby-dev && \
+                            ruby-dev \
+                            openssl && \
     echo 'gem: --no-document' >> /etc/gemrc && \
     gem install oj && \
     gem install json && \
     gem install fluentd -v 0.12.29 && \
-    apk del build-base ruby-dev && \
+    wget -O /tmp/jemalloc-4.3.0.tar.bz2 https://github.com/jemalloc/jemalloc/releases/download/4.3.0/jemalloc-4.3.0.tar.bz2 && \
+    cd /tmp && tar -xjf jemalloc-4.3.0.tar.bz2  && cd jemalloc-4.3.0/ && \
+    ./configure && make && \
+    mv lib/libjemalloc.so.2 /usr/lib && cd / && \
+    apk del build-base ruby-dev openssl && \
     rm -rf /tmp/* /var/tmp/* /var/cache/apk/* /usr/lib/ruby/gems/*/cache/*.gem
+
 
 RUN adduser -D -g '' -u 1000 -h /home/fluent fluent
 RUN chown -R fluent:fluent /home/fluent
@@ -38,8 +44,10 @@ ENV GEM_PATH /home/fluent/.gem/ruby/2.3.0:$GEM_PATH
 
 COPY fluent.conf /fluentd/etc/
 
+# Environment variables
 ENV FLUENTD_OPT=""
 ENV FLUENTD_CONF="fluent.conf"
+ENV LD_PRELOAD="/usr/lib/libjemalloc.so.2"
 
 EXPOSE 24224 5140
 
