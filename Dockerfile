@@ -47,7 +47,7 @@ COPY fluent.conf /fluentd/etc/
 # Environment variables
 ENV FLUENTD_OPT=""
 ENV FLUENTD_CONF="fluent.conf"
-ENV LD_PRELOAD="/usr/lib/libjemalloc.so.2"
+# ENV LD_PRELOAD="/usr/lib/libjemalloc.so.2"
 
 EXPOSE 24224 5140
 
