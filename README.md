@@ -19,6 +19,39 @@ Default configurations are to:
 
 This image uses Alpine Linux. Since v0.12.26, we separate tags into `vX.XX.XX` and `vX.XX.XX-onbuild`.
 
+## Docker image tag and fluentd versions
+
+### latest
+
+`latest` tag refers `master` branch. Current used fluentd version is v0.12 seriese.
+
+This branch will use fluentd v0.14 seriese after v0.14 becomes stable. We don't recommend to use `latest` on production.
+`latest` is mainly for development and testing.
+
+### v0.12-latest
+
+`v0.12-latest` tag refers `v0.12` branch. This image uses latest fluentd v0.12 version.
+
+fluentd v0.12 is current stable version.
+
+### v0.14-latest
+
+`v0.14-latest` tag refers `v0.14` branch. This image uses latest fluentd v0.14 version.
+
+fluentd v0.14 has new useful features but v0.14 is not stable for now.
+You need to check fluentd and plugins work on your environment.
+
+### vX.Y.Z
+
+`vX.Y.Z` image uses fluentd `vX.Y.Z` version.
+
+We recommend to use this fixed tag image for production.
+
+### xxx-onbuild
+
+Above tags have corresponding `xxx-onbuild` tag for custormization, e.g. `latest-onbuild`, `v0.12.29-onbuild`, etc.
+See `How to build your own image` section for more detail.
+
 ### Ubuntu based image
 
 This is deprecated. You can use `ubuntu-base` tag for your build but we don't maintain ubuntu based image with latest Fluentd release.
