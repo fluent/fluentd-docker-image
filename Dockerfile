@@ -5,18 +5,18 @@ LABEL Description="Fluentd docker image" Vendor="Fluent Organization" Version="1
 # Do not split this into multiple RUN!
 # Docker creates a layer for every RUN-Statement
 # therefore an 'apk delete build*' has no effect
-RUN apk --no-cache --update add \
-                            build-base \
-                            ca-certificates \
-                            ruby \
-                            ruby-irb \
-                            ruby-dev && \
+RUN apk --no-cache add \
+                   build-base \
+                   ca-certificates \
+                   ruby \
+                   ruby-irb \
+                   ruby-dev && \
     echo 'gem: --no-document' >> /etc/gemrc && \
     gem install oj && \
     gem install json && \
     gem install fluentd -v 0.12.29 && \
     apk del build-base ruby-dev && \
-    rm -rf /tmp/* /var/tmp/* /var/cache/apk/* /usr/lib/ruby/gems/*/cache/*.gem
+    rm -rf /tmp/* /var/tmp/* /usr/lib/ruby/gems/*/cache/*.gem
 
 RUN adduser -D -g '' -u 1000 -h /home/fluent fluent
 RUN chown -R fluent:fluent /home/fluent
