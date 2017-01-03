@@ -1,7 +1,9 @@
 FROM fluent/fluentd:latest-onbuild
 MAINTAINER YOUR_NAME <...@...>
 
+USER fluent
 RUN fluent-gem install fluent-plugin-secure-forward 
+
 EXPOSE 24284
 
 CMD exec fluentd -c /fluentd/etc/$FLUENTD_CONF -p /fluentd/plugins $FLUENTD_OPT
