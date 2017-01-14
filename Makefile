@@ -3,6 +3,10 @@
 # Images and description on Docker Hub will be automatically rebuilt on
 # pushes to `master` branch of this repo and on updates of parent images.
 #
+# Note! Docker Hub `post_push` hook must be always up-to-date with values
+# specified in current Makefile. To update it just use:
+#	make post-push-hook-all
+#
 # It's still possible to build, tag and push images manually. Just use:
 #	make release-all
 
@@ -96,4 +100,40 @@ release-all:
 
 
 
-.PHONY: image tags push release release-all
+# Create `post_push` Docker Hub hook.
+#
+# When Docker Hub triggers automated build all the tags defined in `post_push`
+# hook will be assigned to built image. It allows to link the same image with
+# different tags, and not to build identical image for each tag separately.
+# See details:
+# http://windsock.io/automated-docker-image-builds-with-multiple-tags
+#
+# Usage:
+#	make post-push-hook [DOCKERFILE=] [TAGS=t1,t2,...]
+
+post-push-hook:
+	mkdir -p $(DOCKERFILE)/hooks
+	docker run --rm -i -v $(PWD)/post_push.erb:/post_push.erb:ro \
+		ruby:alpine erb \
+			image_tags='$(TAGS)' \
+		/post_push.erb > $(DOCKERFILE)/hooks/post_push
+
+
+
+# Create `post_push` Docker Hub hook for all supported Docker images.
+#
+# Usage:
+#	make post-push-hook-all
+
+post-push-hook-all:
+	(set -e ; $(foreach img,$(ALL_IMAGES), \
+		make post-push-hook \
+			DOCKERFILE=$(word 1,$(subst :, ,$(img))) \
+			TAGS=$(word 2,$(subst :, ,$(img))) ; \
+	))
+
+
+
+.PHONY: image tags push \
+        release release-all \
+        post-push-hook post-push-hook-all
