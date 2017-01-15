@@ -100,6 +100,35 @@ release-all:
 
 
 
+# Generate Dockerfile from template.
+#
+# Usage:
+#	make dockerfile [DOCKERFILE=] [VERSION=]
+
+dockerfile:
+	mkdir -p $(DOCKERFILE)
+	docker run --rm -i -v $(PWD)/Dockerfile.template.erb:/Dockerfile.erb:ro \
+		ruby:alpine erb -U -T 1 \
+			version='$(VERSION)' \
+		/Dockerfile.erb > $(DOCKERFILE)/Dockerfile
+
+
+
+# Generate Dockerfile from template for all supported Docker images.
+#
+# Usage:
+#	make dockerfile-all
+
+dockerfile-all:
+	(set -e ; $(foreach img,$(ALL_IMAGES), \
+		make dockerfile \
+			DOCKERFILE=$(word 1,$(subst :, ,$(img))) \
+			VERSION=$(word 1,$(subst $(comma), ,\
+			                 $(word 2,$(subst :, ,$(img))))) ; \
+	))
+
+
+
 # Create `post_push` Docker Hub hook.
 #
 # When Docker Hub triggers automated build all the tags defined in `post_push`
@@ -114,7 +143,7 @@ release-all:
 post-push-hook:
 	mkdir -p $(DOCKERFILE)/hooks
 	docker run --rm -i -v $(PWD)/post_push.erb:/post_push.erb:ro \
-		ruby:alpine erb \
+		ruby:alpine erb -U \
 			image_tags='$(TAGS)' \
 		/post_push.erb > $(DOCKERFILE)/hooks/post_push
 
@@ -136,4 +165,5 @@ post-push-hook-all:
 
 .PHONY: image tags push \
         release release-all \
+        dockerfile dockerfile-all \
         post-push-hook post-push-hook-all
