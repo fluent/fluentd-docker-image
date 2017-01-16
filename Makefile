@@ -163,7 +163,55 @@ post-push-hook-all:
 
 
 
+# Run tests for Docker image.
+#
+# Usage:
+#	make test [DOCKERFILE=] [VERSION=]
+
+test: deps.bats
+	DOCKERFILE=$(DOCKERFILE) IMAGE=$(IMAGE_NAME):$(VERSION) \
+		./test/bats/bats test/suite.bats
+
+
+
+# Run tests for all supported Docker images.
+#
+# Usage:
+#	make test-all
+
+test-all:
+	(set -e ; $(foreach img,$(ALL_IMAGES), \
+		make test \
+			DOCKERFILE=$(word 1,$(subst :, ,$(img))) \
+			IMAGE=$(IMAGE_NAME):$(word 1,$(subst $(comma), ,\
+			                             $(word 2,$(subst :, ,$(img))))) ; \
+	))
+
+
+
+# Resolve project dependencies for running Bats tests.
+#
+# Usage:
+#	make deps.bats [BATS_VER=]
+
+BATS_VER ?= 0.4.0
+
+deps.bats:
+ifeq ($(wildcard $(PWD)/test/bats),)
+	mkdir -p $(PWD)/test/bats/vendor
+	wget https://github.com/sstephenson/bats/archive/v$(BATS_VER).tar.gz \
+		-O $(PWD)/test/bats/vendor/bats.tar.gz
+	tar -xzf $(PWD)/test/bats/vendor/bats.tar.gz \
+		-C $(PWD)/test/bats/vendor
+	rm -f $(PWD)/test/bats/vendor/bats.tar.gz
+	ln -s $(PWD)/test/bats/vendor/bats-$(BATS_VER)/libexec/* \
+		$(PWD)/test/bats/
+endif
+
+
+
 .PHONY: image tags push \
         release release-all \
         dockerfile dockerfile-all \
-        post-push-hook post-push-hook-all
+        post-push-hook post-push-hook-all \
+        test test-all deps.bats
