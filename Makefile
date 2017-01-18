@@ -130,6 +130,35 @@ dockerfile-all:
 
 
 
+# Generate fluent.conf from template.
+#
+# Usage:
+#	make fluent.conf [DOCKERFILE=] [VERSION=]
+
+fluent.conf:
+	mkdir -p $(DOCKERFILE)
+	docker run --rm -i -v $(PWD)/fluent.conf.erb:/fluent.conf.erb:ro \
+		ruby:alpine erb -U -T 1 \
+			version='$(VERSION)' \
+		/fluent.conf.erb > $(DOCKERFILE)/fluent.conf
+
+
+
+# Generate fluent.conf from template for all supported Docker images.
+#
+# Usage:
+#	make fluent.conf-all
+
+fluent.conf-all:
+	(set -e ; $(foreach img,$(ALL_IMAGES), \
+		make fluent.conf \
+			DOCKERFILE=$(word 1,$(subst :, ,$(img))) \
+			VERSION=$(word 1,$(subst $(comma), ,\
+			                 $(word 2,$(subst :, ,$(img))))) ; \
+	))
+
+
+
 # Create `post_push` Docker Hub hook.
 #
 # When Docker Hub triggers automated build all the tags defined in `post_push`
@@ -214,5 +243,6 @@ endif
 .PHONY: image tags push \
         release release-all \
         dockerfile dockerfile-all \
+        fluent.conf fluent.conf-all \
         post-push-hook post-push-hook-all \
         test test-all deps.bats
