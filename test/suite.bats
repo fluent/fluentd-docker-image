@@ -34,6 +34,7 @@
   actual=$(echo "$output" | cut -d ' ' -f 2 | tr -d " \n")
 
   run sh -c "cat Makefile | grep $DOCKERFILE: | cut -d ':' -f 2 \
+                                              | cut -d ',' -f 1 \
                                               | cut -d '-' -f 1 \
                                               | tr -d ' v'"
   [ "$status" -eq 0 ]

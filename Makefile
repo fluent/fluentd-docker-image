@@ -232,14 +232,24 @@ test: deps.bats
 # Run tests for all supported Docker images.
 #
 # Usage:
-#	make test-all
+#	make test-all [prepare-images=(no|yes)]
+
+prepare-images ?= no
 
 test-all:
+ifeq ($(prepare-images),yes)
+	(set -e ; $(foreach img,$(ALL_IMAGES), \
+		make image no-cache=$(no-cache) \
+			DOCKERFILE=$(word 1,$(subst :, ,$(img))) \
+			VERSION=$(word 1,$(subst $(comma), ,\
+			                 $(word 2,$(subst :, ,$(img))))) ; \
+	))
+endif
 	(set -e ; $(foreach img,$(ALL_IMAGES), \
 		make test \
 			DOCKERFILE=$(word 1,$(subst :, ,$(img))) \
-			IMAGE=$(IMAGE_NAME):$(word 1,$(subst $(comma), ,\
-			                             $(word 2,$(subst :, ,$(img))))) ; \
+			VERSION=$(word 1,$(subst $(comma), ,\
+			                 $(word 2,$(subst :, ,$(img))))) ; \
 	))
 
 
