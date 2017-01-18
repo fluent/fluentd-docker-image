@@ -101,6 +101,31 @@ release-all:
 
 
 
+# Generate Docker image sources.
+#
+# Usage:
+#	make src [DOCKERFILE=] [VERSION=] [TAGS=t1,t2,...]
+
+src: dockerfile fluent.conf post-push-hook
+
+
+
+# Generate sources for all supported Docker images.
+#
+# Usage:
+#	make src-all
+
+src-all:
+	(set -e ; $(foreach img,$(ALL_IMAGES), \
+		make image-src \
+			DOCKERFILE=$(word 1,$(subst :, ,$(img))) \
+			VERSION=$(word 1,$(subst $(comma), ,\
+			                 $(word 2,$(subst :, ,$(img))))) \
+			TAGS=$(word 2,$(subst :, ,$(img))) ; \
+	))
+
+
+
 # Generate Dockerfile from template.
 #
 # Usage:
@@ -242,6 +267,7 @@ endif
 
 .PHONY: image tags push \
         release release-all \
+        src src-all \
         dockerfile dockerfile-all \
         fluent.conf fluent.conf-all \
         post-push-hook post-push-hook-all \
