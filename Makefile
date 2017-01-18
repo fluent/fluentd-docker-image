@@ -13,17 +13,18 @@
 
 IMAGE_NAME := fluent/fluentd
 ALL_IMAGES := \
-	v0.12/alpine:v0.12.31-alpine,v0.12-alpine,alpine,latest \
-	v0.12/alpine-onbuild:v0.12.31-alpine-onbuild,v0.12-alpine-onbuild,alpine-onbuild \
-	v0.14/alpine:v0.14.11-alpine,v0.14-alpine \
-	v0.14/alpine-onbuild:v0.14.11-alpine-onbuild,v0.14-alpine-onbuild
+	v0.12/alpine:v0.12.31,v0.12,stable,latest \
+	v0.12/alpine-onbuild:v0.12.31-onbuild,v0.12-onbuild,stable-onbuild,onbuild \
+	v0.14/alpine:v0.14.11,v0.14,edge \
+	v0.14/alpine-onbuild:v0.14.11-onbuild,v0.14-onbuild,edge-onbuild
 #	<Dockerfile>:<version>,<tag1>,<tag2>,...
 
 
-
-VERSION ?= v0.12.31-alpine
-TAGS ?= v0.12-alpine,alpine,latest
-DOCKERFILE ?= v0.12/alpine
+# Default is first image from ALL_IMAGES list.
+DOCKERFILE ?= $(word 1,$(subst :, ,$(word 1,$(ALL_IMAGES))))
+VERSION ?=  $(word 1,$(subst $(comma), ,\
+                     $(word 2,$(subst :, ,$(word 1,$(ALL_IMAGES))))))
+TAGS ?= $(word 2,$(subst :, ,$(word 1,$(ALL_IMAGES))))
 
 no-cache ?= no
 
