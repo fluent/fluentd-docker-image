@@ -1,0 +1,18 @@
+language: bash
+
+sudo: required
+
+services:
+  - docker
+
+env:
+  - Dockerfile=v0.12/alpine
+  - Dockerfile=v0.12/alpine-onbuild
+  - Dockerfile=v0.14/alpine
+  - Dockerfile=v0.14/alpine-onbuild
+
+before_script:
+  - make image DOCKERFILE=$Dockerfile VERSION=test
+
+script:
+  - make test DOCKERFILE=$Dockerfile VERSION=test
