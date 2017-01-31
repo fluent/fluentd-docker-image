@@ -16,9 +16,9 @@ Fluentd Docker Image
   [(v0.12/alpine/Dockerfile)][101]
 - `v0.12.31-onbuild`, `v0.12-onbuild`, `stable-onbuild`, `onbuild`
   [(v0.12/alpine-onbuild/Dockerfile)][102]
-- `v0.14.11`, `v0.14`, `edge`
+- `v0.14.12`, `v0.14`, `edge`
   [(v0.14/alpine/Dockerfile)][103]
-- `v0.14.11-onbuild`, `v0.14-onbuild`, `edge-onbuild`
+- `v0.14.12-onbuild`, `v0.14-onbuild`, `edge-onbuild`
   [(v0.14/alpine-onbuild/Dockerfile)][104]
 
 
