@@ -117,7 +117,7 @@ src: dockerfile fluent.conf post-push-hook
 
 src-all:
 	(set -e ; $(foreach img,$(ALL_IMAGES), \
-		make image-src \
+		make src \
 			DOCKERFILE=$(word 1,$(subst :, ,$(img))) \
 			VERSION=$(word 1,$(subst $(comma), ,\
 			                 $(word 2,$(subst :, ,$(img))))) \
@@ -135,6 +135,7 @@ dockerfile:
 	mkdir -p $(DOCKERFILE)
 	docker run --rm -i -v $(PWD)/Dockerfile.template.erb:/Dockerfile.erb:ro \
 		ruby:alpine erb -U -T 1 \
+			dockerfile='$(DOCKERFILE)' \
 			version='$(VERSION)' \
 		/Dockerfile.erb > $(DOCKERFILE)/Dockerfile
 
