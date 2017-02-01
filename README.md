@@ -16,10 +16,19 @@ Fluentd Docker Image
   [(v0.12/alpine/Dockerfile)][101]
 - `v0.12.31-onbuild`, `v0.12-onbuild`, `stable-onbuild`, `onbuild`
   [(v0.12/alpine-onbuild/Dockerfile)][102]
+- `v0.12.31-debian`, `v0.12-debian`, `stable-debian`, `debian`
+  [(v0.12/debian/Dockerfile)][105]
+- `v0.12.31-debian-onbuild`, `v0.12-debian-onbuild`, `stable-debian-onbuild`,
+  `debian-onbuild`
+  [(v0.12/debian-onbuild/Dockerfile)][106]
 - `v0.14.12`, `v0.14`, `edge`
   [(v0.14/alpine/Dockerfile)][103]
 - `v0.14.12-onbuild`, `v0.14-onbuild`, `edge-onbuild`
   [(v0.14/alpine-onbuild/Dockerfile)][104]
+- `v0.14.12-debian`, `v0.14-debian`, `edge-debian`
+  [(v0.14/debian/Dockerfile)][103]
+- `v0.14.12-debian-onbuild`, `v0.14-debian-onbuild`, `edge-debian-onbuild`
+  [(v0.14/debian-onbuild/Dockerfile)][104]
 
 
 
@@ -118,11 +127,11 @@ See ["How to build your own image"](#how-to-build-your-own-image) section for
 more details.
 
 
-### Ubuntu based image
+### `debian`
 
-This is deprecated. You can use `ubuntu-base` tag for your build but we don't
-maintain ubuntu based image with latest Fluentd release.
-We recommend to fork `ubuntu/Dockerfile` for your case.
+The image based on [Debian Linux image][7].
+You may use this image when you require plugins which cannot be installed
+on Alpine (like `fluent-plugin-systemd`).
 
 
 
@@ -166,7 +175,7 @@ Sample Dockerfile installs `fluent-plugin-secure-forward`.
 To add plugins, edit `Dockerfile` as following:
 
 ```Dockerfile
-FROM fluent/fluentd:latest-onbuild
+FROM fluent/fluentd:onbuild
 WORKDIR /home/fluent
 ENV PATH /home/fluent/.gem/ruby/2.3.0/bin:$PATH
 
@@ -263,7 +272,12 @@ through a [GitHub issue](https://github.com/fluent/fluentd-docker-image/issues).
 [4]: http://www.fluentd.org/plugins
 [5]: http://www.fluentd.org/guides/recipes/docker-logging
 [6]: https://docs.docker.com/engine/reference/logging/fluentd
+[7]: https://hub.docker.com/_/debian
 [101]: https://github.com/fluent/fluentd-docker-image/blob/master/v0.12/alpine/Dockerfile
 [102]: https://github.com/fluent/fluentd-docker-image/blob/master/v0.12/alpine-onbuild/Dockerfile
 [103]: https://github.com/fluent/fluentd-docker-image/blob/master/v0.14/alpine/Dockerfile
 [104]: https://github.com/fluent/fluentd-docker-image/blob/master/v0.14/alpine-onbuild/Dockerfile
+[105]: https://github.com/fluent/fluentd-docker-image/blob/master/v0.12/debian/Dockerfile
+[106]: https://github.com/fluent/fluentd-docker-image/blob/master/v0.12/debian-onbuild/Dockerfile
+[107]: https://github.com/fluent/fluentd-docker-image/blob/master/v0.14/debian/Dockerfile
+[108]: https://github.com/fluent/fluentd-docker-image/blob/master/v0.14/debian-onbuild/Dockerfile
