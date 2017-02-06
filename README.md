@@ -12,9 +12,9 @@ Fluentd Docker Image
 
 ## Supported tags and respective `Dockerfile` links
 
-- `v0.12.31`, `v0.12`, `stable`, `latest`
+- `v0.12.32`, `v0.12`, `stable`, `latest`
   [(v0.12/alpine/Dockerfile)][101]
-- `v0.12.31-onbuild`, `v0.12-onbuild`, `stable-onbuild`, `onbuild`
+- `v0.12.32-onbuild`, `v0.12-onbuild`, `stable-onbuild`, `onbuild`
   [(v0.12/alpine-onbuild/Dockerfile)][102]
 - `v0.14.12`, `v0.14`, `edge`
   [(v0.14/alpine/Dockerfile)][103]

@@ -17,7 +17,7 @@ RUN apk --no-cache add \
     echo 'gem: --no-document' >> /etc/gemrc && \
     gem install oj && \
     gem install json && \
-    gem install fluentd -v 0.12.31 && \
+    gem install fluentd -v 0.12.32 && \
     apk del build-base ruby-dev && \
     rm -rf /tmp/* /var/tmp/* /usr/lib/ruby/gems/*/cache/*.gem
 

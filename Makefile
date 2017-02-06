@@ -13,8 +13,8 @@
 
 IMAGE_NAME := fluent/fluentd
 ALL_IMAGES := \
-	v0.12/alpine:v0.12.31,v0.12,stable,latest \
-	v0.12/alpine-onbuild:v0.12.31-onbuild,v0.12-onbuild,stable-onbuild,onbuild \
+	v0.12/alpine:v0.12.32,v0.12,stable,latest \
+	v0.12/alpine-onbuild:v0.12.32-onbuild,v0.12-onbuild,stable-onbuild,onbuild \
 	v0.14/alpine:v0.14.12,v0.14,edge \
 	v0.14/alpine-onbuild:v0.14.12-onbuild,v0.14-onbuild,edge-onbuild
 #	<Dockerfile>:<version>,<tag1>,<tag2>,...
