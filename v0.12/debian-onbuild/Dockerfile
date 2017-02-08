@@ -22,7 +22,7 @@ RUN apt-get update \
  && echo 'gem: --no-document' >> /etc/gemrc \
  && gem install oj \
  && gem install json \
- && gem install fluentd -v 0.12.31 \
+ && gem install fluentd -v 0.12.32 \
  && apt-get purge -y --auto-remove \
                   -o APT::AutoRemove::RecommendsImportant=false \
                   $buildDeps \
