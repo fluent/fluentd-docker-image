@@ -44,8 +44,8 @@ WORKDIR /home/fluent
 
 # Tell ruby to install packages as user
 RUN echo "gem: --user-install --no-document" >> ~/.gemrc
-ENV PATH /home/fluent/.gem/ruby/2.3.0/bin:$PATH
-ENV GEM_PATH /home/fluent/.gem/ruby/2.3.0:$GEM_PATH
+ENV PATH /home/fluent/.gem/ruby/2.1.0/bin:$PATH
+ENV GEM_PATH /home/fluent/.gem/ruby/2.1.0:$GEM_PATH
 
 COPY fluent.conf /fluentd/etc/
 ONBUILD COPY fluent.conf /fluentd/etc/
