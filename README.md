@@ -16,10 +16,19 @@ Fluentd Docker Image
   [(v0.12/alpine/Dockerfile)][101]
 - `v0.12.32-onbuild`, `v0.12-onbuild`, `stable-onbuild`, `onbuild`
   [(v0.12/alpine-onbuild/Dockerfile)][102]
+- `v0.12.32-debian`, `v0.12-debian`, `stable-debian`, `debian`
+  [(v0.12/debian/Dockerfile)][105]
+- `v0.12.32-debian-onbuild`, `v0.12-debian-onbuild`, `stable-debian-onbuild`,
+  `debian-onbuild`
+  [(v0.12/debian-onbuild/Dockerfile)][106]
 - `v0.14.12`, `v0.14`, `edge`
   [(v0.14/alpine/Dockerfile)][103]
 - `v0.14.12-onbuild`, `v0.14-onbuild`, `edge-onbuild`
   [(v0.14/alpine-onbuild/Dockerfile)][104]
+- `v0.14.12-debian`, `v0.14-debian`, `edge-debian`
+  [(v0.14/debian/Dockerfile)][103]
+- `v0.14.12-debian-onbuild`, `v0.14-debian-onbuild`, `edge-debian-onbuild`
+  [(v0.14/debian-onbuild/Dockerfile)][104]
 
 
 
@@ -118,11 +127,11 @@ See ["How to build your own image"](#how-to-build-your-own-image) section for
 more details.
 
 
-### Ubuntu based image
+### `debian`
 
-This is deprecated. You can use `ubuntu-base` tag for your build but we don't
-maintain ubuntu based image with latest Fluentd release.
-We recommend to fork `ubuntu/Dockerfile` for your case.
+The image based on [Debian Linux image][7].
+You may use this image when you require plugins which cannot be installed
+on Alpine (like `fluent-plugin-systemd`).
 
 
 
@@ -162,34 +171,67 @@ Documentation of `fluent.conf` is available at [docs.fluentd.org][3].
 ### 3. Customize Dockerfile to install plugins (optional)
 
 You can install [Fluentd plugins][4] using Dockerfile.
-Sample Dockerfile installs `fluent-plugin-secure-forward`.
+Sample Dockerfile installs `fluent-plugin-elasticsearch` and 
+`fluent-plugin-record-reformer`.
 To add plugins, edit `Dockerfile` as following:
 
-```Dockerfile
-FROM fluent/fluentd:latest-onbuild
-WORKDIR /home/fluent
-ENV PATH /home/fluent/.gem/ruby/2.3.0/bin:$PATH
+##### Apline version
 
-# cutomize following "gem install fluent-plugin-..." line as you wish
+```Dockerfile
+FROM fluent/fluentd:onbuild
 
 USER root
-RUN apk --no-cache add sudo build-base ruby-dev && \
 
-    sudo -u fluent gem install fluent-plugin-elasticsearch fluent-plugin-record-reformer && \
+RUN apk add --update --virtual .build-deps \
+        sudo build-base ruby-dev \
 
-    rm -rf /home/fluent/.gem/ruby/2.3.0/cache/*.gem && sudo -u fluent gem sources -c && \
-    apk del sudo build-base ruby-dev
+ # cutomize following instruction as you wish
+ && sudo -u fluent gem install \ 
+        fluent-plugin-elasticsearch \
+        fluent-plugin-record-reformer \
 
-EXPOSE 24284
+ && sudo -u fluent gem sources --clear-all \
+ && apk del .build-deps \
+ && rm -rf /var/cache/apk/* \
+           /home/fluent/.gem/ruby/2.3.0/cache/*.gem
 
 USER fluent
-CMD exec fluentd -c /fluentd/etc/$FLUENTD_CONF -p /fluentd/plugins $FLUENTD_OPT
+
+EXPOSE 24284
 ```
 
-Note:
-This example runs `apk add build-base ruby-dev` to be able to install
+##### Debian version
+
+```Dockerfile
+FROM fluent/fluentd:debian-onbuild
+
+USER root
+
+RUN buildDeps="sudo make gcc g++ libc-dev ruby-dev" \
+ && apt-get update \
+ && apt-get install -y --no-install-recommends $buildDeps \
+
+ # cutomize following instruction as you wish
+ && sudo -u fluent gem install \
+        fluent-plugin-elasticsearch \
+        fluent-plugin-record-reformer \
+
+ && sudo -u fluent gem sources --clear-all \
+ && SUDO_FORCE_REMOVE=yes \
+    apt-get purge -y --auto-remove \
+                  -o APT::AutoRemove::RecommendsImportant=false \
+                  $buildDeps \
+ && rm -rf /var/lib/apt/lists/* \
+           /home/fluent/.gem/ruby/2.3.0/cache/*.gem
+
+USER fluent
+```
+
+##### Note
+
+These example run `apk add`/`apt-get install` to be able to install
 Fluentd plugins which require native extensions (they are removed immediately
-after plugin installation).
+after plugin installation).  
 If you're sure that plugins don't include native extensions, you can omit it
 to make image build faster.
 
@@ -235,7 +277,6 @@ You will see some logs sent to Fluentd.
 
 
 
-
 ### References
 
 [Docker Logging | fluentd.org][5]
@@ -263,7 +304,12 @@ through a [GitHub issue](https://github.com/fluent/fluentd-docker-image/issues).
 [4]: http://www.fluentd.org/plugins
 [5]: http://www.fluentd.org/guides/recipes/docker-logging
 [6]: https://docs.docker.com/engine/reference/logging/fluentd
+[7]: https://hub.docker.com/_/debian
 [101]: https://github.com/fluent/fluentd-docker-image/blob/master/v0.12/alpine/Dockerfile
 [102]: https://github.com/fluent/fluentd-docker-image/blob/master/v0.12/alpine-onbuild/Dockerfile
 [103]: https://github.com/fluent/fluentd-docker-image/blob/master/v0.14/alpine/Dockerfile
 [104]: https://github.com/fluent/fluentd-docker-image/blob/master/v0.14/alpine-onbuild/Dockerfile
+[105]: https://github.com/fluent/fluentd-docker-image/blob/master/v0.12/debian/Dockerfile
+[106]: https://github.com/fluent/fluentd-docker-image/blob/master/v0.12/debian-onbuild/Dockerfile
+[107]: https://github.com/fluent/fluentd-docker-image/blob/master/v0.14/debian/Dockerfile
+[108]: https://github.com/fluent/fluentd-docker-image/blob/master/v0.14/debian-onbuild/Dockerfile
