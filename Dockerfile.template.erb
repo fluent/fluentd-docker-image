@@ -35,7 +35,7 @@ RUN apt-get update \
  && buildDeps=" \
       make gcc g++ libc-dev \
       ruby-dev \
-      openssl \
+      wget bzip2 \
     " \
  && apt-get install -y --no-install-recommends $buildDeps \
 <% end %>
@@ -47,7 +47,7 @@ RUN apt-get update \
  && wget -O /tmp/jemalloc-4.4.0.tar.bz2 https://github.com/jemalloc/jemalloc/releases/download/4.4.0/jemalloc-4.4.0.tar.bz2 \
  && cd /tmp && tar -xjf jemalloc-4.4.0.tar.bz2 && cd jemalloc-4.4.0/ \
  && ./configure && make \
- && mv lib/libjemalloc.so.2 /usr/lib && cd / \
+ && mv lib/libjemalloc.so.2 /usr/lib \
 <% if is_alpine %>
  && apk del .build-deps \
  && rm -rf /var/cache/apk/* \
