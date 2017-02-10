@@ -42,6 +42,10 @@ RUN apt-get update \
  && gem install oj \
  && gem install json \
  && gem install fluentd -v <%= fluentd_ver %> \
+ && wget -O /tmp/jemalloc-4.4.0.tar.bz2 https://github.com/jemalloc/jemalloc/releases/download/4.4.0/jemalloc-4.4.0.tar.bz2 \
+ && cd /tmp && tar -xjf jemalloc-4.4.0.tar.bz2 && cd jemalloc-4.4.0/ \
+ && ./configure && make \
+ && mv lib/libjemalloc.so.2 /usr/lib && cd / \
 <% if is_alpine %>
  && apk del .build-deps \
  && rm -rf /var/cache/apk/* \
@@ -83,6 +87,7 @@ ONBUILD COPY plugins /fluentd/plugins/
 
 ENV FLUENTD_OPT=""
 ENV FLUENTD_CONF="fluent.conf"
+ENV LD_PRELOAD="/usr/lib/libjemalloc.so.2"
 
 EXPOSE 24224 5140
 
