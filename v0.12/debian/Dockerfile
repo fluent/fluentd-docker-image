@@ -16,6 +16,7 @@ RUN apt-get update \
  && buildDeps=" \
       make gcc g++ libc-dev \
       ruby-dev \
+      wget bzip2 \
     " \
  && apt-get install -y --no-install-recommends $buildDeps \
  && update-ca-certificates \
@@ -23,6 +24,10 @@ RUN apt-get update \
  && gem install oj \
  && gem install json \
  && gem install fluentd -v 0.12.32 \
+ && wget -O /tmp/jemalloc-4.4.0.tar.bz2 https://github.com/jemalloc/jemalloc/releases/download/4.4.0/jemalloc-4.4.0.tar.bz2 \
+ && cd /tmp && tar -xjf jemalloc-4.4.0.tar.bz2 && cd jemalloc-4.4.0/ \
+ && ./configure && make \
+ && mv lib/libjemalloc.so.2 /usr/lib \
  && apt-get purge -y --auto-remove \
                   -o APT::AutoRemove::RecommendsImportant=false \
                   $buildDeps \
@@ -51,6 +56,8 @@ COPY fluent.conf /fluentd/etc/
 
 ENV FLUENTD_OPT=""
 ENV FLUENTD_CONF="fluent.conf"
+
+ENV LD_PRELOAD="/usr/lib/libjemalloc.so.2"
 
 EXPOSE 24224 5140
 
