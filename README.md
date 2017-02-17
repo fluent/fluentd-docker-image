@@ -21,13 +21,13 @@ Fluentd Docker Image
 - `v0.12.32-debian-onbuild`, `v0.12-debian-onbuild`, `stable-debian-onbuild`,
   `debian-onbuild`
   [(v0.12/debian-onbuild/Dockerfile)][106]
-- `v0.14.12`, `v0.14`, `edge`
+- `v0.14.13`, `v0.14`, `edge`
   [(v0.14/alpine/Dockerfile)][103]
-- `v0.14.12-onbuild`, `v0.14-onbuild`, `edge-onbuild`
+- `v0.14.13-onbuild`, `v0.14-onbuild`, `edge-onbuild`
   [(v0.14/alpine-onbuild/Dockerfile)][104]
-- `v0.14.12-debian`, `v0.14-debian`, `edge-debian`
+- `v0.14.13-debian`, `v0.14-debian`, `edge-debian`
   [(v0.14/debian/Dockerfile)][107]
-- `v0.14.12-debian-onbuild`, `v0.14-debian-onbuild`, `edge-debian-onbuild`
+- `v0.14.13-debian-onbuild`, `v0.14-debian-onbuild`, `edge-debian-onbuild`
   [(v0.14/debian-onbuild/Dockerfile)][108]
 
 
