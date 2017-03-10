@@ -110,7 +110,7 @@ release-all:
 # Usage:
 #	make src [DOCKERFILE=] [VERSION=] [TAGS=t1,t2,...]
 
-src: dockerfile fluent.conf post-push-hook
+src: dockerfile fluent.conf entrypoint.sh post-push-hook
 
 
 
@@ -187,6 +187,33 @@ fluent.conf-all:
 			                 $(word 2,$(subst :, ,$(img))))) ; \
 	))
 
+# Generate entrypoint.sh from template.
+#
+# Usage:
+#	make entrypoint.sh [DOCKERFILE=] [VERSION=]
+
+entrypoint.sh:
+	mkdir -p $(DOCKERFILE)
+	docker run --rm -i -v $(PWD)/entrypoint.sh.erb:/entrypoint.sh.erb:ro \
+		ruby:alpine erb -U -T 1 \
+			dockerfile='$(DOCKERFILE)' \
+			version='$(VERSION)' \
+		/entrypoint.sh.erb > $(DOCKERFILE)/entrypoint.sh
+
+
+
+# Generate entrypoint.sh from template for all supported Docker images.
+#
+# Usage:
+#	make entrypoint.sh-all
+
+entrypoint.sh-all:
+	(set -e ; $(foreach img,$(ALL_IMAGES), \
+		make entrypoint.sh \
+			DOCKERFILE=$(word 1,$(subst :, ,$(img))) \
+			VERSION=$(word 1,$(subst $(comma), ,\
+			                 $(word 2,$(subst :, ,$(img))))) ; \
+	))
 
 
 # Create `post_push` Docker Hub hook.
