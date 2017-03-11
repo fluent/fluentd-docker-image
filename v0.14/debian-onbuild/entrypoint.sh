@@ -1,6 +1,6 @@
 #!/usr/bin/dumb-init /bin/sh
 
-uid=${FLUENT_UID:-9001}
+uid=${FLUENT_UID:-1000}
 
 # check if a old fluent user exists and delete it
 cat /etc/passwd | grep fluent
