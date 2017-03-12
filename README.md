@@ -50,7 +50,7 @@ collection and consumption for a better use and understanding of data.
 To create endpoint that collectc logs on your host just run:
 
 ```bash
-docker run -d -p 24224:24224 -v /data:/fluentd/log fluent/fluentd
+docker run -d -p 24224:24224 -p 24224:24224/udp -v /data:/fluentd/log fluent/fluentd
 ```
 
 Default configurations are to:
