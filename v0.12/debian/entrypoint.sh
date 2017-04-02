@@ -12,8 +12,7 @@ fi
 useradd -u ${uid} -o -c "" -m fluent
 export HOME=/home/fluent
 
-# chown data folders
+# chown home folder
 chown -R fluent /home/fluent
-chown -R fluent /fluentd
 
 gosu fluent "$@"

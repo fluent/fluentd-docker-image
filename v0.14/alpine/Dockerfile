@@ -23,7 +23,7 @@ RUN apk update \
  && echo 'gem: --no-document' >> /etc/gemrc \
  && gem install oj \
  && gem install json \
- && gem install fluentd -v 0.14.13 \
+ && gem install fluentd -v 0.14.14 \
  && wget -O /usr/bin/dumb-init https://github.com/Yelp/dumb-init/releases/download/v${DUMB_INIT_VERSION}/dumb-init_${DUMB_INIT_VERSION}_amd64 \
  && chmod +x /usr/bin/dumb-init \
  && apk del .build-deps \

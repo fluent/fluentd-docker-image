@@ -12,22 +12,22 @@ Fluentd Docker Image
 
 ## Supported tags and respective `Dockerfile` links
 
-- `v0.12.33`, `v0.12`, `stable`, `latest`
+- `v0.12.34`, `v0.12`, `stable`, `latest`
   [(v0.12/alpine/Dockerfile)][101]
-- `v0.12.33-onbuild`, `v0.12-onbuild`, `stable-onbuild`, `onbuild`
+- `v0.12.34-onbuild`, `v0.12-onbuild`, `stable-onbuild`, `onbuild`
   [(v0.12/alpine-onbuild/Dockerfile)][102]
-- `v0.12.33-debian`, `v0.12-debian`, `stable-debian`, `debian`
+- `v0.12.34-debian`, `v0.12-debian`, `stable-debian`, `debian`
   [(v0.12/debian/Dockerfile)][105]
-- `v0.12.33-debian-onbuild`, `v0.12-debian-onbuild`, `stable-debian-onbuild`,
+- `v0.12.34-debian-onbuild`, `v0.12-debian-onbuild`, `stable-debian-onbuild`,
   `debian-onbuild`
   [(v0.12/debian-onbuild/Dockerfile)][106]
-- `v0.14.13`, `v0.14`, `edge`
+- `v0.14.14`, `v0.14`, `edge`
   [(v0.14/alpine/Dockerfile)][103]
-- `v0.14.13-onbuild`, `v0.14-onbuild`, `edge-onbuild`
+- `v0.14.14-onbuild`, `v0.14-onbuild`, `edge-onbuild`
   [(v0.14/alpine-onbuild/Dockerfile)][104]
-- `v0.14.13-debian`, `v0.14-debian`, `edge-debian`
+- `v0.14.14-debian`, `v0.14-debian`, `edge-debian`
   [(v0.14/debian/Dockerfile)][107]
-- `v0.14.13-debian-onbuild`, `v0.14-debian-onbuild`, `edge-debian-onbuild`
+- `v0.14.14-debian-onbuild`, `v0.14-debian-onbuild`, `edge-debian-onbuild`
   [(v0.14/debian-onbuild/Dockerfile)][108]
 
 
@@ -50,7 +50,7 @@ collection and consumption for a better use and understanding of data.
 To create endpoint that collectc logs on your host just run:
 
 ```bash
-docker run -d -p 24224:24224 -v /data:/fluentd/log fluent/fluentd
+docker run -d -p 24224:24224 -p 24224:24224/udp -v /data:/fluentd/log fluent/fluentd
 ```
 
 Default configurations are to:
