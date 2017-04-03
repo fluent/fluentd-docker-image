@@ -13,5 +13,6 @@ adduser -D -g '' -u ${uid} -h /home/fluent fluent
 
 # chown home folder
 chown -R fluent /home/fluent
+chown -R fluent /fluentd
 
 su-exec fluent "$@"

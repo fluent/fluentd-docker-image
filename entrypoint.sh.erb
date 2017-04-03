@@ -17,8 +17,9 @@ useradd -u ${uid} -o -c "" -m fluent
 export HOME=/home/fluent
 <% end %>
 
-# chown home folder
+# chown home and data folder
 chown -R fluent /home/fluent
+chown -R fluent /fluentd
 
 <% if is_alpine %>
 su-exec fluent "$@"
