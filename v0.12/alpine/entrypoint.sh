@@ -1,4 +1,5 @@
 #!/usr/bin/dumb-init /bin/sh
+set -e
 
 uid=${FLUENT_UID:-1000}
 
@@ -11,7 +12,7 @@ fi
 # (re)add the fluent user with $FLUENT_UID
 adduser -D -g '' -u ${uid} -h /home/fluent fluent
 
-# chown home folder
+# chown home and data folder
 chown -R fluent /home/fluent
 chown -R fluent /fluentd
 

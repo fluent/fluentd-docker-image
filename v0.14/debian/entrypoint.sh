@@ -1,4 +1,5 @@
 #!/usr/bin/dumb-init /bin/sh
+set -e
 
 uid=${FLUENT_UID:-1000}
 
@@ -12,7 +13,7 @@ fi
 useradd -u ${uid} -o -c "" -m fluent
 export HOME=/home/fluent
 
-# chown home folder
+# chown home and data folder
 chown -R fluent /home/fluent
 chown -R fluent /fluentd
 
