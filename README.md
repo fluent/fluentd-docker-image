@@ -171,7 +171,7 @@ Documentation of `fluent.conf` is available at [docs.fluentd.org][3].
 ### 3. Customize Dockerfile to install plugins (optional)
 
 You can install [Fluentd plugins][4] using Dockerfile.
-Sample Dockerfile installs `fluent-plugin-elasticsearch` and 
+Sample Dockerfile installs `fluent-plugin-elasticsearch` and
 `fluent-plugin-record-reformer`.
 To add plugins, edit `Dockerfile` as following:
 
@@ -184,12 +184,11 @@ USER root
 
 RUN apk add --update --virtual .build-deps \
         sudo build-base ruby-dev \
-
- # cutomize following instruction as you wish
- && sudo -u fluent gem install \ 
+ `# customize following instruction as you wish` \
+ && sudo -u fluent gem install \
         fluent-plugin-elasticsearch \
         fluent-plugin-record-reformer \
-
+ `# retain remaining lines to minimize size ` \
  && sudo -u fluent gem sources --clear-all \
  && apk del .build-deps \
  && rm -rf /var/cache/apk/* \
@@ -210,12 +209,11 @@ USER root
 RUN buildDeps="sudo make gcc g++ libc-dev ruby-dev" \
  && apt-get update \
  && apt-get install -y --no-install-recommends $buildDeps \
-
- # cutomize following instruction as you wish
+ `# customize following instruction as you wish` \
  && sudo -u fluent gem install \
         fluent-plugin-elasticsearch \
         fluent-plugin-record-reformer \
-
+ `# retain remaining lines to minimize size ` \
  && sudo -u fluent gem sources --clear-all \
  && SUDO_FORCE_REMOVE=yes \
     apt-get purge -y --auto-remove \
@@ -252,8 +250,8 @@ Once the image is built, it's ready to run.
 Following commands run Fluentd sharing `./log` directory with the host machine:
 
 ```bash
-mkdir log
-docker run -it --rm --name custom-docker-fluent-logger -v `pwd`/log:/fluentd/log custom-fluentd:latest
+mkdir -p log
+docker run -it --rm --name custom-docker-fluent-logger -v $(pwd)/log:/fluentd/log custom-fluentd:latest
 ```
 
 Open another terminal and type following command to inspect IP address.
@@ -266,7 +264,7 @@ docker inspect -f '{{.NetworkSettings.IPAddress}}' custom-docker-fluent-logger
 Let's try to use another docker container to send its logs to Fluentd.
 
 ```bash
-docker run --log-driver=fluentd --log-opt fluentd-address=FLUENTD.ADD.RE.SS:24224 python:alpine echo Hello
+docker run --log-driver=fluentd --log-opt tag="docker.{{.ID}}" --log-opt fluentd-address=FLUENTD.ADD.RE.SS:24224 python:alpine echo Hello
 # and force flush buffered logs
 docker kill -s USR1 custom-docker-fluent-logger
 ```
