@@ -182,13 +182,15 @@ FROM fluent/fluentd:onbuild
 
 USER root
 
+# below RUN includes two plugins as examples
+# elasticsearch and record-reformer are not required
+# you may customize including plugins as you wish
+
 RUN apk add --update --virtual .build-deps \
         sudo build-base ruby-dev \
- `# customize following instruction as you wish` \
  && sudo -u fluent gem install \
         fluent-plugin-elasticsearch \
         fluent-plugin-record-reformer \
- `# retain remaining lines to minimize size ` \
  && sudo -u fluent gem sources --clear-all \
  && apk del .build-deps \
  && rm -rf /var/cache/apk/* \
@@ -206,14 +208,16 @@ FROM fluent/fluentd:debian-onbuild
 
 USER root
 
+# below RUN includes two plugins as examples
+# elasticsearch and record-reformer are not required
+# you may customize including plugins as you wish
+
 RUN buildDeps="sudo make gcc g++ libc-dev ruby-dev" \
  && apt-get update \
  && apt-get install -y --no-install-recommends $buildDeps \
- `# customize following instruction as you wish` \
  && sudo -u fluent gem install \
         fluent-plugin-elasticsearch \
         fluent-plugin-record-reformer \
- `# retain remaining lines to minimize size ` \
  && sudo -u fluent gem sources --clear-all \
  && SUDO_FORCE_REMOVE=yes \
     apt-get purge -y --auto-remove \
