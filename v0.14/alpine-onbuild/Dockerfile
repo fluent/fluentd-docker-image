@@ -5,7 +5,9 @@ FROM alpine:3.5
 MAINTAINER TAGOMORI Satoshi <tagomoris@gmail.com>
 LABEL Description="Fluentd docker image" Vendor="Fluent Organization" Version="1.1"
 
-ENV DUMB_INIT_VERSION=1.2.0 GOSU_VERSION=1.10
+ENV DUMB_INIT_VERSION=1.2.0
+
+ENV SU_EXEC_VERSION=0.2
 
 # Do not split this into multiple RUN!
 # Docker creates a layer for every RUN-Statement
@@ -15,7 +17,8 @@ RUN apk update \
  && apk add --no-cache \
         ca-certificates \
         ruby ruby-irb \
-        'su-exec>=0.2' \
+        su-exec==${SU_EXEC_VERSION}-r0 \
+        dumb-init==${DUMB_INIT_VERSION}-r0 \
  && apk add --no-cache --virtual .build-deps \
         build-base \
         ruby-dev wget gnupg \
@@ -24,8 +27,6 @@ RUN apk update \
  && gem install oj \
  && gem install json \
  && gem install fluentd -v 0.14.14 \
- && wget -O /usr/bin/dumb-init https://github.com/Yelp/dumb-init/releases/download/v${DUMB_INIT_VERSION}/dumb-init_${DUMB_INIT_VERSION}_amd64 \
- && chmod +x /usr/bin/dumb-init \
  && apk del .build-deps \
  && rm -rf /var/cache/apk/* \
  && rm -rf /tmp/* /var/tmp/* /usr/lib/ruby/gems/*/cache/*.gem

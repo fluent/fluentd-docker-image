@@ -12,7 +12,13 @@ FROM debian:stretch-slim
 MAINTAINER TAGOMORI Satoshi <tagomoris@gmail.com>
 LABEL Description="Fluentd docker image" Vendor="Fluent Organization" Version="1.1"
 
-ENV DUMB_INIT_VERSION=1.2.0 GOSU_VERSION=1.10
+ENV DUMB_INIT_VERSION=1.2.0
+
+<% if is_alpine %>
+ENV SU_EXEC_VERSION=0.2
+<% else %>
+ENV GOSU_VERSION=1.10
+<% end %>
 
 # Do not split this into multiple RUN!
 # Docker creates a layer for every RUN-Statement
@@ -23,7 +29,8 @@ RUN apk update \
  && apk add --no-cache \
         ca-certificates \
         ruby ruby-irb \
-        'su-exec>=0.2' \
+        su-exec==${SU_EXEC_VERSION}-r0 \
+        dumb-init==${DUMB_INIT_VERSION}-r0 \
  && apk add --no-cache --virtual .build-deps \
         build-base \
         ruby-dev wget gnupg \
@@ -46,13 +53,13 @@ RUN apt-get update \
  && gem install oj \
  && gem install json \
  && gem install fluentd -v <%= fluentd_ver %> \
- && wget -O /usr/bin/dumb-init https://github.com/Yelp/dumb-init/releases/download/v${DUMB_INIT_VERSION}/dumb-init_${DUMB_INIT_VERSION}_amd64 \
- && chmod +x /usr/bin/dumb-init \
 <% if is_alpine %>
  && apk del .build-deps \
  && rm -rf /var/cache/apk/* \
 <% else %>
  && dpkgArch="$(dpkg --print-architecture | awk -F- '{ print $NF }')" \
+ && wget -O /usr/bin/dumb-init https://github.com/Yelp/dumb-init/releases/download/v${DUMB_INIT_VERSION}/dumb-init_${DUMB_INIT_VERSION}_$dpkgArch \
+ && chmod +x /usr/bin/dumb-init \
  && wget -O /usr/local/bin/gosu "https://github.com/tianon/gosu/releases/download/$GOSU_VERSION/gosu-$dpkgArch" \
  && wget -O /usr/local/bin/gosu.asc "https://github.com/tianon/gosu/releases/download/$GOSU_VERSION/gosu-$dpkgArch.asc" \
  && export GNUPGHOME="$(mktemp -d)" \

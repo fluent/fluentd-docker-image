@@ -5,7 +5,9 @@ FROM debian:stretch-slim
 MAINTAINER TAGOMORI Satoshi <tagomoris@gmail.com>
 LABEL Description="Fluentd docker image" Vendor="Fluent Organization" Version="1.1"
 
-ENV DUMB_INIT_VERSION=1.2.0 GOSU_VERSION=1.10
+ENV DUMB_INIT_VERSION=1.2.0
+
+ENV GOSU_VERSION=1.10
 
 # Do not split this into multiple RUN!
 # Docker creates a layer for every RUN-Statement
@@ -26,9 +28,9 @@ RUN apt-get update \
  && gem install oj \
  && gem install json \
  && gem install fluentd -v 0.14.14 \
- && wget -O /usr/bin/dumb-init https://github.com/Yelp/dumb-init/releases/download/v${DUMB_INIT_VERSION}/dumb-init_${DUMB_INIT_VERSION}_amd64 \
- && chmod +x /usr/bin/dumb-init \
  && dpkgArch="$(dpkg --print-architecture | awk -F- '{ print $NF }')" \
+ && wget -O /usr/bin/dumb-init https://github.com/Yelp/dumb-init/releases/download/v${DUMB_INIT_VERSION}/dumb-init_${DUMB_INIT_VERSION}_$dpkgArch \
+ && chmod +x /usr/bin/dumb-init \
  && wget -O /usr/local/bin/gosu "https://github.com/tianon/gosu/releases/download/$GOSU_VERSION/gosu-$dpkgArch" \
  && wget -O /usr/local/bin/gosu.asc "https://github.com/tianon/gosu/releases/download/$GOSU_VERSION/gosu-$dpkgArch.asc" \
  && export GNUPGHOME="$(mktemp -d)" \
