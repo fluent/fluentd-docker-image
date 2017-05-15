@@ -160,7 +160,7 @@ curl https://raw.githubusercontent.com/fluent/fluentd-docker-image/master/VERSIO
 # Create plugins directory. plugins scripts put here will be copied to the new image.
 mkdir plugins
 
-# Download sample Dockerfile.
+# Download sample Dockerfile. If you use v0.14.15/v0.12.34 or earlier image, use Dockerfile.sample.old
 curl https://raw.githubusercontent.com/fluent/fluentd-docker-image/master/Dockerfile.sample > Dockerfile
 ```
 
