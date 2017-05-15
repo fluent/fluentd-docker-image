@@ -26,7 +26,7 @@ RUN apk update \
  && echo 'gem: --no-document' >> /etc/gemrc \
  && gem install oj \
  && gem install json \
- && gem install fluentd -v 0.14.15 \
+ && gem install fluentd -v 0.14.16 \
  && apk del .build-deps \
  && rm -rf /var/cache/apk/* \
  && rm -rf /tmp/* /var/tmp/* /usr/lib/ruby/gems/*/cache/*.gem
