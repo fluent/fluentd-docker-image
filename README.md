@@ -173,19 +173,42 @@ Documentation of `fluent.conf` is available at [docs.fluentd.org][3].
 ### 3. Customize Dockerfile to install plugins (optional)
 
 You can install [Fluentd plugins][4] using Dockerfile.
-Sample Dockerfile installs `fluent-plugin-elasticsearch` and
-`fluent-plugin-record-reformer`.
+Sample Dockerfile installs `fluent-plugin-elasticsearch`.
 To add plugins, edit `Dockerfile` as following:
 
 ##### Apline version
 
+- Latest and v0.14.16/v0.12.35 or later
+
 ```Dockerfile
-FROM fluent/fluentd:onbuild
+# or v0.14-onbuild
+FROM fluent/fluentd:v0.12-onbuild
+
+# below RUN includes plugin as examples elasticsearch is not required
+# you may customize including plugins as you wish
+
+RUN apk add --update --virtual .build-deps \
+        sudo build-base ruby-dev \
+ && sudo gem install \
+        fluent-plugin-elasticsearch \
+ && sudo gem sources --clear-all \
+ && apk del .build-deps \
+ && rm -rf /var/cache/apk/* \
+           /home/fluent/.gem/ruby/2.3.0/cache/*.gem
+```
+
+- v0.14.15/v0.12.34 or earlier
+
+Need `USER` line.
+
+
+```Dockerfile
+# or v0.14-onbuild
+FROM fluent/fluentd:v0.12-onbuild
 
 USER root
 
-# below RUN includes two plugins as examples
-# elasticsearch and record-reformer are not required
+# below RUN includes plugin as examples elasticsearch is not required
 # you may customize including plugins as you wish
 
 RUN apk add --update --virtual .build-deps \
@@ -199,19 +222,44 @@ RUN apk add --update --virtual .build-deps \
            /home/fluent/.gem/ruby/2.3.0/cache/*.gem
 
 USER fluent
-
-EXPOSE 24284
 ```
 
 ##### Debian version
 
+- Latest and v0.14.16/v0.12.35 or later
+
 ```Dockerfile
-FROM fluent/fluentd:debian-onbuild
+# or v0.14-debian-onbuild
+FROM fluent/fluentd:v0.12-debian-onbuild
+
+# below RUN includes plugin as examples elasticsearch is not required
+# you may customize including plugins as you wish
+
+RUN buildDeps="sudo make gcc g++ libc-dev ruby-dev" \
+ && apt-get update \
+ && apt-get install -y --no-install-recommends $buildDeps \
+ && sudo gem install \
+        fluent-plugin-elasticsearch \
+ && sudo gem sources --clear-all \
+ && SUDO_FORCE_REMOVE=yes \
+    apt-get purge -y --auto-remove \
+                  -o APT::AutoRemove::RecommendsImportant=false \
+                  $buildDeps \
+ && rm -rf /var/lib/apt/lists/* \
+           /home/fluent/.gem/ruby/2.3.0/cache/*.gem
+```
+
+- v0.14.15/v0.12.34 or earlier
+
+Need `USER` line.
+
+```Dockerfile
+# or v0.14-debian-onbuild
+FROM fluent/fluentd:v0.12-debian-onbuild
 
 USER root
 
-# below RUN includes two plugins as examples
-# elasticsearch and record-reformer are not required
+# below RUN includes plugin as examples elasticsearch is not required
 # you may customize including plugins as you wish
 
 RUN buildDeps="sudo make gcc g++ libc-dev ruby-dev" \
@@ -219,7 +267,6 @@ RUN buildDeps="sudo make gcc g++ libc-dev ruby-dev" \
  && apt-get install -y --no-install-recommends $buildDeps \
  && sudo -u fluent gem install \
         fluent-plugin-elasticsearch \
-        fluent-plugin-record-reformer \
  && sudo -u fluent gem sources --clear-all \
  && SUDO_FORCE_REMOVE=yes \
     apt-get purge -y --auto-remove \
