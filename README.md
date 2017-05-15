@@ -88,6 +88,9 @@ Use this variable to specify other Fluentd command line options,
 like `-v` or `-q`.
 
 
+### `FLUENT_UID`
+
+Use this variable to specify user id of fluent user.
 
 
 ## Image versions
