@@ -152,8 +152,10 @@ Type following commands on a terminal to prepare a minimal project first:
 mkdir custom-fluentd
 cd custom-fluentd
 
-# Download default fluent.conf. this file will be copied to the new image.
-curl https://raw.githubusercontent.com/fluent/fluentd-docker-image/master/fluent.conf > fluent.conf
+# Download default fluent.conf. This file will be copied to the new image.
+# VERSION is v0.12 or v0.14 like fluentd version and OS is alpine or debian.
+# Full example is https://raw.githubusercontent.com/fluent/fluentd-docker-image/master/v0.12/debian-onbuild/fluent.conf
+curl https://raw.githubusercontent.com/fluent/fluentd-docker-image/master/VERSION/OS-onbuild/fluent.conf > fluent.conf
 
 # Create plugins directory. plugins scripts put here will be copied to the new image.
 mkdir plugins
