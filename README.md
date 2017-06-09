@@ -7,9 +7,6 @@ Fluentd Docker Image
 [![ImageLayers Size](https://img.shields.io/imagelayers/image-size/fluent/fluentd/latest.svg)](https://hub.docker.com/r/fluent/fluentd)
 [![ImageLayers Layers](https://img.shields.io/imagelayers/layers/fluent/fluentd/latest.svg)](https://hub.docker.com/r/fluent/fluentd)
 
-
-
-
 ## Supported tags and respective `Dockerfile` links
 
 - `v0.12.36`, `v0.12`, `stable`, `latest`
@@ -30,8 +27,9 @@ Fluentd Docker Image
 - `v0.14.17-debian-onbuild`, `v0.14-debian-onbuild`, `edge-debian-onbuild`
   [(v0.14/debian-onbuild/Dockerfile)][108]
 
+### Using Kubernetes?
 
-
+Check [fluentd-kubernetes-daemonset](https://github.com/fluent/fluentd-kubernetes-daemonset) images.
 
 ## What is Fluentd?
 
