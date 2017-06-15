@@ -177,7 +177,7 @@ You can install [Fluentd plugins][4] using Dockerfile.
 Sample Dockerfile installs `fluent-plugin-elasticsearch`.
 To add plugins, edit `Dockerfile` as following:
 
-##### Apline version
+##### Alpine version
 
 - Latest and v0.14.16/v0.12.35 or later
 
