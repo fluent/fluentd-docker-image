@@ -25,8 +25,8 @@ RUN apt-get update \
  && apt-get install -y --no-install-recommends $buildDeps \
  && update-ca-certificates \
  && echo 'gem: --no-document' >> /etc/gemrc \
- && gem install oj \
- && gem install json \
+ && gem install oj -v 2.18.3 \
+ && gem install json -v 2.1.0 \
  && gem install fluentd -v 0.12.37 \
  && dpkgArch="$(dpkg --print-architecture | awk -F- '{ print $NF }')" \
  && wget -O /usr/bin/dumb-init https://github.com/Yelp/dumb-init/releases/download/v${DUMB_INIT_VERSION}/dumb-init_${DUMB_INIT_VERSION}_$dpkgArch \

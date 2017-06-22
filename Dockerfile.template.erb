@@ -50,8 +50,8 @@ RUN apt-get update \
 <% end %>
  && update-ca-certificates \
  && echo 'gem: --no-document' >> /etc/gemrc \
- && gem install oj \
- && gem install json \
+ && gem install oj -v 2.18.3 \
+ && gem install json -v 2.1.0 \
  && gem install fluentd -v <%= fluentd_ver %> \
 <% if is_alpine %>
  && apk del .build-deps \
