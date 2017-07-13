@@ -27,7 +27,7 @@ RUN apt-get update \
  && echo 'gem: --no-document' >> /etc/gemrc \
  && gem install oj -v 2.18.3 \
  && gem install json -v 2.1.0 \
- && gem install fluentd -v 0.12.37 \
+ && gem install fluentd -v 0.12.38 \
  && dpkgArch="$(dpkg --print-architecture | awk -F- '{ print $NF }')" \
  && wget -O /usr/bin/dumb-init https://github.com/Yelp/dumb-init/releases/download/v${DUMB_INIT_VERSION}/dumb-init_${DUMB_INIT_VERSION}_$dpkgArch \
  && chmod +x /usr/bin/dumb-init \
