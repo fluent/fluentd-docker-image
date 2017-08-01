@@ -22,7 +22,7 @@ chown -R fluent /home/fluent
 chown -R fluent /fluentd
 
 <% if is_alpine %>
-su-exec fluent "$@"
+exec su-exec fluent "$@"
 <% else %>
-gosu fluent "$@"
+exec gosu fluent "$@"
 <% end %>

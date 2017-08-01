@@ -15,4 +15,4 @@ adduser -D -g '' -u ${uid} -h /home/fluent fluent
 chown -R fluent /home/fluent
 chown -R fluent /fluentd
 
-su-exec fluent "$@"
+exec su-exec fluent "$@"
