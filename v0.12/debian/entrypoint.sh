@@ -16,4 +16,4 @@ export HOME=/home/fluent
 chown -R fluent /home/fluent
 chown -R fluent /fluentd
 
-gosu fluent "$@"
+exec gosu fluent "$@"
