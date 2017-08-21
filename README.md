@@ -36,9 +36,9 @@ Check [fluentd-kubernetes-daemonset](https://github.com/fluent/fluentd-kubernete
 Fluentd is an open source data collector, which lets you unify the data
 collection and consumption for a better use and understanding of data.
 
-> [www.fluentd.org](http://www.fluentd.org/)
+> [www.fluentd.org](https://www.fluentd.org/)
 
-![Fluentd Logo](http://www.fluentd.org/assets/img/miscellany/fluentd-logo.png)
+![Fluentd Logo](https://www.fluentd.org/assets/img/miscellany/fluentd-logo.png)
 
 
 
@@ -352,9 +352,9 @@ through a [GitHub issue](https://github.com/fluent/fluentd-docker-image/issues).
 
 [1]: http://alpinelinux.org
 [2]: https://hub.docker.com/_/alpine
-[3]: http://docs.fluentd.org
-[4]: http://www.fluentd.org/plugins
-[5]: http://www.fluentd.org/guides/recipes/docker-logging
+[3]: https://docs.fluentd.org
+[4]: https://www.fluentd.org/plugins
+[5]: https://www.fluentd.org/guides/recipes/docker-logging
 [6]: https://docs.docker.com/engine/reference/logging/fluentd
 [7]: https://hub.docker.com/_/debian
 [101]: https://github.com/fluent/fluentd-docker-image/blob/master/v0.12/alpine/Dockerfile
