@@ -63,6 +63,7 @@ ENV FLUENTD_OPT=""
 ENV FLUENTD_CONF="fluent.conf"
 
 ENV LD_PRELOAD="/usr/lib/libjemalloc.so.2"
+ENV DUMB_INIT_SETSID 0
 
 EXPOSE 24224 5140
 
