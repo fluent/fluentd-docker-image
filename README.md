@@ -40,9 +40,6 @@ collection and consumption for a better use and understanding of data.
 
 ![Fluentd Logo](https://www.fluentd.org/assets/img/miscellany/fluentd-logo.png)
 
-
-
-
 ## How to use this image
 
 To create endpoint that collectc logs on your host just run:
