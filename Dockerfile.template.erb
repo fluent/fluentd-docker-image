@@ -9,7 +9,7 @@ FROM alpine:3.5
 <% else %>
 FROM debian:stretch-slim
 <% end %>
-MAINTAINER TAGOMORI Satoshi <tagomoris@gmail.com>
+LABEL maintainer "TAGOMORI Satoshi <tagomoris@gmail.com>"
 LABEL Description="Fluentd docker image" Vendor="Fluent Organization" Version="1.1"
 
 ENV DUMB_INIT_VERSION=1.2.0
