@@ -9,8 +9,6 @@ ENV DUMB_INIT_VERSION=1.2.0
 
 ENV GOSU_VERSION=1.10
 
-ARG DEBIAN_FRONTEND noninteractive
-
 # Do not split this into multiple RUN!
 # Docker creates a layer for every RUN-Statement
 # therefore an 'apt-get purge' has no effect
