@@ -18,13 +18,13 @@ Fluentd Docker Image
 - `v0.12.41-debian-onbuild`, `v0.12-debian-onbuild`, `stable-debian-onbuild`,
   `debian-onbuild`
   [(v0.12/debian-onbuild/Dockerfile)][106]
-- `v0.14.24`, `v0.14`, `edge`
+- `v0.14.25`, `v0.14`, `edge`
   [(v0.14/alpine/Dockerfile)][103]
-- `v0.14.24-onbuild`, `v0.14-onbuild`, `edge-onbuild`
+- `v0.14.25-onbuild`, `v0.14-onbuild`, `edge-onbuild`
   [(v0.14/alpine-onbuild/Dockerfile)][104]
-- `v0.14.24-debian`, `v0.14-debian`, `edge-debian`
+- `v0.14.25-debian`, `v0.14-debian`, `edge-debian`
   [(v0.14/debian/Dockerfile)][107]
-- `v0.14.24-debian-onbuild`, `v0.14-debian-onbuild`, `edge-debian-onbuild`
+- `v0.14.25-debian-onbuild`, `v0.14-debian-onbuild`, `edge-debian-onbuild`
   [(v0.14/debian-onbuild/Dockerfile)][108]
 
 ### Using Kubernetes?
