@@ -18,14 +18,22 @@ Fluentd Docker Image
 - `v0.12.41-debian-onbuild`, `v0.12-debian-onbuild`, `stable-debian-onbuild`,
   `debian-onbuild`
   [(v0.12/debian-onbuild/Dockerfile)][106]
-- `v0.14.25`, `v0.14`, `edge`
+- `v0.14.25`, `v0.14`
   [(v0.14/alpine/Dockerfile)][103]
-- `v0.14.25-onbuild`, `v0.14-onbuild`, `edge-onbuild`
+- `v0.14.25-onbuild`, `v0.14-onbuild`
   [(v0.14/alpine-onbuild/Dockerfile)][104]
-- `v0.14.25-debian`, `v0.14-debian`, `edge-debian`
+- `v0.14.25-debian`, `v0.14-debian`
   [(v0.14/debian/Dockerfile)][107]
-- `v0.14.25-debian-onbuild`, `v0.14-debian-onbuild`, `edge-debian-onbuild`
+- `v0.14.25-debian-onbuild`, `v0.14-debian-onbuild`
   [(v0.14/debian-onbuild/Dockerfile)][108]
+- `v1.0.0`, `v1.0`, `edge`
+  [(v1.0/alpine/Dockerfile)][109]
+- `v1.0.0-onbuild`, `v1.0-onbuild`, `edge-onbuild`
+  [(v1.0/alpine-onbuild/Dockerfile)][110]
+- `v1.0.0-debian`, `v1.0-debian`, `edge-debian`
+  [(v1.0/debian/Dockerfile)][111]
+- `v1.0.0-debian-onbuild`, `v1.0-debian-onbuild`, `edge-debian-onbuild`
+  [(v1.0/debian-onbuild/Dockerfile)][112]
 
 ### Using Kubernetes?
 
@@ -362,3 +370,7 @@ through a [GitHub issue](https://github.com/fluent/fluentd-docker-image/issues).
 [106]: https://github.com/fluent/fluentd-docker-image/blob/master/v0.12/debian-onbuild/Dockerfile
 [107]: https://github.com/fluent/fluentd-docker-image/blob/master/v0.14/debian/Dockerfile
 [108]: https://github.com/fluent/fluentd-docker-image/blob/master/v0.14/debian-onbuild/Dockerfile
+[109]: https://github.com/fluent/fluentd-docker-image/blob/master/v1.0/alpine/Dockerfile
+[110]: https://github.com/fluent/fluentd-docker-image/blob/master/v1.0/alpine-onbuild/Dockerfile
+[111]: https://github.com/fluent/fluentd-docker-image/blob/master/v1.0/debian/Dockerfile
+[112]: https://github.com/fluent/fluentd-docker-image/blob/master/v1.0/debian-onbuild/Dockerfile
