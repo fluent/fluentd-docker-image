@@ -18,14 +18,6 @@ Fluentd Docker Image
 - `v0.12.42-debian-onbuild`, `v0.12-debian-onbuild`, `stable-debian-onbuild`,
   `debian-onbuild`
   [(v0.12/debian-onbuild/Dockerfile)][106]
-- `v0.14.25`, `v0.14`
-  [(v0.14/alpine/Dockerfile)][103]
-- `v0.14.25-onbuild`, `v0.14-onbuild`
-  [(v0.14/alpine-onbuild/Dockerfile)][104]
-- `v0.14.25-debian`, `v0.14-debian`
-  [(v0.14/debian/Dockerfile)][107]
-- `v0.14.25-debian-onbuild`, `v0.14-debian-onbuild`
-  [(v0.14/debian-onbuild/Dockerfile)][108]
 - `v1.0.0`, `v1.0`, `edge`
   [(v1.0/alpine/Dockerfile)][109]
 - `v1.0.0-onbuild`, `v1.0-onbuild`, `edge-onbuild`
@@ -34,6 +26,9 @@ Fluentd Docker Image
   [(v1.0/debian/Dockerfile)][111]
 - `v1.0.0-debian-onbuild`, `v1.0-debian-onbuild`, `edge-debian-onbuild`
   [(v1.0/debian-onbuild/Dockerfile)][112]
+
+v1.0 is built on top of v0.14 so we stop v0.14 update.
+If you use v0.14 image before, use v1.0 image instead.
 
 ### Using Kubernetes?
 

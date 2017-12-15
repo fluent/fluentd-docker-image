@@ -17,10 +17,6 @@ ALL_IMAGES := \
 	v0.12/alpine-onbuild:v0.12.42-onbuild,v0.12-onbuild,stable-onbuild,onbuild \
 	v0.12/debian:v0.12.42-debian,v0.12-debian,stable-debian,debian \
 	v0.12/debian-onbuild:v0.12.42-debian-onbuild,v0.12-debian-onbuild,stable-debian-onbuild,debian-onbuild \
-	v0.14/alpine:v0.14.25,v0.14 \
-	v0.14/alpine-onbuild:v0.14.25-onbuild,v0.14-onbuild \
-	v0.14/debian:v0.14.25-debian,v0.14-debian \
-	v0.14/debian-onbuild:v0.14.25-debian-onbuild,v0.14-debian-onbuild \
 	v1.0/alpine:v1.0.0,v1.0,edge \
 	v1.0/alpine-onbuild:v1.0.0-onbuild,v1.0-onbuild,edge-onbuild \
 	v1.0/debian:v1.0.0-debian,v1.0-debian,edge-debian \
