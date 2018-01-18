@@ -9,23 +9,26 @@ Fluentd Docker Image
 
 ## Supported tags and respective `Dockerfile` links
 
-- `v0.12.42`, `v0.12`, `stable`, `latest`
+- `v0.12.42`, `v0.12`
   [(v0.12/alpine/Dockerfile)][101]
-- `v0.12.42-onbuild`, `v0.12-onbuild`, `stable-onbuild`, `onbuild`
+- `v0.12.42-onbuild`, `v0.12-onbuild`
   [(v0.12/alpine-onbuild/Dockerfile)][102]
-- `v0.12.42-debian`, `v0.12-debian`, `stable-debian`, `debian`
+- `v0.12.42-debian`, `v0.12-debian`
   [(v0.12/debian/Dockerfile)][105]
-- `v0.12.42-debian-onbuild`, `v0.12-debian-onbuild`, `stable-debian-onbuild`,
+- `v0.12.42-debian-onbuild`, `v0.12-debian-onbuild`
   `debian-onbuild`
   [(v0.12/debian-onbuild/Dockerfile)][106]
-- `v1.0.2`, `v1.0`, `edge`
+- `v1.0.2`, `v1.0`, `edge`, `stable`, `latest`
   [(v1.0/alpine/Dockerfile)][109]
-- `v1.0.2-onbuild`, `v1.0-onbuild`, `edge-onbuild`
+- `v1.0.2-onbuild`, `v1.0-onbuild`, `edge-onbuild`, `stable-onbuild`, `onbuild`
   [(v1.0/alpine-onbuild/Dockerfile)][110]
-- `v1.0.2-debian`, `v1.0-debian`, `edge-debian`
+- `v1.0.2-debian`, `v1.0-debian`, `edge-debian`, `stable-debian`, `debian`
   [(v1.0/debian/Dockerfile)][111]
-- `v1.0.2-debian-onbuild`, `v1.0-debian-onbuild`, `edge-debian-onbuild`
+- `v1.0.2-debian-onbuild`, `v1.0-debian-onbuild`, `edge-debian-onbuild`, `stable-debian-onbuild`,
   [(v1.0/debian-onbuild/Dockerfile)][112]
+
+v1.0 is for fluentd v1.x.y releases. This is current stable.
+v0.12 is for fluentd v0.12.x releases. This is old stable.
 
 v1.0 is built on top of v0.14 so we stop v0.14 update.
 If you use v0.14 image before, use v1.0 image instead.
@@ -106,12 +109,12 @@ Since `v0.12.26`, tags are separated into `vX.Y.Z` and `vX.Y.Z-onbuild`.
 
 ### `stable`, `latest`
 
-Latest version of stable Fluentd branch (currently `v0.12`).
+Latest version of stable Fluentd branch (currently `v1.0`).
 
 
 ### `edge`
 
-Latest version of edge Fluentd branch (currently `v0.14`).
+Latest version of edge Fluentd branch (currently `v1.0`).
 
 
 ### `vX.Y`
@@ -185,7 +188,7 @@ To add plugins, edit `Dockerfile` as following:
 - Latest and v0.14.16/v0.12.35 or later
 
 ```Dockerfile
-# or v0.14-onbuild
+# or v1.0-onbuild
 FROM fluent/fluentd:v0.12-onbuild
 
 # below RUN includes plugin as examples elasticsearch is not required
@@ -207,7 +210,7 @@ Need `USER` line.
 
 
 ```Dockerfile
-# or v0.14-onbuild
+# or v1.0-onbuild
 FROM fluent/fluentd:v0.12-onbuild
 
 USER root
@@ -233,7 +236,7 @@ USER fluent
 - Latest and v0.14.16/v0.12.35 or later
 
 ```Dockerfile
-# or v0.14-debian-onbuild
+# or v1.0-debian-onbuild
 FROM fluent/fluentd:v0.12-debian-onbuild
 
 # below RUN includes plugin as examples elasticsearch is not required
@@ -258,7 +261,7 @@ RUN buildDeps="sudo make gcc g++ libc-dev ruby-dev" \
 Need `USER` line.
 
 ```Dockerfile
-# or v0.14-debian-onbuild
+# or v1.0-debian-onbuild
 FROM fluent/fluentd:v0.12-debian-onbuild
 
 USER root
