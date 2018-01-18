@@ -18,13 +18,13 @@ Fluentd Docker Image
 - `v0.12.42-debian-onbuild`, `v0.12-debian-onbuild`
   `debian-onbuild`
   [(v0.12/debian-onbuild/Dockerfile)][106]
-- `v1.0.2`, `v1.0`, `edge`, `stable`, `latest`
+- `v1.1.0`, `v1.0`, `edge`, `stable`, `latest`
   [(v1.0/alpine/Dockerfile)][109]
-- `v1.0.2-onbuild`, `v1.0-onbuild`, `edge-onbuild`, `stable-onbuild`, `onbuild`
+- `v1.1.0-onbuild`, `v1.0-onbuild`, `edge-onbuild`, `stable-onbuild`, `onbuild`
   [(v1.0/alpine-onbuild/Dockerfile)][110]
-- `v1.0.2-debian`, `v1.0-debian`, `edge-debian`, `stable-debian`, `debian`
+- `v1.1.0-debian`, `v1.0-debian`, `edge-debian`, `stable-debian`, `debian`
   [(v1.0/debian/Dockerfile)][111]
-- `v1.0.2-debian-onbuild`, `v1.0-debian-onbuild`, `edge-debian-onbuild`, `stable-debian-onbuild`,
+- `v1.1.0-debian-onbuild`, `v1.0-debian-onbuild`, `edge-debian-onbuild`, `stable-debian-onbuild`,
   [(v1.0/debian-onbuild/Dockerfile)][112]
 
 v1.0 is for fluentd v1.x.y releases. This is current stable.
