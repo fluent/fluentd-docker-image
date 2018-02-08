@@ -33,9 +33,6 @@ v0.12 is for fluentd v0.12.x releases. This is old stable.
 v1.0 is built on top of v0.14 so we stop v0.14 update.
 If you use v0.14 image before, use v1.0 image instead.
 
-We will change `stable`/`latest` to use `v1.0` instead of `v0.12` at Jan 1, 2018.
-If you want to keep to use `v0.12` serise, use `v0.12` instead of `stable`/`latest`.
-
 ### Using Kubernetes?
 
 Check [fluentd-kubernetes-daemonset](https://github.com/fluent/fluentd-kubernetes-daemonset) images.
