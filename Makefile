@@ -17,10 +17,10 @@ ALL_IMAGES := \
 	v0.12/alpine-onbuild:v0.12.42-onbuild,v0.12-onbuild \
 	v0.12/debian:v0.12.42-debian,v0.12-debian \
 	v0.12/debian-onbuild:v0.12.42-debian-onbuild,v0.12-debian-onbuild \
-	v1.0/alpine:v1.1.0,v1.0,edge,stable,latest \
-	v1.0/alpine-onbuild:v1.1.0-onbuild,v1.0-onbuild,edge-onbuild,stable-onbuild,onbuild \
-	v1.0/debian:v1.1.0-debian,v1.0-debian,edge-debian,stable-debian,debian \
-	v1.0/debian-onbuild:v1.1.0-debian-onbuild,v1.0-debian-onbuild,edge-debian-onbuild,stable-debian-onbuild,debian-onbuild
+	v1.1/alpine:v1.1.0,v1.1,edge,stable,latest \
+	v1.1/alpine-onbuild:v1.1.0-onbuild,v1.1-onbuild,edge-onbuild,stable-onbuild,onbuild \
+	v1.1/debian:v1.1.0-debian,v1.1-debian,edge-debian,stable-debian,debian \
+	v1.1/debian-onbuild:v1.1.0-debian-onbuild,v1.1-debian-onbuild,edge-debian-onbuild,stable-debian-onbuild,debian-onbuild
 #	<Dockerfile>:<version>,<tag1>,<tag2>,...
 
 
