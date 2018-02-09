@@ -18,14 +18,14 @@ Fluentd Docker Image
 - `v0.12.42-debian-onbuild`, `v0.12-debian-onbuild`
   `debian-onbuild`
   [(v0.12/debian-onbuild/Dockerfile)][106]
-- `v1.1.0`, `v1.0`, `edge`, `stable`, `latest`
-  [(v1.0/alpine/Dockerfile)][109]
-- `v1.1.0-onbuild`, `v1.0-onbuild`, `edge-onbuild`, `stable-onbuild`, `onbuild`
-  [(v1.0/alpine-onbuild/Dockerfile)][110]
-- `v1.1.0-debian`, `v1.0-debian`, `edge-debian`, `stable-debian`, `debian`
-  [(v1.0/debian/Dockerfile)][111]
-- `v1.1.0-debian-onbuild`, `v1.0-debian-onbuild`, `edge-debian-onbuild`, `stable-debian-onbuild`,
-  [(v1.0/debian-onbuild/Dockerfile)][112]
+- `v1.1.0`, `v1.1`, `edge`, `stable`, `latest`
+  [(v1.1/alpine/Dockerfile)][109]
+- `v1.1.0-onbuild`, `v1.1-onbuild`, `edge-onbuild`, `stable-onbuild`, `onbuild`
+  [(v1.1/alpine-onbuild/Dockerfile)][110]
+- `v1.1.0-debian`, `v1.1-debian`, `edge-debian`, `stable-debian`, `debian`
+  [(v1.1/debian/Dockerfile)][111]
+- `v1.1.0-debian-onbuild`, `v1.1-debian-onbuild`, `edge-debian-onbuild`, `stable-debian-onbuild`,
+  [(v1.1/debian-onbuild/Dockerfile)][112]
 
 v1.1 is for fluentd v1.1.x releases. This is current stable.
 v0.12 is for fluentd v0.12.x releases. This is old stable.
@@ -370,7 +370,7 @@ through a [GitHub issue](https://github.com/fluent/fluentd-docker-image/issues).
 [106]: https://github.com/fluent/fluentd-docker-image/blob/master/v0.12/debian-onbuild/Dockerfile
 [107]: https://github.com/fluent/fluentd-docker-image/blob/master/v0.14/debian/Dockerfile
 [108]: https://github.com/fluent/fluentd-docker-image/blob/master/v0.14/debian-onbuild/Dockerfile
-[109]: https://github.com/fluent/fluentd-docker-image/blob/master/v1.0/alpine/Dockerfile
-[110]: https://github.com/fluent/fluentd-docker-image/blob/master/v1.0/alpine-onbuild/Dockerfile
-[111]: https://github.com/fluent/fluentd-docker-image/blob/master/v1.0/debian/Dockerfile
-[112]: https://github.com/fluent/fluentd-docker-image/blob/master/v1.0/debian-onbuild/Dockerfile
+[109]: https://github.com/fluent/fluentd-docker-image/blob/master/v1.1/alpine/Dockerfile
+[110]: https://github.com/fluent/fluentd-docker-image/blob/master/v1.1/alpine-onbuild/Dockerfile
+[111]: https://github.com/fluent/fluentd-docker-image/blob/master/v1.1/debian/Dockerfile
+[112]: https://github.com/fluent/fluentd-docker-image/blob/master/v1.1/debian-onbuild/Dockerfile
