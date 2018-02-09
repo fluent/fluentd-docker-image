@@ -26,9 +26,9 @@ RUN apk update \
         ruby-dev wget gnupg \
  && update-ca-certificates \
  && echo 'gem: --no-document' >> /etc/gemrc \
- && gem install oj -v 2.18.3 \
+ && gem install oj -v 3.3.10 \
  && gem install json -v 2.1.0 \
- && gem install fluentd -v 1.1.0 \
+ && gem install fluentd -v 1.0.2 \
  && apk del .build-deps \
  && rm -rf /var/cache/apk/* \
  && rm -rf /tmp/* /var/tmp/* /usr/lib/ruby/gems/*/cache/*.gem

@@ -27,9 +27,9 @@ RUN apt-get update \
  && apt-get install -y --no-install-recommends $buildDeps \
  && update-ca-certificates \
  && echo 'gem: --no-document' >> /etc/gemrc \
- && gem install oj -v 2.18.3 \
+ && gem install oj -v 3.3.10 \
  && gem install json -v 2.1.0 \
- && gem install fluentd -v 1.1.0 \
+ && gem install fluentd -v 1.0.2 \
  && dpkgArch="$(dpkg --print-architecture | awk -F- '{ print $NF }')" \
  && wget -O /usr/bin/dumb-init https://github.com/Yelp/dumb-init/releases/download/v${DUMB_INIT_VERSION}/dumb-init_${DUMB_INIT_VERSION}_$dpkgArch \
  && chmod +x /usr/bin/dumb-init \
@@ -41,8 +41,8 @@ RUN apt-get update \
  && rm -rf "$GNUPGHOME" /usr/local/bin/gosu.asc \
  && chmod +x /usr/local/bin/gosu \
  && gosu nobody true \
- && wget -O /tmp/jemalloc-4.4.0.tar.bz2 https://github.com/jemalloc/jemalloc/releases/download/4.4.0/jemalloc-4.4.0.tar.bz2 \
- && cd /tmp && tar -xjf jemalloc-4.4.0.tar.bz2 && cd jemalloc-4.4.0/ \
+ && wget -O /tmp/jemalloc-4.5.0.tar.bz2 https://github.com/jemalloc/jemalloc/releases/download/4.5.0/jemalloc-4.5.0.tar.bz2 \
+ && cd /tmp && tar -xjf jemalloc-4.5.0.tar.bz2 && cd jemalloc-4.5.0/ \
  && ./configure && make \
  && mv lib/libjemalloc.so.2 /usr/lib \
  && apt-get purge -y --auto-remove \
