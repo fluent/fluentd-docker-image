@@ -27,11 +27,13 @@ Fluentd Docker Image
 - `v1.1.0-debian-onbuild`, `v1.0-debian-onbuild`, `edge-debian-onbuild`, `stable-debian-onbuild`,
   [(v1.0/debian-onbuild/Dockerfile)][112]
 
-v1.0 is for fluentd v1.x.y releases. This is current stable.
+v1.1 is for fluentd v1.1.x releases. This is current stable.
 v0.12 is for fluentd v0.12.x releases. This is old stable.
 
-v1.0 is built on top of v0.14 so we stop v0.14 update.
-If you use v0.14 image before, use v1.0 image instead.
+v1.x is built on top of v0.14 so we stop v0.14 update.
+If you use v0.14 image before, use v1.x image instead.
+
+You can use older versions via tag. See [tag page on Docker Hub](https://hub.docker.com/r/fluent/fluentd/tags/).
 
 ### Using Kubernetes?
 
