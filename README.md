@@ -63,12 +63,9 @@ Default configurations are to:
   (and symlink `docker.log`)
 - store all other logs into `/fluentd/log/data.*.log` (and symlink `data.log`)
 
-
-
 ## Environment Variables
 
 Environment variable below are configurable to control how to execute fluentd process:
-
 
 ### `FLUENTD_CONF`
 
@@ -84,17 +81,14 @@ of `docker run`).
    to share `/path/to/dir/yours.conf` in container,
    and `-e FLUENTD_CONF=yours.conf` to read it.
 
-
 ### `FLUENTD_OPT`
 
 Use this variable to specify other Fluentd command line options,
 like `-v` or `-q`.
 
-
 ### `FLUENT_UID`
 
 Use this variable to specify user id of fluent user.
-
 
 ## Image versions
 
@@ -105,26 +99,21 @@ thus leads to much slimmer images in general.
 
 Since `v0.12.26`, tags are separated into `vX.Y.Z` and `vX.Y.Z-onbuild`.
 
-
 ### `stable`, `latest`
 
 Latest version of stable Fluentd branch (currently `v1.0`).
-
 
 ### `edge`
 
 Latest version of edge Fluentd branch (currently `v1.0`).
 
-
 ### `vX.Y`
 
 Latest version of `vX.Y` Fluentd branch.
 
-
 ### `vX.Y.Z`
 
 Concrete `vX.Y.Z` version of Fluentd.
-
 
 ### `onbuild`, `xxx-onbuild`
 
@@ -132,15 +121,11 @@ This image makes building derivative images easier.
 See ["How to build your own image"](#how-to-build-your-own-image) section for
 more details.
 
-
 ### `debian`
 
 The image based on [Debian Linux image][7].
 You may use this image when you require plugins which cannot be installed
 on Alpine (like `fluent-plugin-systemd`).
-
-
-
 
 ## How to build your own image
 
@@ -170,11 +155,9 @@ mkdir plugins
 curl https://raw.githubusercontent.com/fluent/fluentd-docker-image/master/Dockerfile.sample > Dockerfile
 ```
 
-
 ### 2. Customize `fluent.conf`
 
 Documentation of `fluent.conf` is available at [docs.fluentd.org][3].
-
 
 ### 3. Customize Dockerfile to install plugins (optional)
 
@@ -292,7 +275,6 @@ after plugin installation).
 If you're sure that plugins don't include native extensions, you can omit it
 to make image build faster.
 
-
 ### 4. Build image
 
 Use `docker build` command to build the image.
@@ -301,7 +283,6 @@ This example names the image as `custom-fluentd:latest`:
 ```bash
 docker build -t custom-fluentd:latest ./
 ```
-
 
 ### 5. Test it
 
@@ -332,16 +313,11 @@ the previous step)
 
 You will see some logs sent to Fluentd.
 
-
-
 ### References
 
 [Docker Logging | fluentd.org][5]
 
 [Fluentd logging driver - Docker Docs][6]
-
-
-
 
 ## Issues
 
@@ -350,10 +326,6 @@ or asking question.
 
 If you have any problems with or questions about this image, please contact us
 through a [GitHub issue](https://github.com/fluent/fluentd-docker-image/issues).
-
-
-
-
 
 [1]: http://alpinelinux.org
 [2]: https://hub.docker.com/_/alpine
