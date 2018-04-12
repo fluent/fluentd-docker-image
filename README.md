@@ -9,13 +9,13 @@ Fluentd Docker Image
 
 ## Supported tags and respective `Dockerfile` links
 
-- `v0.12.42`, `v0.12`
+- `v0.12.43`, `v0.12`
   [(v0.12/alpine/Dockerfile)][101]
-- `v0.12.42-onbuild`, `v0.12-onbuild`
+- `v0.12.43-onbuild`, `v0.12-onbuild`
   [(v0.12/alpine-onbuild/Dockerfile)][102]
-- `v0.12.42-debian`, `v0.12-debian`
+- `v0.12.43-debian`, `v0.12-debian`
   [(v0.12/debian/Dockerfile)][105]
-- `v0.12.42-debian-onbuild`, `v0.12-debian-onbuild`
+- `v0.12.43-debian-onbuild`, `v0.12-debian-onbuild`
   `debian-onbuild`
   [(v0.12/debian-onbuild/Dockerfile)][106]
 - `v1.1.3`, `v1.1`, `edge`, `stable`, `latest`
