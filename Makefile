@@ -13,10 +13,10 @@
 
 IMAGE_NAME := fluent/fluentd
 ALL_IMAGES := \
-	v0.12/alpine:v0.12.42,v0.12 \
-	v0.12/alpine-onbuild:v0.12.42-onbuild,v0.12-onbuild \
-	v0.12/debian:v0.12.42-debian,v0.12-debian \
-	v0.12/debian-onbuild:v0.12.42-debian-onbuild,v0.12-debian-onbuild \
+	v0.12/alpine:v0.12.43,v0.12 \
+	v0.12/alpine-onbuild:v0.12.43-onbuild,v0.12-onbuild \
+	v0.12/debian:v0.12.43-debian,v0.12-debian \
+	v0.12/debian-onbuild:v0.12.43-debian-onbuild,v0.12-debian-onbuild \
 	v1.1/alpine:v1.1.3,v1.1,edge,stable,latest \
 	v1.1/alpine-onbuild:v1.1.3-onbuild,v1.1-onbuild,edge-onbuild,stable-onbuild,onbuild \
 	v1.1/debian:v1.1.3-debian,v1.1-debian,edge-debian,stable-debian,debian \
