@@ -14,6 +14,10 @@ env:
   - Dockerfile=v1.1/alpine-onbuild
   - Dockerfile=v1.1/debian
   - Dockerfile=v1.1/debian-onbuild
+  - Dockerfile=v1.2/alpine
+  - Dockerfile=v1.2/alpine-onbuild
+  - Dockerfile=v1.2/debian
+  - Dockerfile=v1.2/debian-onbuild
 
 before_script:
   - make image DOCKERFILE=$Dockerfile VERSION=test
