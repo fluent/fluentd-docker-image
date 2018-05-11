@@ -1,5 +1,9 @@
 language: bash
 
+os:
+  - linux
+  - linux-ppc64le
+
 sudo: false
 
 services:
@@ -19,6 +23,22 @@ env:
   - Dockerfile=v1.2/debian
   - Dockerfile=v1.2/debian-onbuild
 
+matrix:
+  exclude:
+   - os: linux-ppc64le
+     env: 
+        - Dockerfile=v0.12/alpine
+        - Dockerfile=v0.12/alpine-onbuild
+        - Dockerfile=v0.12/debian
+        - Dockerfile=v0.12/debian-onbuild
+        - Dockerfile=v1.1/alpine-onbuild
+        - Dockerfile=v1.1/debian
+        - Dockerfile=v1.1/debian-onbuild
+        - Dockerfile=v1.2/alpine
+        - Dockerfile=v1.2/alpine-onbuild
+        - Dockerfile=v1.2/debian
+        - Dockerfile=v1.2/debian-onbuild
+    
 before_script:
   - make image DOCKERFILE=$Dockerfile VERSION=test
 
