@@ -3,7 +3,7 @@
 
 FROM debian:stretch-slim
 LABEL maintainer "TAGOMORI Satoshi <tagomoris@gmail.com>"
-LABEL Description="Fluentd docker image" Vendor="Fluent Organization" Version="1.1"
+LABEL Description="Fluentd docker image" Vendor="Fluent Organization" Version="1.2"
 
 ENV DUMB_INIT_VERSION=1.2.0
 
