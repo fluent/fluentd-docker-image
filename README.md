@@ -26,20 +26,19 @@ Fluentd Docker Image
   [(v1.1/debian/Dockerfile)][111]
 - `v1.1.3-debian-onbuild`, `v1.1-debian-onbuild`, `stable-debian-onbuild`,
   [(v1.1/debian-onbuild/Dockerfile)][112]
-- `v1.2.0.pre1`, `v1.2`, `edge`
+- `v1.2.1`, `v1.2`, `edge`
   [(v1.2/alpine/Dockerfile)][113]
-- `v1.2.0.pre1-onbuild`, `v1.2-onbuild`, `edge-onbuild`
+- `v1.2.1-onbuild`, `v1.2-onbuild`, `edge-onbuild`
   [(v1.2/alpine-onbuild/Dockerfile)][114]
-- `v1.2.0.pre1-debian`, `v1.2-debian`, `edge-debian`
+- `v1.2.1-debian`, `v1.2-debian`, `edge-debian`
   [(v1.2/debian/Dockerfile)][115]
-- `v1.2.0.pre1-debian-onbuild`, `v1.2-debian-onbuild`, `edge-debian-onbuild`
+- `v1.2.1-debian-onbuild`, `v1.2-debian-onbuild`, `edge-debian-onbuild`
   [(v1.2/debian-onbuild/Dockerfile)][116]
 
 
 We recommend to use debian version for production because it uses jemalloc to mitigate memory fragmentation issue.
 
-v1.2 is for fluentd v1.2.x releases. This is edge version..
-v1.1 is for fluentd v1.1.x releases. This is current stable.
+v1.2 is for fluentd v1.2.x releases. This is current stable version..
 v0.12 is for fluentd v0.12.x releases. This is old stable.
 
 v1.x is built on top of v0.14 so we stop v0.14 update.
