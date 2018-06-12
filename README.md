@@ -170,8 +170,6 @@ To add plugins, edit `Dockerfile` as following:
 
 ##### Alpine version
 
-- Latest and v0.14.16/v0.12.35 or later
-
 ```Dockerfile
 # or v1.0-onbuild
 FROM fluent/fluentd:v0.12-onbuild
@@ -186,40 +184,11 @@ RUN apk add --update --virtual .build-deps \
  && sudo gem sources --clear-all \
  && apk del .build-deps \
  && rm -rf /var/cache/apk/* \
-           /home/fluent/.gem/ruby/2.3.0/cache/*.gem
-```
-
-- v0.14.15/v0.12.34 or earlier
-
-Need `USER` line.
-
-
-```Dockerfile
-# or v1.0-onbuild
-FROM fluent/fluentd:v0.12-onbuild
-
-USER root
-
-# below RUN includes plugin as examples elasticsearch is not required
-# you may customize including plugins as you wish
-
-RUN apk add --update --virtual .build-deps \
-        sudo build-base ruby-dev \
- && sudo -u fluent gem install \
-        fluent-plugin-elasticsearch \
-        fluent-plugin-record-reformer \
- && sudo -u fluent gem sources --clear-all \
- && apk del .build-deps \
- && rm -rf /var/cache/apk/* \
-           /home/fluent/.gem/ruby/2.3.0/cache/*.gem
-
-USER fluent
+           /home/fluent/.gem/ruby/2.4.0/cache/*.gem
 ```
 
 ##### Debian version
 
-- Latest and v0.14.16/v0.12.35 or later
-
 ```Dockerfile
 # or v1.0-debian-onbuild
 FROM fluent/fluentd:v0.12-debian-onbuild
@@ -239,35 +208,6 @@ RUN buildDeps="sudo make gcc g++ libc-dev ruby-dev" \
                   $buildDeps \
  && rm -rf /var/lib/apt/lists/* \
            /home/fluent/.gem/ruby/2.3.0/cache/*.gem
-```
-
-- v0.14.15/v0.12.34 or earlier
-
-Need `USER` line.
-
-```Dockerfile
-# or v1.0-debian-onbuild
-FROM fluent/fluentd:v0.12-debian-onbuild
-
-USER root
-
-# below RUN includes plugin as examples elasticsearch is not required
-# you may customize including plugins as you wish
-
-RUN buildDeps="sudo make gcc g++ libc-dev ruby-dev" \
- && apt-get update \
- && apt-get install -y --no-install-recommends $buildDeps \
- && sudo -u fluent gem install \
-        fluent-plugin-elasticsearch \
- && sudo -u fluent gem sources --clear-all \
- && SUDO_FORCE_REMOVE=yes \
-    apt-get purge -y --auto-remove \
-                  -o APT::AutoRemove::RecommendsImportant=false \
-                  $buildDeps \
- && rm -rf /var/lib/apt/lists/* \
-           /home/fluent/.gem/ruby/2.3.0/cache/*.gem
-
-USER fluent
 ```
 
 ##### Note
