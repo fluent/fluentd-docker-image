@@ -12,7 +12,11 @@ FROM debian:stretch-slim
 LABEL maintainer "TAGOMORI Satoshi <tagomoris@gmail.com>"
 LABEL Description="Fluentd docker image" Vendor="Fluent Organization" Version="1.1"
 
+<% if is_alpine %>
+ENV DUMB_INIT_VERSION=1.2.0
+<% else %>
 ENV DUMB_INIT_VERSION=1.2.1
+<% end %>
 
 <% if is_alpine %>
 ENV SU_EXEC_VERSION=0.2
