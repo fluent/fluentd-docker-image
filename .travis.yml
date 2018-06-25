@@ -2,6 +2,10 @@ language: bash
 
 sudo: false
 
+os:
+  - linux
+  - linux-ppc64le
+
 services:
   - docker
 
