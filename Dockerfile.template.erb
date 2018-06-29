@@ -14,17 +14,15 @@ LABEL Description="Fluentd docker image" Vendor="Fluent Organization" Version="1
 
 <% if is_alpine %>
 ENV DUMB_INIT_VERSION=1.2.0
-<% else %>
-ENV DUMB_INIT_VERSION=1.2.1
-<% end %>
 
-<% if is_alpine %>
 ENV SU_EXEC_VERSION=0.2
 <% else %>
+ENV DUMB_INIT_VERSION=1.2.1
+
 ENV GOSU_VERSION=1.10
-<% end %>
 
 ARG DEBIAN_FRONTEND=noninteractive
+<% end %>
 
 # Do not split this into multiple RUN!
 # Docker creates a layer for every RUN-Statement
