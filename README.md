@@ -120,7 +120,7 @@ Concrete `vX.Y.Z` version of Fluentd.
 
 ### `onbuild`, `xxx-onbuild`
 
-This image makes building derivative images easier.  
+This image makes building derivative images easier.
 See ["How to build your own image"](#how-to-build-your-own-image) section for
 more details.
 
@@ -129,6 +129,18 @@ more details.
 The image based on [Debian Linux image][7].
 You may use this image when you require plugins which cannot be installed
 on Alpine (like `fluent-plugin-systemd`).
+
+### `armhf`
+
+The `armhf` images use ARM base images for use on devices such as Raspberry Pis.
+
+Furthermore, the base images enable support for cross-platform builds using the cross-build tools from [resin.io](https://docs.resin.io/reference/base-images/resin-base-images/#resin-xbuild-qemu).
+
+In order to build these images natively on ARM devices, the `CROSS_BUILD_START` and `CROSS_BUILD_END` Docker build arguments must be set to the shell no-op (`:`), for example:
+```bash
+docker build --build-arg CROSS_BUILD_START=":" --build-arg CROSS_BUILD_END=":" -t fluent/fluentd:v1.2.2-onbuild v1.2/armhf/alpine-onbuild
+```
+(assuming the command is run from the root of this repository).
 
 ## How to build your own image
 
@@ -214,7 +226,7 @@ RUN buildDeps="sudo make gcc g++ libc-dev ruby-dev" \
 
 These example run `apk add`/`apt-get install` to be able to install
 Fluentd plugins which require native extensions (they are removed immediately
-after plugin installation).  
+after plugin installation).
 If you're sure that plugins don't include native extensions, you can omit it
 to make image build faster.
 
