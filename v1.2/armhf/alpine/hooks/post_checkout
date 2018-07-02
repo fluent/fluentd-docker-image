@@ -5,7 +5,7 @@
 
 set -e
 
-HOST_ARCH=$(shell uname -m)
+HOST_ARCH=$(uname -m)
 
 if [ x"${HOST_ARCH}" == x"arm*" ]; then
     echo "Building armhf image natively"
