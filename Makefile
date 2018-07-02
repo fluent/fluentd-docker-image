@@ -118,7 +118,7 @@ release-all:
 # Usage:
 #	make src [DOCKERFILE=] [VERSION=] [TAGS=t1,t2,...]
 
-src: dockerfile fluent.conf entrypoint.sh post-push-hook
+src: dockerfile fluent.conf entrypoint.sh post-push-hook post-checkout-hook
 
 
 
@@ -258,6 +258,40 @@ post-push-hook-all:
 
 
 
+# Create `post_checkout` Docker Hub hook.
+#
+# When Docker Hub triggers automated build, the `post_checkout` hook is called
+# after the Git repo is checked out. This can be used to set up prerequisites
+# for, for example, cross-platform builds.
+# See details:
+# https://docs.docker.com/docker-cloud/builds/advanced/#build-hook-examples
+#
+# Usage:
+#	make post-checkout-hook [DOCKERFILE=]
+
+post-checkout-hook:
+	if [ -n "$(findstring /armhf/,$(DOCKERFILE))" ]; then \
+		mkdir -p $(DOCKERFILE)/hooks; \
+		docker run --rm -i -v $(PWD)/post_checkout.erb:/post_checkout.erb:ro \
+			ruby:alpine erb -U \
+				dockerfile='$(DOCKERFILE)' \
+			/post_checkout.erb > $(DOCKERFILE)/hooks/post_checkout ; \
+	fi
+
+
+# Create `post_push` Docker Hub hook for all supported Docker images.
+#
+# Usage:
+#	make post-checkout-hook-all
+
+post-checkout-hook-all:
+	(set -e ; $(foreach img,$(ALL_IMAGES), \
+		make post-checkout-hook \
+			DOCKERFILE=$(word 1,$(subst :, ,$(img))) ; \
+	))
+
+
+
 # Run tests for Docker image.
 #
 # Usage:
@@ -321,4 +355,5 @@ endif
         dockerfile dockerfile-all \
         fluent.conf fluent.conf-all \
         post-push-hook post-push-hook-all \
+		post-checkout-hook post-checkout-hook-all \
         test test-all deps.bats
