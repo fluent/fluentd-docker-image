@@ -27,8 +27,8 @@ X86_IMAGES := \
 ARM_IMAGES := \
 	v1.2/armhf/alpine:v1.2.2-armhf,v1.2-armhf,edge-armhf \
 	v1.2/armhf/alpine-onbuild:v1.2.2-armhf-onbuild,v1.2-armhf-onbuild,edge-armhf-onbuild \
-	v1.2/armhf/debian:v1.2.2-debian,v1.2-debian-armhf,edge-debian-armhf,stable-debian-armhf,debian-armhf \
-	v1.2/armhf/debian-onbuild:v1.2.2-debian-onbuild,v1.2-debian-armhf-onbuild,edge-debian-armhf-onbuild,stable-debian-armhf-onbuild,debian-armhf-onbuild
+	v1.2/armhf/debian:v1.2.2-debian-armhf,v1.2-debian-armhf,edge-debian-armhf,stable-debian-armhf,debian-armhf \
+	v1.2/armhf/debian-onbuild:v1.2.2-debian-armhf-onbuild,v1.2-debian-armhf-onbuild,edge-debian-armhf-onbuild,stable-debian-armhf-onbuild,debian-armhf-onbuild
 
 ALL_IMAGES := $(X86_IMAGES) $(ARM_IMAGES)
 
