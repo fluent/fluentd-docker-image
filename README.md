@@ -18,13 +18,13 @@ Fluentd Docker Image
 - `v0.12.43-debian-onbuild`, `v0.12-debian-onbuild`
   `debian-onbuild`
   [(v0.12/debian-onbuild/Dockerfile)][106]
-- `v1.2.2`, `v1.2`, `edge`, `stable`, `latest`
+- `v1.2.4`, `v1.2`, `edge`, `stable`, `latest`
   [(v1.2/alpine/Dockerfile)][113]
-- `v1.2.2-onbuild`, `v1.2-onbuild`, `edge-onbuild`, `stable-onbuild`, `onbuild`
+- `v1.2.4-onbuild`, `v1.2-onbuild`, `edge-onbuild`, `stable-onbuild`, `onbuild`
   [(v1.2/alpine-onbuild/Dockerfile)][114]
-- `v1.2.2-debian`, `v1.2-debian`, `edge-debian`, `stable-debian`, `debian`
+- `v1.2.4-debian`, `v1.2-debian`, `edge-debian`, `stable-debian`, `debian`
   [(v1.2/debian/Dockerfile)][115]
-- `v1.2.2-debian-onbuild`, `v1.2-debian-onbuild`, `edge-debian-onbuild`, `v1.1-debian-onbuild`, `stable-debian-onbuild`,
+- `v1.2.4-debian-onbuild`, `v1.2-debian-onbuild`, `edge-debian-onbuild`, `v1.1-debian-onbuild`, `stable-debian-onbuild`,
   [(v1.2/debian-onbuild/Dockerfile)][116]
 
 
@@ -138,7 +138,7 @@ Furthermore, the base images enable support for cross-platform builds using the 
 
 In order to build these images natively on ARM devices, the `CROSS_BUILD_START` and `CROSS_BUILD_END` Docker build arguments must be set to the shell no-op (`:`), for example:
 ```bash
-docker build --build-arg CROSS_BUILD_START=":" --build-arg CROSS_BUILD_END=":" -t fluent/fluentd:v1.2.2-onbuild v1.2/armhf/alpine-onbuild
+docker build --build-arg CROSS_BUILD_START=":" --build-arg CROSS_BUILD_END=":" -t fluent/fluentd:v1.2.4-onbuild v1.2/armhf/alpine-onbuild
 ```
 (assuming the command is run from the root of this repository).
 
