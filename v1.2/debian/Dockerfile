@@ -56,6 +56,9 @@ RUN mkdir -p /fluentd/log
 # configuration/plugins path (default: copied from .)
 RUN mkdir -p /fluentd/etc /fluentd/plugins
 
+#allow env vars to be sourced from /etc/default/fluentd for automation
+ADD fluentd /etc/default/
+
 COPY fluent.conf /fluentd/etc/
 COPY entrypoint.sh /bin/
 RUN chmod +x /bin/entrypoint.sh
