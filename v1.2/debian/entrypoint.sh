@@ -4,7 +4,7 @@ uid=${FLUENT_UID:-1000}
 
 # source vars for /etc/default/fluentd if exists
 DEFAULT=/etc/default/fluent
- if [ -r $DEFAULT ]; then
+if [ -r $DEFAULT ]; then
     set -o allexport
     source $DEFAULT
     set +o allexport
