@@ -20,7 +20,8 @@ X86_IMAGES := \
 	v1.2/alpine:v1.2.4,v1.2,edge,stable,latest \
 	v1.2/alpine-onbuild:v1.2.4-onbuild,v1.2-onbuild,edge-onbuild,stable-onbuild,onbuild \
 	v1.2/debian:v1.2.4-debian,v1.2-debian,edge-debian,stable-debian,debian \
-	v1.2/debian-onbuild:v1.2.4-debian-onbuild,v1.2-debian-onbuild,edge-debian-onbuild,stable-debian-onbuild,debian-onbuild
+	v1.2/debian-onbuild:v1.2.4-debian-onbuild,v1.2-debian-onbuild,edge-debian-onbuild,stable-debian-onbuild,debian-onbuild \
+	v1.2/windows:v1.2.4-windows,stable-windows,windows 
 #	<Dockerfile>:<version>,<tag1>,<tag2>,...
 
 # Define images for running on ARM platforms
