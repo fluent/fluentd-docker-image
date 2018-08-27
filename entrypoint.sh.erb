@@ -1,5 +1,6 @@
 <% is_alpine = (dockerfile.split("/").last.split("-").first == "alpine") %>
 #!/usr/bin/dumb-init /bin/sh
+
 uid=${FLUENT_UID:-1000}
 
 # check if a old fluent user exists and delete it
