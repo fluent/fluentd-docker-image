@@ -4,13 +4,11 @@
 FROM alpine:3.7
 LABEL maintainer "TAGOMORI Satoshi <tagomoris@gmail.com>"
 LABEL Description="Fluentd docker image" Vendor="Fluent Organization" Version="1.1"
-
 ENV DUMB_INIT_VERSION=1.2.0
 
 ENV SU_EXEC_VERSION=0.2
 
 ARG DEBIAN_FRONTEND=noninteractive
-
 # Do not split this into multiple RUN!
 # Docker creates a layer for every RUN-Statement
 # therefore an 'apk delete' has no effect
@@ -50,7 +48,6 @@ ENV FLUENTD_CONF="fluent.conf"
 
 ENV LD_PRELOAD=""
 ENV DUMB_INIT_SETSID 0
-
 EXPOSE 24224 5140
 
 ENTRYPOINT ["/bin/entrypoint.sh"]

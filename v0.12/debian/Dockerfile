@@ -4,13 +4,11 @@
 FROM debian:stretch-slim
 LABEL maintainer "TAGOMORI Satoshi <tagomoris@gmail.com>"
 LABEL Description="Fluentd docker image" Vendor="Fluent Organization" Version="1.1"
-
 ENV DUMB_INIT_VERSION=1.2.1
 
 ENV GOSU_VERSION=1.10
 
 ARG DEBIAN_FRONTEND=noninteractive
-
 # Do not split this into multiple RUN!
 # Docker creates a layer for every RUN-Statement
 # therefore an 'apt-get purge' has no effect
@@ -66,7 +64,6 @@ ENV FLUENTD_CONF="fluent.conf"
 
 ENV LD_PRELOAD="/usr/lib/libjemalloc.so.2"
 ENV DUMB_INIT_SETSID 0
-
 EXPOSE 24224 5140
 
 ENTRYPOINT ["/bin/entrypoint.sh"]

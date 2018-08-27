@@ -12,6 +12,15 @@ fi
 useradd -u ${uid} -o -c "" -m fluent
 export HOME=/home/fluent
 
+#source vars if file exists
+DEFAULT=/etc/default/fluentd
+
+if [ -r $DEFAULT ]; then
+    set -o allexport
+    source $DEFAULT
+    set +o allexport
+fi
+
 # chown home and data folder
 chown -R fluent /home/fluent
 chown -R fluent /fluentd
