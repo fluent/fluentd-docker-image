@@ -13,7 +13,7 @@ FROM microsoft/windowsservercore:1803
 <% if is_armhf %>
 FROM resin/armhf-alpine:3.7
 <% else %>
-FROM alpine:3.7
+FROM alpine:3.8
 <% end %>
 <% else %>
 <% if is_armhf %>
@@ -31,7 +31,7 @@ ARG CROSS_BUILD_END="cross-build-end"
 RUN [ ${CROSS_BUILD_START} ]
 <% end %>
 <% if is_alpine %>
-ENV DUMB_INIT_VERSION=1.2.0
+ENV DUMB_INIT_VERSION=1.2.1
 
 ENV SU_EXEC_VERSION=0.2
 <% else %>
