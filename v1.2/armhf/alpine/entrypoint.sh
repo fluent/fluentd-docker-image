@@ -11,6 +11,15 @@ fi
 # (re)add the fluent user with $FLUENT_UID
 adduser -D -g '' -u ${uid} -h /home/fluent fluent
 
+#source vars if file exists
+DEFAULT=/etc/default/fluentd
+
+if [ -r $DEFAULT ]; then
+    set -o allexport
+    source $DEFAULT
+    set +o allexport
+fi
+
 # chown home and data folder
 chown -R fluent /home/fluent
 chown -R fluent /fluentd

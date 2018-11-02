@@ -4,7 +4,6 @@
 FROM resin/armhf-alpine:3.7
 LABEL maintainer "TAGOMORI Satoshi <tagomoris@gmail.com>"
 LABEL Description="Fluentd docker image" Vendor="Fluent Organization" Version="1.1"
-
 ARG CROSS_BUILD_START="cross-build-start"
 ARG CROSS_BUILD_END="cross-build-end"
 RUN [ ${CROSS_BUILD_START} ]
@@ -13,7 +12,6 @@ ENV DUMB_INIT_VERSION=1.2.0
 ENV SU_EXEC_VERSION=0.2
 
 ARG DEBIAN_FRONTEND=noninteractive
-
 # Do not split this into multiple RUN!
 # Docker creates a layer for every RUN-Statement
 # therefore an 'apk delete' has no effect
@@ -31,7 +29,7 @@ RUN apk update \
  && echo 'gem: --no-document' >> /etc/gemrc \
  && gem install oj -v 3.3.10 \
  && gem install json -v 2.1.0 \
- && gem install fluentd -v 1.2.3 \
+ && gem install fluentd -v 1.2.6 \
  && apk del .build-deps \
  && rm -rf /var/cache/apk/* \
  && rm -rf /tmp/* /var/tmp/* /usr/lib/ruby/gems/*/cache/*.gem
@@ -53,7 +51,6 @@ ENV FLUENTD_CONF="fluent.conf"
 
 ENV LD_PRELOAD=""
 ENV DUMB_INIT_SETSID 0
-
 EXPOSE 24224 5140
 
 ENTRYPOINT ["/bin/entrypoint.sh"]
