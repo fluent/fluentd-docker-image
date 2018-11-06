@@ -11,21 +11,12 @@ Fluentd Docker Image
 
 - `v0.12.43`, `v0.12`
   [(v0.12/alpine/Dockerfile)][101]
-- `v0.12.43-onbuild`, `v0.12-onbuild`
-  [(v0.12/alpine-onbuild/Dockerfile)][102]
 - `v0.12.43-debian`, `v0.12-debian`
   [(v0.12/debian/Dockerfile)][105]
-- `v0.12.43-debian-onbuild`, `v0.12-debian-onbuild`
-  `debian-onbuild`
-  [(v0.12/debian-onbuild/Dockerfile)][106]
 - `v1.3.0`, `v1.3`, `edge`, `stable`, `latest`
   [(v1.3/alpine/Dockerfile)][113]
-- `v1.3.0-onbuild`, `v1.3-onbuild`, `edge-onbuild`, `stable-onbuild`, `onbuild`
-  [(v1.3/alpine-onbuild/Dockerfile)][114]
 - `v1.3.0-debian`, `v1.3-debian`, `edge-debian`, `stable-debian`, `debian`
   [(v1.3/debian/Dockerfile)][115]
-- `v1.3.0-debian-onbuild`, `v1.3-debian-onbuild`, `edge-debian-onbuild`, `v1.1-debian-onbuild`, `stable-debian-onbuild`,
-  [(v1.3/debian-onbuild/Dockerfile)][116]
 
 
 We recommend to use debian version for production because it uses jemalloc to mitigate memory fragmentation issue.
@@ -100,8 +91,6 @@ This image is based on the popular [Alpine Linux project][1], available in
 Alpine Linux is much smaller than most distribution base images (~5MB), and
 thus leads to much slimmer images in general.
 
-Since `v0.12.26`, tags are separated into `vX.Y.Z` and `vX.Y.Z-onbuild`.
-
 ### `stable`, `latest`
 
 Latest version of stable Fluentd branch (currently `v1.3`).
@@ -118,12 +107,6 @@ Latest version of `vX.Y` Fluentd branch.
 
 Concrete `vX.Y.Z` version of Fluentd.
 
-### `onbuild`, `xxx-onbuild`
-
-This image makes building derivative images easier.
-See ["How to build your own image"](#how-to-build-your-own-image) section for
-more details.
-
 ### `debian`
 
 The image based on [Debian Linux image][7].
@@ -138,14 +121,14 @@ Furthermore, the base images enable support for cross-platform builds using the 
 
 In order to build these images natively on ARM devices, the `CROSS_BUILD_START` and `CROSS_BUILD_END` Docker build arguments must be set to the shell no-op (`:`), for example:
 ```bash
-docker build --build-arg CROSS_BUILD_START=":" --build-arg CROSS_BUILD_END=":" -t fluent/fluentd:v1.3.0-onbuild v1.3/armhf/alpine-onbuild
+docker build --build-arg CROSS_BUILD_START=":" --build-arg CROSS_BUILD_END=":" -t fluent/fluentd:v1.3.0 v1.3/armhf/alpine
 ```
 (assuming the command is run from the root of this repository).
 
 ## How to build your own image
 
-You can build a customized image based on Fluentd's `onbuild` image.
-Customized image can include plugins and `fluent.conf` file.
+You can build a customized image based on the supplied `Dockerfile.sample` template.
+Customized image can include plugins and `fluent.conf` file (See 'COPY' instructions).
 
 
 ### 1. Create a working directory
@@ -160,8 +143,8 @@ cd custom-fluentd
 
 # Download default fluent.conf. This file will be copied to the new image.
 # VERSION is v0.12 or v0.14 like fluentd version and OS is alpine or debian.
-# Full example is https://raw.githubusercontent.com/fluent/fluentd-docker-image/master/v0.12/debian-onbuild/fluent.conf
-curl https://raw.githubusercontent.com/fluent/fluentd-docker-image/master/VERSION/OS-onbuild/fluent.conf > fluent.conf
+# Full example is https://raw.githubusercontent.com/fluent/fluentd-docker-image/master/v0.12/debian/fluent.conf
+curl https://raw.githubusercontent.com/fluent/fluentd-docker-image/master/VERSION/OS/fluent.conf > fluent.conf
 
 # Create plugins directory. plugins scripts put here will be copied to the new image.
 mkdir plugins
@@ -183,8 +166,8 @@ To add plugins, edit `Dockerfile` as following:
 ##### Alpine version
 
 ```Dockerfile
-# or v0.12-onbuild
-FROM fluent/fluentd:v1.3-onbuild
+# or v0.12
+FROM fluent/fluentd:v1.3
 
 # below RUN includes plugin as examples elasticsearch is not required
 # you may customize including plugins as you wish
@@ -197,13 +180,16 @@ RUN apk add --update --virtual .build-deps \
  && apk del .build-deps \
  && rm -rf /var/cache/apk/* \
            /home/fluent/.gem/ruby/2.5.0/cache/*.gem
+
+COPY fluent.conf /fluentd/etc/
+COPY entrypoint.sh /bin/
 ```
 
 ##### Debian version
 
 ```Dockerfile
-# or v0.12-debian-onbuild
-FROM fluent/fluentd:v1.3-debian-onbuild
+# or v0.12-debian
+FROM fluent/fluentd:v1.3-debian
 
 # below RUN includes plugin as examples elasticsearch is not required
 # you may customize including plugins as you wish
@@ -220,6 +206,9 @@ RUN buildDeps="sudo make gcc g++ libc-dev ruby-dev" \
                   $buildDeps \
  && rm -rf /var/lib/apt/lists/* \
            /home/fluent/.gem/ruby/2.3.0/cache/*.gem
+
+COPY fluent.conf /fluentd/etc/
+COPY entrypoint.sh /bin/
 ```
 
 ##### Note
@@ -290,10 +279,6 @@ through a [GitHub issue](https://github.com/fluent/fluentd-docker-image/issues).
 [6]: https://docs.docker.com/engine/reference/logging/fluentd
 [7]: https://hub.docker.com/_/debian
 [101]: https://github.com/fluent/fluentd-docker-image/blob/master/v0.12/alpine/Dockerfile
-[102]: https://github.com/fluent/fluentd-docker-image/blob/master/v0.12/alpine-onbuild/Dockerfile
 [105]: https://github.com/fluent/fluentd-docker-image/blob/master/v0.12/debian/Dockerfile
-[106]: https://github.com/fluent/fluentd-docker-image/blob/master/v0.12/debian-onbuild/Dockerfile
 [113]: https://github.com/fluent/fluentd-docker-image/blob/master/v1.3/alpine/Dockerfile
-[114]: https://github.com/fluent/fluentd-docker-image/blob/master/v1.3/alpine-onbuild/Dockerfile
 [115]: https://github.com/fluent/fluentd-docker-image/blob/master/v1.3/debian/Dockerfile
-[116]: https://github.com/fluent/fluentd-docker-image/blob/master/v1.3/debian-onbuild/Dockerfile

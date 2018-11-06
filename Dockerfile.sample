@@ -1,4 +1,4 @@
-FROM fluent/fluentd:v0.12-onbuild
+FROM fluent/fluentd:v0.12
 MAINTAINER YOUR_NAME <...@...>
 
 RUN apk add --update --virtual .build-deps \
@@ -12,5 +12,8 @@ RUN apk add --update --virtual .build-deps \
  && apk del .build-deps \
  && rm -rf /var/cache/apk/* \
            /home/fluent/.gem/ruby/2.3.0/cache/*.gem
+
+COPY fluent.conf /fluentd/etc/
+COPY entrypoint.sh /bin/
 
 EXPOSE 24284

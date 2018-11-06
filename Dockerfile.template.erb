@@ -1,5 +1,4 @@
 <% fluentd_ver = version.split("-").first[1..-1] %>
-<% is_onbuild = (version.split("-").last == "onbuild") %>
 <% is_alpine = (dockerfile.split("/").last.split("-").first == "alpine") %>
 <% is_armhf = (dockerfile.split("/")[1] == "armhf") %>
 <% is_windows = (dockerfile.split("/").last.split("-").first == "windows") %>
@@ -162,11 +161,6 @@ RUN mkdir -p /fluentd/etc /fluentd/plugins
 COPY fluent.conf /fluentd/etc/
 COPY entrypoint.sh /bin/
 RUN chmod +x /bin/entrypoint.sh
-<% end %>
-
-<% if is_onbuild %>
-ONBUILD COPY fluent.conf /fluentd/etc/
-ONBUILD COPY plugins /fluentd/plugins/
 <% end %>
 
 ENV FLUENTD_OPT=""
