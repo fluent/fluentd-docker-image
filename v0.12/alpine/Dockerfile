@@ -16,7 +16,7 @@ RUN apk update \
  && apk upgrade \
  && apk add --no-cache \
         ca-certificates \
-        ruby ruby-irb \
+        ruby ruby-irb ruby-etc ruby-webrick \
         su-exec==${SU_EXEC_VERSION}-r0 \
         dumb-init==${DUMB_INIT_VERSION}-r0 \
  && apk add --no-cache --virtual .build-deps \
@@ -27,6 +27,7 @@ RUN apk update \
  && gem install oj -v 2.18.3 \
  && gem install json -v 2.1.0 \
  && gem install fluentd -v 0.12.43 \
+ && gem install bigdecimal -v 1.3.5 \
  && apk del .build-deps \
  && rm -rf /var/cache/apk/* \
  && rm -rf /tmp/* /var/tmp/* /usr/lib/ruby/gems/*/cache/*.gem
