@@ -13,7 +13,7 @@ FROM microsoft/windowsservercore:1803
 <% if is_armhf %>
 FROM resin/armhf-alpine:3.7
 <% else %>
-FROM alpine:3.7
+FROM alpine:3.8
 <% end %>
 <% else %>
 <% if is_armhf %>
@@ -31,7 +31,7 @@ ARG CROSS_BUILD_END="cross-build-end"
 RUN [ ${CROSS_BUILD_START} ]
 <% end %>
 <% if is_alpine %>
-ENV DUMB_INIT_VERSION=1.2.0
+ENV DUMB_INIT_VERSION=1.2.1
 
 ENV SU_EXEC_VERSION=0.2
 <% else %>
@@ -87,7 +87,7 @@ RUN apk update \
  && apk upgrade \
  && apk add --no-cache \
         ca-certificates \
-        ruby ruby-irb \
+        ruby ruby-irb ruby-etc ruby-webrick \
         su-exec==${SU_EXEC_VERSION}-r0 \
         dumb-init==${DUMB_INIT_VERSION}-r0 \
  && apk add --no-cache --virtual .build-deps \
@@ -121,6 +121,7 @@ RUN apt-get update \
  && gem install json -v 2.1.0 \
  && gem install fluentd -v <%= fluentd_ver %> \
 <% if is_alpine %>
+ && gem install bigdecimal -v 1.3.5 \
  && apk del .build-deps \
  && rm -rf /var/cache/apk/* \
 <% else %>
