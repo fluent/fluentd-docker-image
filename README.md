@@ -18,19 +18,19 @@ Fluentd Docker Image
 - `v0.12.43-debian-onbuild`, `v0.12-debian-onbuild`
   `debian-onbuild`
   [(v0.12/debian-onbuild/Dockerfile)][106]
-- `v1.2.6`, `v1.2`, `edge`, `stable`, `latest`
-  [(v1.2/alpine/Dockerfile)][113]
-- `v1.2.6-onbuild`, `v1.2-onbuild`, `edge-onbuild`, `stable-onbuild`, `onbuild`
-  [(v1.2/alpine-onbuild/Dockerfile)][114]
-- `v1.2.6-debian`, `v1.2-debian`, `edge-debian`, `stable-debian`, `debian`
-  [(v1.2/debian/Dockerfile)][115]
-- `v1.2.6-debian-onbuild`, `v1.2-debian-onbuild`, `edge-debian-onbuild`, `v1.1-debian-onbuild`, `stable-debian-onbuild`,
-  [(v1.2/debian-onbuild/Dockerfile)][116]
+- `v1.3.0`, `v1.3`, `edge`, `stable`, `latest`
+  [(v1.3/alpine/Dockerfile)][113]
+- `v1.3.0-onbuild`, `v1.3-onbuild`, `edge-onbuild`, `stable-onbuild`, `onbuild`
+  [(v1.3/alpine-onbuild/Dockerfile)][114]
+- `v1.3.0-debian`, `v1.3-debian`, `edge-debian`, `stable-debian`, `debian`
+  [(v1.3/debian/Dockerfile)][115]
+- `v1.3.0-debian-onbuild`, `v1.3-debian-onbuild`, `edge-debian-onbuild`, `v1.1-debian-onbuild`, `stable-debian-onbuild`,
+  [(v1.3/debian-onbuild/Dockerfile)][116]
 
 
 We recommend to use debian version for production because it uses jemalloc to mitigate memory fragmentation issue.
 
-v1.2 is for fluentd v1.2.x releases. This is current stable version..
+v1.x is for fluentd v1.x releases. This is current stable version.
 v0.12 is for fluentd v0.12.x releases. This is old stable.
 
 v1.x is built on top of v0.14 so we stop v0.14 update.
@@ -56,7 +56,7 @@ collection and consumption for a better use and understanding of data.
 To create endpoint that collectc logs on your host just run:
 
 ```bash
-docker run -d -p 24224:24224 -p 24224:24224/udp -v /data:/fluentd/log fluent/fluentd
+docker run -d -p 24224:24224 -p 24224:24224/udp -v /data:/fluentd/log fluent/fluentd:v1.3-debian
 ```
 
 Default configurations are to:
@@ -104,11 +104,11 @@ Since `v0.12.26`, tags are separated into `vX.Y.Z` and `vX.Y.Z-onbuild`.
 
 ### `stable`, `latest`
 
-Latest version of stable Fluentd branch (currently `v1.0`).
+Latest version of stable Fluentd branch (currently `v1.3`).
 
 ### `edge`
 
-Latest version of edge Fluentd branch (currently `v1.0`).
+Latest version of edge Fluentd branch (currently `v1.3`).
 
 ### `vX.Y`
 
@@ -138,7 +138,7 @@ Furthermore, the base images enable support for cross-platform builds using the 
 
 In order to build these images natively on ARM devices, the `CROSS_BUILD_START` and `CROSS_BUILD_END` Docker build arguments must be set to the shell no-op (`:`), for example:
 ```bash
-docker build --build-arg CROSS_BUILD_START=":" --build-arg CROSS_BUILD_END=":" -t fluent/fluentd:v1.2.6-onbuild v1.2/armhf/alpine-onbuild
+docker build --build-arg CROSS_BUILD_START=":" --build-arg CROSS_BUILD_END=":" -t fluent/fluentd:v1.3.0-onbuild v1.3/armhf/alpine-onbuild
 ```
 (assuming the command is run from the root of this repository).
 
@@ -183,8 +183,8 @@ To add plugins, edit `Dockerfile` as following:
 ##### Alpine version
 
 ```Dockerfile
-# or v1.0-onbuild
-FROM fluent/fluentd:v0.12-onbuild
+# or v0.12-onbuild
+FROM fluent/fluentd:v1.3-onbuild
 
 # below RUN includes plugin as examples elasticsearch is not required
 # you may customize including plugins as you wish
@@ -196,14 +196,14 @@ RUN apk add --update --virtual .build-deps \
  && sudo gem sources --clear-all \
  && apk del .build-deps \
  && rm -rf /var/cache/apk/* \
-           /home/fluent/.gem/ruby/2.4.0/cache/*.gem
+           /home/fluent/.gem/ruby/2.5.0/cache/*.gem
 ```
 
 ##### Debian version
 
 ```Dockerfile
-# or v1.0-debian-onbuild
-FROM fluent/fluentd:v0.12-debian-onbuild
+# or v0.12-debian-onbuild
+FROM fluent/fluentd:v1.3-debian-onbuild
 
 # below RUN includes plugin as examples elasticsearch is not required
 # you may customize including plugins as you wish
@@ -293,7 +293,7 @@ through a [GitHub issue](https://github.com/fluent/fluentd-docker-image/issues).
 [102]: https://github.com/fluent/fluentd-docker-image/blob/master/v0.12/alpine-onbuild/Dockerfile
 [105]: https://github.com/fluent/fluentd-docker-image/blob/master/v0.12/debian/Dockerfile
 [106]: https://github.com/fluent/fluentd-docker-image/blob/master/v0.12/debian-onbuild/Dockerfile
-[113]: https://github.com/fluent/fluentd-docker-image/blob/master/v1.2/alpine/Dockerfile
-[114]: https://github.com/fluent/fluentd-docker-image/blob/master/v1.2/alpine-onbuild/Dockerfile
-[115]: https://github.com/fluent/fluentd-docker-image/blob/master/v1.2/debian/Dockerfile
-[116]: https://github.com/fluent/fluentd-docker-image/blob/master/v1.2/debian-onbuild/Dockerfile
+[113]: https://github.com/fluent/fluentd-docker-image/blob/master/v1.3/alpine/Dockerfile
+[114]: https://github.com/fluent/fluentd-docker-image/blob/master/v1.3/alpine-onbuild/Dockerfile
+[115]: https://github.com/fluent/fluentd-docker-image/blob/master/v1.3/debian/Dockerfile
+[116]: https://github.com/fluent/fluentd-docker-image/blob/master/v1.3/debian-onbuild/Dockerfile
