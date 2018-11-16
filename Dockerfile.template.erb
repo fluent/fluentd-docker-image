@@ -107,7 +107,6 @@ RUN apk update \
 <% else %>
 # therefore an 'apt-get purge' has no effect
 RUN apt-get update \
- && apt-get upgrade -y \
  && apt-get install -y --no-install-recommends \
             ca-certificates \
             ruby \

@@ -13,7 +13,6 @@ ENV GOSU_VERSION=1.10
 # Docker creates a layer for every RUN-Statement
 # therefore an 'apt-get purge' has no effect
 RUN apt-get update \
- && apt-get upgrade -y \
  && apt-get install -y --no-install-recommends \
             ca-certificates \
             ruby \
