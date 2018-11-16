@@ -21,7 +21,6 @@ RUN apk update \
  && apk add --no-cache --virtual .build-deps \
         build-base \
         ruby-dev wget gnupg \
- && update-ca-certificates \
  && echo 'gem: --no-document' >> /etc/gemrc \
  && gem install oj -v 3.3.10 \
  && gem install json -v 2.1.0 \
