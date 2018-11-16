@@ -96,7 +96,6 @@ COPY fluent.conf /fluent/conf/fluent.conf
 <% if is_alpine %>
 # therefore an 'apk delete' has no effect
 RUN apk update \
- && apk upgrade \
  && apk add --no-cache \
         ca-certificates \
         ruby ruby-irb ruby-etc ruby-webrick \

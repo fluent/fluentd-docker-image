@@ -17,7 +17,6 @@ ENV SU_EXEC_VERSION=0.2
 # Docker creates a layer for every RUN-Statement
 # therefore an 'apk delete' has no effect
 RUN apk update \
- && apk upgrade \
  && apk add --no-cache \
         ca-certificates \
         ruby ruby-irb \
