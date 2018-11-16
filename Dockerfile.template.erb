@@ -180,9 +180,6 @@ COPY entrypoint.sh /bin/
 RUN chmod +x /bin/entrypoint.sh
 <% end %>
 
-ENV FLUENTD_OPT=""
-ENV FLUENTD_CONF="fluent.conf"
-
 <% if not is_windows %>
 <% if is_alpine %>
 ENV LD_PRELOAD=""
@@ -197,8 +194,8 @@ EXPOSE 24224 5140
 ENTRYPOINT ["cmd", "/k", "fluentd", "-c", "C:\\fluent\\conf\\fluent.conf"]
 <% else %>
 ENTRYPOINT ["/bin/entrypoint.sh"]
+CMD ["fluentd"]
 
-CMD exec fluentd -c /fluentd/etc/${FLUENTD_CONF} -p /fluentd/plugins $FLUENTD_OPT
 <% if is_armhf %>
 RUN [ ${CROSS_BUILD_END} ]
 <% end %>

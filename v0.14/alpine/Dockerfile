@@ -40,9 +40,6 @@ COPY fluent.conf /fluentd/etc/
 COPY entrypoint.sh /bin/
 RUN chmod +x /bin/entrypoint.sh
 
-ENV FLUENTD_OPT=""
-ENV FLUENTD_CONF="fluent.conf"
-
 ENV LD_PRELOAD=""
 ENV DUMB_INIT_SETSID 0
 
@@ -50,4 +47,4 @@ EXPOSE 24224 5140
 
 ENTRYPOINT ["/bin/entrypoint.sh"]
 
-CMD exec fluentd -c /fluentd/etc/${FLUENTD_CONF} -p /fluentd/plugins $FLUENTD_OPT
+CMD ["fluentd"]

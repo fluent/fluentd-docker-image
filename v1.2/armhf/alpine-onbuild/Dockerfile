@@ -48,15 +48,12 @@ RUN chmod +x /bin/entrypoint.sh
 ONBUILD COPY fluent.conf /fluentd/etc/
 ONBUILD COPY plugins /fluentd/plugins/
 
-ENV FLUENTD_OPT=""
-ENV FLUENTD_CONF="fluent.conf"
-
 ENV LD_PRELOAD=""
 ENV DUMB_INIT_SETSID 0
 
 EXPOSE 24224 5140
 
 ENTRYPOINT ["/bin/entrypoint.sh"]
+CMD ["fluentd"]
 
-CMD exec fluentd -c /fluentd/etc/${FLUENTD_CONF} -p /fluentd/plugins $FLUENTD_OPT
 RUN [ ${CROSS_BUILD_END} ]
