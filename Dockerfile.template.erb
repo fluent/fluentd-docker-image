@@ -63,9 +63,6 @@ ENV GOSU_VERSION=1.10
 <% end %>
 <% end %>
 
-<% if not is_windows %>
-ARG DEBIAN_FRONTEND=noninteractive
-<% end %>
 # Do not split this into multiple RUN!
 # Docker creates a layer for every RUN-Statement
 <% if is_windows %>

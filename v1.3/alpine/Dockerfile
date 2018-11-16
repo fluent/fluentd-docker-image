@@ -9,7 +9,6 @@ ENV DUMB_INIT_VERSION=1.2.1
 
 ENV SU_EXEC_VERSION=0.2
 
-ARG DEBIAN_FRONTEND=noninteractive
 # Do not split this into multiple RUN!
 # Docker creates a layer for every RUN-Statement
 # therefore an 'apk delete' has no effect

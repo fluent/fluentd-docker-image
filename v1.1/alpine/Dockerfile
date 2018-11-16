@@ -10,7 +10,6 @@ ENV DUMB_INIT_VERSION=1.2.0
 
 ENV SU_EXEC_VERSION=0.2
 
-ARG DEBIAN_FRONTEND=noninteractive
 
 # Do not split this into multiple RUN!
 # Docker creates a layer for every RUN-Statement
