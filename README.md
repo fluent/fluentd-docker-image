@@ -89,10 +89,6 @@ of `docker run`).
 Use this variable to specify other Fluentd command line options,
 like `-v` or `-q`.
 
-### `FLUENT_UID`
-
-Use this variable to specify user id of fluent user.
-
 ## Image versions
 
 This image is based on the popular [Alpine Linux project][1], available in
