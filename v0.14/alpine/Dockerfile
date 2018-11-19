@@ -33,6 +33,9 @@ RUN apk update \
 # for log storage (maybe shared with host) and  configuration/plugins path (default: copied from .)
 RUN mkdir -p /fluentd/log /fluentd/etc /fluentd/plugins
 
+RUN addgroup -S fluent && adduser -S -g fluent fluent
+RUN chown -R fluent /fluentd && chgrp -R fluent /fluentd
+
 COPY fluent.conf /fluentd/etc/
 COPY entrypoint.sh /bin/
 RUN chmod +x /bin/entrypoint.sh
