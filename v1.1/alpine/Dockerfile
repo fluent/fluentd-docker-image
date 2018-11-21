@@ -3,7 +3,8 @@
 
 FROM alpine:3.7
 LABEL maintainer "TAGOMORI Satoshi <tagomoris@gmail.com>"
-LABEL Description="Fluentd docker image" Vendor="Fluent Organization" Version="1.1"
+ARG VERSION=1.1
+LABEL Description="Fluentd docker image" Vendor="Fluent Organization" Version=${VERSION}
 
 ENV DUMB_INIT_VERSION=1.2.0
 
