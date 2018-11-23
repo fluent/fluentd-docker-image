@@ -206,6 +206,7 @@ entrypoint.sh:
 			dockerfile='$(DOCKERFILE)' \
 			version='$(VERSION)' \
 		/entrypoint.sh.erb > $(DOCKERFILE)/entrypoint.sh
+	chmod +x $(DOCKERFILE)/entrypoint.sh
 
 
 

@@ -38,7 +38,6 @@ RUN chown -R fluent /fluentd && chgrp -R fluent /fluentd
 
 COPY fluent.conf /fluentd/etc/
 COPY entrypoint.sh /bin/
-RUN chmod +x /bin/entrypoint.sh
 
 ENV LD_PRELOAD=""
 ENV DUMB_INIT_SETSID 0

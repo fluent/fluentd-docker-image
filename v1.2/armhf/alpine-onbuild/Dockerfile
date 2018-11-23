@@ -43,7 +43,6 @@ RUN chown -R fluent /fluentd && chgrp -R fluent /fluentd
 
 COPY fluent.conf /fluentd/etc/
 COPY entrypoint.sh /bin/
-RUN chmod +x /bin/entrypoint.sh
 
 ONBUILD COPY fluent.conf /fluentd/etc/
 ONBUILD COPY plugins /fluentd/plugins/
