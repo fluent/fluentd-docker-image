@@ -25,7 +25,6 @@ RUN apk update \
  && gem install fluentd -v 1.3.2 \
  && gem install bigdecimal -v 1.3.5 \
  && apk del .build-deps \
- && rm -rf /var/cache/apk/* \
  && rm -rf /tmp/* /var/tmp/* /usr/lib/ruby/gems/*/cache/*.gem
 
 # for log storage (maybe shared with host)

@@ -28,7 +28,6 @@ RUN apk update \
  && gem install json -v 2.1.0 \
  && gem install fluentd -v 1.1.3 \
  && apk del .build-deps \
- && rm -rf /var/cache/apk/* \
  && rm -rf /tmp/* /var/tmp/* /usr/lib/ruby/gems/*/cache/*.gem
 
 # for log storage (maybe shared with host)

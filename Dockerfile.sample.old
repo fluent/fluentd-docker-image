@@ -3,7 +3,7 @@ MAINTAINER YOUR_NAME <...@...>
 
 USER root
 
-RUN apk add --update --virtual .build-deps \
+RUN apk add --no-cache --update --virtual .build-deps \
         sudo build-base ruby-dev \
 
  # cutomize following instruction as you wish
@@ -12,8 +12,7 @@ RUN apk add --update --virtual .build-deps \
 
  && sudo -u fluent gem sources --clear-all \
  && apk del .build-deps \
- && rm -rf /var/cache/apk/* \
-           /home/fluent/.gem/ruby/2.3.0/cache/*.gem
+ && rm -rf /home/fluent/.gem/ruby/2.3.0/cache/*.gem
 
 USER fluent
 
