@@ -5,8 +5,7 @@ FROM debian:stretch-slim
 ARG VERSION=1.1
 LABEL maintainer "TAGOMORI Satoshi <tagomoris@gmail.com>"
 LABEL Description="Fluentd docker image" Vendor="Fluent Organization" Version=${VERSION}
-ENV DUMB_INIT_VERSION=1.2.1
-
+ENV TINI_VERSION=0.18.0
 ENV GOSU_VERSION=1.10
 
 # Do not split this into multiple RUN!
@@ -27,11 +26,16 @@ RUN apt-get update \
  && gem install json -v 2.1.0 \
  && gem install fluentd -v 0.12.43 \
  && dpkgArch="$(dpkg --print-architecture | awk -F- '{ print $NF }')" \
- && wget -O /usr/bin/dumb-init https://github.com/Yelp/dumb-init/releases/download/v${DUMB_INIT_VERSION}/dumb-init_${DUMB_INIT_VERSION}_$dpkgArch \
- && chmod +x /usr/bin/dumb-init \
+ && wget -O /usr/local/bin/tini "https://github.com/krallin/tini/releases/download/v$TINI_VERSION/tini-$dpkgArch" \
+ && wget -O /usr/local/bin/tini.asc "https://github.com/krallin/tini/releases/download/v$TINI_VERSION/tini-$dpkgArch.asc" \
+ && export GNUPGHOME="$(mktemp -d)" \
+ && gpg --no-tty --keyserver hkp://p80.pool.sks-keyservers.net:80 --recv-keys 6380DC428747F6C393FEACA59A84159D7001A4E5 \
+ && gpg --batch --verify /usr/local/bin/tini.asc /usr/local/bin/tini \
+ && rm -r /usr/local/bin/tini.asc \
+ && chmod +x /usr/local/bin/tini \
+ && tini -h \
  && wget -O /usr/local/bin/gosu "https://github.com/tianon/gosu/releases/download/$GOSU_VERSION/gosu-$dpkgArch" \
  && wget -O /usr/local/bin/gosu.asc "https://github.com/tianon/gosu/releases/download/$GOSU_VERSION/gosu-$dpkgArch.asc" \
- && export GNUPGHOME="$(mktemp -d)" \
  && gpg --no-tty --keyserver hkp://p80.pool.sks-keyservers.net:80 --recv-keys B42F6819007F00F88E364FD4036A9C25BF357DD4 \
  && gpg --no-tty --batch --verify /usr/local/bin/gosu.asc /usr/local/bin/gosu \
  && rm -rf "$GNUPGHOME" /usr/local/bin/gosu.asc \
@@ -60,9 +64,8 @@ COPY entrypoint.sh /bin/
 RUN chmod +x /bin/entrypoint.sh
 
 ENV LD_PRELOAD="/usr/lib/libjemalloc.so.2"
-ENV DUMB_INIT_SETSID 0
 EXPOSE 24224 5140
 
-ENTRYPOINT ["/bin/entrypoint.sh"]
+ENTRYPOINT ["tini",  "--", "/bin/entrypoint.sh"]
 CMD ["fluentd"]
 

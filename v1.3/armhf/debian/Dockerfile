@@ -8,8 +8,7 @@ LABEL Description="Fluentd docker image" Vendor="Fluent Organization" Version=${
 ARG CROSS_BUILD_START="cross-build-start"
 ARG CROSS_BUILD_END="cross-build-end"
 RUN [ ${CROSS_BUILD_START} ]
-ENV DUMB_INIT_VERSION=1.2.0-1
-
+ENV TINI_VERSION=0.18.0
 ENV GOSU_VERSION=1.10-1+b2
 
 # Do not split this into multiple RUN!
@@ -19,7 +18,6 @@ RUN apt-get update \
  && apt-get install -y --no-install-recommends \
             ca-certificates \
             ruby \
-            dumb-init=${DUMB_INIT_VERSION} \
             gosu=${GOSU_VERSION} \
  && buildDeps=" \
       make gcc g++ libc-dev \
@@ -31,6 +29,15 @@ RUN apt-get update \
  && gem install oj -v 3.3.10 \
  && gem install json -v 2.1.0 \
  && gem install fluentd -v 1.3.2 \
+ && dpkgArch="$(dpkg --print-architecture | awk -F- '{ print $NF }')" \
+ && wget -O /usr/local/bin/tini "https://github.com/krallin/tini/releases/download/v$TINI_VERSION/tini-armhf" \
+ && wget -O /usr/local/bin/tini.asc "https://github.com/krallin/tini/releases/download/v$TINI_VERSION/tini-armhf.asc" \
+ && export GNUPGHOME="$(mktemp -d)" \
+ && gpg --no-tty --keyserver hkp://p80.pool.sks-keyservers.net:80 --recv-keys 6380DC428747F6C393FEACA59A84159D7001A4E5 \
+ && gpg --batch --verify /usr/local/bin/tini.asc /usr/local/bin/tini \
+ && rm -r /usr/local/bin/tini.asc \
+ && chmod +x /usr/local/bin/tini \
+ && tini -h \
  && gosu nobody true \
  && wget -O /tmp/jemalloc-4.5.0.tar.bz2 https://github.com/jemalloc/jemalloc/releases/download/4.5.0/jemalloc-4.5.0.tar.bz2 \
  && cd /tmp && tar -xjf jemalloc-4.5.0.tar.bz2 && cd jemalloc-4.5.0/ \
@@ -55,10 +62,9 @@ COPY entrypoint.sh /bin/
 RUN chmod +x /bin/entrypoint.sh
 
 ENV LD_PRELOAD="/usr/lib/libjemalloc.so.2"
-ENV DUMB_INIT_SETSID 0
 EXPOSE 24224 5140
 
-ENTRYPOINT ["/bin/entrypoint.sh"]
+ENTRYPOINT ["tini",  "--", "/bin/entrypoint.sh"]
 CMD ["fluentd"]
 
 RUN [ ${CROSS_BUILD_END} ]

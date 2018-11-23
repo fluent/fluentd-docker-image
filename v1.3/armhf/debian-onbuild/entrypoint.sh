@@ -1,4 +1,4 @@
-#!/usr/bin/dumb-init /bin/sh
+#!/bin/sh
 
 #source vars if file exists
 DEFAULT=/etc/default/fluentd

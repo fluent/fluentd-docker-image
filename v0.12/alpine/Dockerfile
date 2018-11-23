@@ -5,8 +5,6 @@ FROM alpine:3.8
 ARG VERSION=1.1
 LABEL maintainer "TAGOMORI Satoshi <tagomoris@gmail.com>"
 LABEL Description="Fluentd docker image" Vendor="Fluent Organization" Version=${VERSION}
-ENV DUMB_INIT_VERSION=1.2.1
-
 ENV SU_EXEC_VERSION=0.2
 
 # Do not split this into multiple RUN!
@@ -17,7 +15,7 @@ RUN apk update \
         ca-certificates \
         ruby ruby-irb ruby-etc ruby-webrick \
         su-exec==${SU_EXEC_VERSION}-r0 \
-        dumb-init==${DUMB_INIT_VERSION}-r0 \
+        tini \
  && apk add --no-cache --virtual .build-deps \
         build-base \
         ruby-dev wget gnupg \
@@ -43,9 +41,8 @@ COPY entrypoint.sh /bin/
 RUN chmod +x /bin/entrypoint.sh
 
 ENV LD_PRELOAD=""
-ENV DUMB_INIT_SETSID 0
 EXPOSE 24224 5140
 
-ENTRYPOINT ["/bin/entrypoint.sh"]
+ENTRYPOINT ["tini",  "--", "/bin/entrypoint.sh"]
 CMD ["fluentd"]
 
