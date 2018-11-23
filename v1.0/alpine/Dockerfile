@@ -21,7 +21,7 @@ RUN apk update \
         dumb-init==${DUMB_INIT_VERSION}-r0 \
  && apk add --no-cache --virtual .build-deps \
         build-base \
-        ruby-dev wget gnupg \
+        ruby-dev gnupg \
  && echo 'gem: --no-document' >> /etc/gemrc \
  && gem install oj -v 3.3.10 \
  && gem install json -v 2.1.0 \

@@ -99,7 +99,7 @@ RUN apk update \
         tini \
  && apk add --no-cache --virtual .build-deps \
         build-base \
-        ruby-dev wget gnupg \
+        ruby-dev gnupg \
 <% else %>
 # therefore an 'apt-get purge' has no effect
 RUN apt-get update \
