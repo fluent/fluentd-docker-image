@@ -54,7 +54,6 @@ COPY fluent.conf /fluentd/etc/
 COPY entrypoint.sh /bin/
 RUN chmod +x /bin/entrypoint.sh
 
-
 ENV FLUENTD_OPT=""
 ENV FLUENTD_CONF="fluent.conf"
 
