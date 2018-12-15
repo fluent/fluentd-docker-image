@@ -33,15 +33,12 @@ RUN apk update \
  && rm -rf /var/cache/apk/* \
  && rm -rf /tmp/* /var/tmp/* /usr/lib/ruby/gems/*/cache/*.gem
 
-# for log storage (maybe shared with host)
-RUN mkdir -p /fluentd/log
-# configuration/plugins path (default: copied from .)
-RUN mkdir -p /fluentd/etc /fluentd/plugins
+# for log storage (maybe shared with host) and configuration/plugins path (default: copied from .)
+RUN mkdir -p /fluentd/log /fluentd/etc /fluentd/plugins
 
 COPY fluent.conf /fluentd/etc/
 COPY entrypoint.sh /bin/
 RUN chmod +x /bin/entrypoint.sh
-
 
 ENV FLUENTD_OPT=""
 ENV FLUENTD_CONF="fluent.conf"
