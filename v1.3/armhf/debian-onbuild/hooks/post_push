@@ -9,7 +9,7 @@ tagStart=$(expr index "$IMAGE_NAME" :)
 repoName=${IMAGE_NAME:0:tagStart-1}
 
 # Tag and push image for each additional tag
-for tag in {v1.3.1-debian-armhf-onbuild,v1.3-debian-armhf-onbuild,edge-debian-armhf-onbuild,stable-debian-armhf-onbuild,debian-armhf-onbuild}; do
+for tag in {v1.3.2-debian-armhf-onbuild,v1.3-debian-armhf-onbuild,edge-debian-armhf-onbuild,stable-debian-armhf-onbuild,debian-armhf-onbuild}; do
   docker tag $IMAGE_NAME ${repoName}:${tag}
   docker push ${repoName}:${tag}
 done
