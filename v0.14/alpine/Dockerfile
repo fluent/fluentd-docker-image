@@ -33,7 +33,7 @@ RUN apk update \
  && rm -rf /var/cache/apk/* \
  && rm -rf /tmp/* /var/tmp/* /usr/lib/ruby/gems/*/cache/*.gem
 
-# for log storage (maybe shared with host) and configuration/plugins path (default: copied from .)
+# for log storage (maybe shared with host) and  configuration/plugins path (default: copied from .)
 RUN mkdir -p /fluentd/log /fluentd/etc /fluentd/plugins
 
 COPY fluent.conf /fluentd/etc/
