@@ -13,21 +13,21 @@
 
 IMAGE_NAME := fluent/fluentd
 X86_IMAGES := \
-	v0.12/alpine:v0.12.43,v0.12 \
-	v0.12/alpine-onbuild:v0.12.43-onbuild,v0.12-onbuild \
-	v0.12/debian:v0.12.43-debian,v0.12-debian \
-	v0.12/debian-onbuild:v0.12.43-debian-onbuild,v0.12-debian-onbuild \
-	v1.3/alpine:v1.3.2,v1.3,edge,stable,latest \
-	v1.3/alpine-onbuild:v1.3.2-onbuild,v1.3-onbuild,edge-onbuild,stable-onbuild,onbuild \
-	v1.3/debian:v1.3.2-debian,v1.3-debian,edge-debian,stable-debian,debian \
-	v1.3/debian-onbuild:v1.3.2-debian-onbuild,v1.3-debian-onbuild,edge-debian-onbuild,stable-debian-onbuild,debian-onbuild \
-	v1.3/windows:v1.3.2-windows,stable-windows,windows
+	v0.12/alpine:v0.12.43-1.0,v0.12-1 \
+	v0.12/alpine-onbuild:v0.12.43-onbuild-1.0,v0.12-onbuild-1 \
+	v0.12/debian:v0.12.43-debian-1.0,v0.12-debian-1 \
+	v0.12/debian-onbuild:v0.12.43-debian-onbuild-1.0,v0.12-debian-onbuild-1 \
+	v1.3/alpine:v1.3.2-1.0,v1.3-1,edge \
+	v1.3/alpine-onbuild:v1.3.2-onbuild-1.0,v1.3-onbuild-1,edge-onbuild \
+	v1.3/debian:v1.3.2-debian-1.0,v1.3-debian-1,edge-debian \
+	v1.3/debian-onbuild:v1.3.2-debian-onbuild-1.0,v1.3-debian-onbuild-1,edge-debian-onbuild \
+	v1.3/windows:v1.3.2-windows-1.0,v1.3-windows-1
 #	<Dockerfile>:<version>,<tag1>,<tag2>,...
 
 # Define images for running on ARM platforms
 ARM_IMAGES := \
-	v1.3/armhf/debian:v1.3.2-debian-armhf,v1.3-debian-armhf,edge-debian-armhf,stable-debian-armhf,debian-armhf \
-	v1.3/armhf/debian-onbuild:v1.3.2-debian-armhf-onbuild,v1.3-debian-armhf-onbuild,edge-debian-armhf-onbuild,stable-debian-armhf-onbuild,debian-armhf-onbuild
+	v1.3/armhf/debian:v1.3.2-debian-armhf-1.0,v1.3-debian-armhf-1,edge-debian-armhf \
+	v1.3/armhf/debian-onbuild:v1.3.2-debian-armhf-onbuild-1.0,v1.3-debian-armhf-onbuild-1,edge-debian-armhf-onbuild
 
 ALL_IMAGES := $(X86_IMAGES) $(ARM_IMAGES)
 
