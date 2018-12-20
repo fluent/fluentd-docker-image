@@ -8,20 +8,16 @@ LABEL Description="Fluentd docker image" Vendor="Fluent Organization" Version=${
 ARG CROSS_BUILD_START="cross-build-start"
 ARG CROSS_BUILD_END="cross-build-end"
 RUN [ ${CROSS_BUILD_START} ]
-ENV DUMB_INIT_VERSION=1.2.0-1
-
+ENV TINI_VERSION=0.18.0
 ENV GOSU_VERSION=1.10-1+b2
 
-ARG DEBIAN_FRONTEND=noninteractive
 # Do not split this into multiple RUN!
 # Docker creates a layer for every RUN-Statement
 # therefore an 'apt-get purge' has no effect
 RUN apt-get update \
- && apt-get upgrade -y \
  && apt-get install -y --no-install-recommends \
             ca-certificates \
             ruby \
-            dumb-init=${DUMB_INIT_VERSION} \
             gosu=${GOSU_VERSION} \
  && buildDeps=" \
       make gcc g++ libc-dev \
@@ -29,11 +25,19 @@ RUN apt-get update \
       wget bzip2 gnupg dirmngr \
     " \
  && apt-get install -y --no-install-recommends $buildDeps \
- && update-ca-certificates \
  && echo 'gem: --no-document' >> /etc/gemrc \
  && gem install oj -v 3.3.10 \
  && gem install json -v 2.1.0 \
  && gem install fluentd -v 1.3.2 \
+ && dpkgArch="$(dpkg --print-architecture | awk -F- '{ print $NF }')" \
+ && wget -O /usr/local/bin/tini "https://github.com/krallin/tini/releases/download/v$TINI_VERSION/tini-armhf" \
+ && wget -O /usr/local/bin/tini.asc "https://github.com/krallin/tini/releases/download/v$TINI_VERSION/tini-armhf.asc" \
+ && export GNUPGHOME="$(mktemp -d)" \
+ && gpg --batch --keyserver hkp://p80.pool.sks-keyservers.net:80 --recv-keys 6380DC428747F6C393FEACA59A84159D7001A4E5 \
+ && gpg --batch --verify /usr/local/bin/tini.asc /usr/local/bin/tini \
+ && rm -r /usr/local/bin/tini.asc \
+ && chmod +x /usr/local/bin/tini \
+ && tini -h \
  && gosu nobody true \
  && wget -O /tmp/jemalloc-4.5.0.tar.bz2 https://github.com/jemalloc/jemalloc/releases/download/4.5.0/jemalloc-4.5.0.tar.bz2 \
  && cd /tmp && tar -xjf jemalloc-4.5.0.tar.bz2 && cd jemalloc-4.5.0/ \
@@ -50,19 +54,16 @@ RUN mkdir -p /fluentd/log
 # configuration/plugins path (default: copied from .)
 RUN mkdir -p /fluentd/etc /fluentd/plugins
 
+RUN groupadd -r fluent && useradd -r -g fluent fluent
+RUN chown -R fluent /fluentd && chgrp -R fluent /fluentd
+
 COPY fluent.conf /fluentd/etc/
 COPY entrypoint.sh /bin/
-RUN chmod +x /bin/entrypoint.sh
-
-
-ENV FLUENTD_OPT=""
-ENV FLUENTD_CONF="fluent.conf"
 
 ENV LD_PRELOAD="/usr/lib/libjemalloc.so.2"
-ENV DUMB_INIT_SETSID 0
 EXPOSE 24224 5140
 
-ENTRYPOINT ["/bin/entrypoint.sh"]
+ENTRYPOINT ["tini",  "--", "/bin/entrypoint.sh"]
+CMD ["fluentd"]
 
-CMD exec fluentd -c /fluentd/etc/${FLUENTD_CONF} -p /fluentd/plugins $FLUENTD_OPT
 RUN [ ${CROSS_BUILD_END} ]

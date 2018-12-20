@@ -30,10 +30,6 @@ RUN powershell -Command "del C:\ruby24\lib\ruby\gems\2.4.0\cache\*.gem; Remove-I
 
 COPY fluent.conf /fluent/conf/fluent.conf
 
-
-ENV FLUENTD_OPT=""
-ENV FLUENTD_CONF="fluent.conf"
-
 EXPOSE 24224 5140
 
 ENTRYPOINT ["cmd", "/k", "fluentd", "-c", "C:\\fluent\\conf\\fluent.conf"]

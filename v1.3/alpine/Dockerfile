@@ -5,32 +5,26 @@ FROM alpine:3.8
 ARG VERSION=1.1
 LABEL maintainer "TAGOMORI Satoshi <tagomoris@gmail.com>"
 LABEL Description="Fluentd docker image" Vendor="Fluent Organization" Version=${VERSION}
-ENV DUMB_INIT_VERSION=1.2.1
-
 ENV SU_EXEC_VERSION=0.2
 
-ARG DEBIAN_FRONTEND=noninteractive
 # Do not split this into multiple RUN!
 # Docker creates a layer for every RUN-Statement
 # therefore an 'apk delete' has no effect
 RUN apk update \
- && apk upgrade \
  && apk add --no-cache \
         ca-certificates \
         ruby ruby-irb ruby-etc ruby-webrick \
         su-exec==${SU_EXEC_VERSION}-r0 \
-        dumb-init==${DUMB_INIT_VERSION}-r0 \
+        tini \
  && apk add --no-cache --virtual .build-deps \
         build-base \
-        ruby-dev wget gnupg \
- && update-ca-certificates \
+        ruby-dev gnupg \
  && echo 'gem: --no-document' >> /etc/gemrc \
  && gem install oj -v 3.3.10 \
  && gem install json -v 2.1.0 \
  && gem install fluentd -v 1.3.2 \
  && gem install bigdecimal -v 1.3.5 \
  && apk del .build-deps \
- && rm -rf /var/cache/apk/* \
  && rm -rf /tmp/* /var/tmp/* /usr/lib/ruby/gems/*/cache/*.gem
 
 # for log storage (maybe shared with host)
@@ -38,18 +32,15 @@ RUN mkdir -p /fluentd/log
 # configuration/plugins path (default: copied from .)
 RUN mkdir -p /fluentd/etc /fluentd/plugins
 
+RUN addgroup -S fluent && adduser -S -g fluent fluent
+RUN chown -R fluent /fluentd && chgrp -R fluent /fluentd
+
 COPY fluent.conf /fluentd/etc/
 COPY entrypoint.sh /bin/
-RUN chmod +x /bin/entrypoint.sh
-
-
-ENV FLUENTD_OPT=""
-ENV FLUENTD_CONF="fluent.conf"
 
 ENV LD_PRELOAD=""
-ENV DUMB_INIT_SETSID 0
 EXPOSE 24224 5140
 
-ENTRYPOINT ["/bin/entrypoint.sh"]
+ENTRYPOINT ["tini",  "--", "/bin/entrypoint.sh"]
+CMD ["fluentd"]
 
-CMD exec fluentd -c /fluentd/etc/${FLUENTD_CONF} -p /fluentd/plugins $FLUENTD_OPT

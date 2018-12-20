@@ -66,32 +66,17 @@ Default configurations are to:
   (and symlink `docker.log`)
 - store all other logs into `/fluentd/log/data.*.log` (and symlink `data.log`)
 
-## Environment Variables
+## Providing your own configuration file and additional options
 
-Environment variable below are configurable to control how to execute fluentd process:
+`fluentd` arguments can be appended to the `docker run` line
 
-### `FLUENTD_CONF`
+For example, to provide a bespoke config and make `fluentd` verbose, then:
 
-This variable allows you to specify configuration file name that will be used
-in `-c` Fluentd command line option.
+`docker run -ti --rm -v /path/to/dir:/fluentd/etc fluentd -c /fluentd/etc/<conf> -v`
 
-If you want to use your own configuration file (without any optional plugins),
-you can do it with this environment variable and Docker volumes (`-v` option
-of `docker run`).
-
-1. Write configuration file with filename `yours.conf`.
-2. Execute `docker run` with `-v /path/to/dir:/fluentd/etc`
-   to share `/path/to/dir/yours.conf` in container,
-   and `-e FLUENTD_CONF=yours.conf` to read it.
-
-### `FLUENTD_OPT`
-
-Use this variable to specify other Fluentd command line options,
-like `-v` or `-q`.
-
-### `FLUENT_UID`
-
-Use this variable to specify user id of fluent user.
+The first `-v` tells Docker to share '/path/to/dir' as a volume and mount it at /fluentd/etc
+The `-c` after the container name (fluentd) tells `fluentd` where to find the config file
+The second `-v` is passed to `fluentd` to tell it to be verbose
 
 ## Image versions
 
@@ -189,14 +174,16 @@ FROM fluent/fluentd:v1.3-onbuild
 # below RUN includes plugin as examples elasticsearch is not required
 # you may customize including plugins as you wish
 
-RUN apk add --update --virtual .build-deps \
+RUN apk add --no-cache --update --virtual .build-deps \
         sudo build-base ruby-dev \
  && sudo gem install \
         fluent-plugin-elasticsearch \
  && sudo gem sources --clear-all \
  && apk del .build-deps \
- && rm -rf /var/cache/apk/* \
-           /home/fluent/.gem/ruby/2.5.0/cache/*.gem
+ && rm -rf /home/fluent/.gem/ruby/2.5.0/cache/*.gem
+
+COPY fluent.conf /fluentd/etc/
+COPY entrypoint.sh /bin/
 ```
 
 ##### Debian version

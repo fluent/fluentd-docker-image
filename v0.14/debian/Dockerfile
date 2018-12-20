@@ -9,13 +9,11 @@ ENV DUMB_INIT_VERSION=1.2.0
 
 ENV GOSU_VERSION=1.10
 
-ARG DEBIAN_FRONTEND=noninteractive
 
 # Do not split this into multiple RUN!
 # Docker creates a layer for every RUN-Statement
 # therefore an 'apt-get purge' has no effect
 RUN apt-get update \
- && apt-get upgrade -y \
  && apt-get install -y --no-install-recommends \
             ca-certificates \
             ruby \
@@ -25,7 +23,6 @@ RUN apt-get update \
       wget bzip2 gnupg dirmngr \
     " \
  && apt-get install -y --no-install-recommends $buildDeps \
- && update-ca-certificates \
  && echo 'gem: --no-document' >> /etc/gemrc \
  && gem install oj -v 2.18.3 \
  && gem install json -v 2.1.0 \
@@ -56,13 +53,11 @@ RUN mkdir -p /fluentd/log
 # configuration/plugins path (default: copied from .)
 RUN mkdir -p /fluentd/etc /fluentd/plugins
 
+RUN groupadd -r fluent && useradd -r -g fluent fluent
+RUN chown -R fluent /fluentd && chgrp -R fluent /fluentd
+
 COPY fluent.conf /fluentd/etc/
 COPY entrypoint.sh /bin/
-RUN chmod +x /bin/entrypoint.sh
-
-
-ENV FLUENTD_OPT=""
-ENV FLUENTD_CONF="fluent.conf"
 
 ENV LD_PRELOAD="/usr/lib/libjemalloc.so.2"
 ENV DUMB_INIT_SETSID 0
@@ -71,4 +66,4 @@ EXPOSE 24224 5140
 
 ENTRYPOINT ["/bin/entrypoint.sh"]
 
-CMD exec fluentd -c /fluentd/etc/${FLUENTD_CONF} -p /fluentd/plugins $FLUENTD_OPT
+CMD ["fluentd"]
