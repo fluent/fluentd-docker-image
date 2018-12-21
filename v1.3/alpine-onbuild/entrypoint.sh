@@ -25,4 +25,4 @@ if [ "$1" = "fluentd" ]; then
     fi
 fi
 
-exec su-exec fluent "$@"
+exec "$@"

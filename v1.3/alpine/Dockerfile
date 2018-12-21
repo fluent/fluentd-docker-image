@@ -5,7 +5,6 @@ FROM alpine:3.8
 ARG VERSION=1.1
 LABEL maintainer "TAGOMORI Satoshi <tagomoris@gmail.com>"
 LABEL Description="Fluentd docker image" Vendor="Fluent Organization" Version=${VERSION}
-ENV SU_EXEC_VERSION=0.2
 
 # Do not split this into multiple RUN!
 # Docker creates a layer for every RUN-Statement
@@ -14,7 +13,6 @@ RUN apk update \
  && apk add --no-cache \
         ca-certificates \
         ruby ruby-irb ruby-etc ruby-webrick \
-        su-exec==${SU_EXEC_VERSION}-r0 \
         tini \
  && apk add --no-cache --virtual .build-deps \
         build-base \
@@ -41,6 +39,7 @@ COPY entrypoint.sh /bin/
 ENV LD_PRELOAD=""
 EXPOSE 24224 5140
 
+USER fluent
 ENTRYPOINT ["tini",  "--", "/bin/entrypoint.sh"]
 CMD ["fluentd"]
 

@@ -6,7 +6,6 @@ ARG VERSION=1.1
 LABEL maintainer "TAGOMORI Satoshi <tagomoris@gmail.com>"
 LABEL Description="Fluentd docker image" Vendor="Fluent Organization" Version=${VERSION}
 ENV TINI_VERSION=0.18.0
-ENV GOSU_VERSION=1.10
 
 # Do not split this into multiple RUN!
 # Docker creates a layer for every RUN-Statement
@@ -34,13 +33,6 @@ RUN apt-get update \
  && rm -r /usr/local/bin/tini.asc \
  && chmod +x /usr/local/bin/tini \
  && tini -h \
- && wget -O /usr/local/bin/gosu "https://github.com/tianon/gosu/releases/download/$GOSU_VERSION/gosu-$dpkgArch" \
- && wget -O /usr/local/bin/gosu.asc "https://github.com/tianon/gosu/releases/download/$GOSU_VERSION/gosu-$dpkgArch.asc" \
- && gpg --batch --keyserver hkp://p80.pool.sks-keyservers.net:80 --recv-keys B42F6819007F00F88E364FD4036A9C25BF357DD4 \
- && gpg --batch --verify /usr/local/bin/gosu.asc /usr/local/bin/gosu \
- && rm -rf "$GNUPGHOME" /usr/local/bin/gosu.asc \
- && chmod +x /usr/local/bin/gosu \
- && gosu nobody true \
  && wget -O /tmp/jemalloc-4.5.0.tar.bz2 https://github.com/jemalloc/jemalloc/releases/download/4.5.0/jemalloc-4.5.0.tar.bz2 \
  && cd /tmp && tar -xjf jemalloc-4.5.0.tar.bz2 && cd jemalloc-4.5.0/ \
  && ./configure && make \
@@ -65,6 +57,7 @@ COPY entrypoint.sh /bin/
 ENV LD_PRELOAD="/usr/lib/libjemalloc.so.2"
 EXPOSE 24224 5140
 
+USER fluent
 ENTRYPOINT ["tini",  "--", "/bin/entrypoint.sh"]
 CMD ["fluentd"]
 

@@ -9,7 +9,6 @@ ARG CROSS_BUILD_START="cross-build-start"
 ARG CROSS_BUILD_END="cross-build-end"
 RUN [ ${CROSS_BUILD_START} ]
 ENV TINI_VERSION=0.18.0
-ENV GOSU_VERSION=1.10-1+b2
 
 # Do not split this into multiple RUN!
 # Docker creates a layer for every RUN-Statement
@@ -18,7 +17,6 @@ RUN apt-get update \
  && apt-get install -y --no-install-recommends \
             ca-certificates \
             ruby \
-            gosu=${GOSU_VERSION} \
  && buildDeps=" \
       make gcc g++ libc-dev \
       ruby-dev \
@@ -38,7 +36,6 @@ RUN apt-get update \
  && rm -r /usr/local/bin/tini.asc \
  && chmod +x /usr/local/bin/tini \
  && tini -h \
- && gosu nobody true \
  && wget -O /tmp/jemalloc-4.5.0.tar.bz2 https://github.com/jemalloc/jemalloc/releases/download/4.5.0/jemalloc-4.5.0.tar.bz2 \
  && cd /tmp && tar -xjf jemalloc-4.5.0.tar.bz2 && cd jemalloc-4.5.0/ \
  && ./configure && make \
@@ -63,6 +60,7 @@ COPY entrypoint.sh /bin/
 ENV LD_PRELOAD="/usr/lib/libjemalloc.so.2"
 EXPOSE 24224 5140
 
+USER fluent
 ENTRYPOINT ["tini",  "--", "/bin/entrypoint.sh"]
 CMD ["fluentd"]
 
