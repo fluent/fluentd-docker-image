@@ -1,4 +1,3 @@
-<% is_alpine = (dockerfile.split("/").last.split("-").first == "alpine") %>
 #!/bin/sh
 
 #source vars if file exists
@@ -26,8 +25,4 @@ if [ "$1" = "fluentd" ]; then
     fi
 fi
 
-<% if is_alpine %>
-exec su-exec fluent "$@"
-<% else %>
-exec gosu fluent "$@"
-<% end %>
+exec "$@"
