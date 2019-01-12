@@ -84,14 +84,14 @@ Latest version of edge Fluentd branch (currently `v1.3-1`).
 
 Latest version of `vX.Y` Fluentd branch.
 
-`A` will be incremented when image has breaking changes.
+`A` will be incremented when image has major changes.
 
 #### `vX.Y.Z-A.B`
 
 Concrete `vX.Y.Z` version of Fluentd.
 
-`A` will be incremented when image has breaking changes.
-`B` will be incremented when image has non-breaking changes, e.g. library update or bug fixes.
+`A` will be incremented when image has major changes.
+`B` will be incremented when image has small changes, e.g. library update or bug fixes.
 
 #### `onbuild` included tag
 
