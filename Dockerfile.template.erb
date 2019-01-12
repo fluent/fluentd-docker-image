@@ -31,8 +31,8 @@ FROM debian:stretch-slim
 <% end %>
 <% end %>
 <% end %>
-LABEL maintainer "TAGOMORI Satoshi <tagomoris@gmail.com>"
-LABEL Description="Fluentd docker image" Vendor="Fluent Organization" Version=${VERSION}
+LABEL maintainer "Fluentd developers <fluentd@googlegroups.com>"
+LABEL Description="Fluentd docker image" Vendor="Fluent Organization" Version="<%= fluentd_ver %>"
 <% if is_armhf %>
 ARG CROSS_BUILD_START="cross-build-start"
 ARG CROSS_BUILD_END="cross-build-end"
