@@ -35,6 +35,7 @@ RUN chown -R fluent /fluentd && chgrp -R fluent /fluentd
 COPY fluent.conf /fluentd/etc/
 COPY entrypoint.sh /bin/
 
+
 ENV LD_PRELOAD=""
 EXPOSE 24224 5140
 
