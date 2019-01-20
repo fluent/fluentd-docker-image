@@ -183,7 +183,6 @@ curl https://raw.githubusercontent.com/fluent/fluentd-docker-image/master/VERSIO
 # Create plugins directory. plugins scripts put here will be copied to the new image.
 mkdir plugins
 
-# Download sample Dockerfile. If you use v0.14.15/v0.12.34 or earlier image, use Dockerfile.sample.old
 curl https://raw.githubusercontent.com/fluent/fluentd-docker-image/master/Dockerfile.sample > Dockerfile
 ```
 
@@ -197,11 +196,69 @@ You can install [Fluentd plugins][4] using Dockerfile.
 Sample Dockerfile installs `fluent-plugin-elasticsearch`.
 To add plugins, edit `Dockerfile` as following:
 
+### 3.1 For current images
+
 #### Alpine version
 
 ```Dockerfile
-# or v0.12-onbuild
-FROM fluent/fluentd:v1.3-onbuild
+FROM fluent/fluentd:v1.3-onbuild-1
+
+# Use root account to use apk
+USER root
+
+# below RUN includes plugin as examples elasticsearch is not required
+# you may customize including plugins as you wish
+RUN apk add --no-cache --update --virtual .build-deps \
+        sudo build-base ruby-dev \
+ && sudo gem install \
+        fluent-plugin-elasticsearch \
+ && sudo gem sources --clear-all \
+ && apk del .build-deps \
+ && rm -rf /home/fluent/.gem/ruby/2.5.0/cache/*.gem
+
+USER fluent
+```
+
+#### Debian version
+
+```Dockerfile
+FROM fluent/fluentd:v1.3-debian-onbuild-1
+
+# Use root account to use apt
+USER root
+
+# below RUN includes plugin as examples elasticsearch is not required
+# you may customize including plugins as you wish
+RUN buildDeps="sudo make gcc g++ libc-dev ruby-dev" \
+ && apt-get update \
+ && apt-get install -y --no-install-recommends $buildDeps \
+ && sudo gem install \
+        fluent-plugin-elasticsearch \
+ && sudo gem sources --clear-all \
+ && SUDO_FORCE_REMOVE=yes \
+    apt-get purge -y --auto-remove \
+                  -o APT::AutoRemove::RecommendsImportant=false \
+                  $buildDeps \
+ && rm -rf /var/lib/apt/lists/* \
+           /home/fluent/.gem/ruby/2.3.0/cache/*.gem
+
+USER fluent
+```
+
+#### Note
+
+These example run `apk add`/`apt-get install` to be able to install
+Fluentd plugins which require native extensions (they are removed immediately
+after plugin installation).
+If you're sure that plugins don't include native extensions, you can omit it
+to make image build faster.
+
+### 3.2 For older images
+
+#### Alpine version
+
+```Dockerfile
+FROM fluent/fluentd:v1.3.2-onbuild
 
 # below RUN includes plugin as examples elasticsearch is not required
 # you may customize including plugins as you wish
@@ -213,16 +270,12 @@ RUN apk add --no-cache --update --virtual .build-deps \
  && sudo gem sources --clear-all \
  && apk del .build-deps \
  && rm -rf /home/fluent/.gem/ruby/2.5.0/cache/*.gem
-
-COPY fluent.conf /fluentd/etc/
-COPY entrypoint.sh /bin/
 ```
 
 #### Debian version
 
 ```Dockerfile
-# or v0.12-debian-onbuild
-FROM fluent/fluentd:v1.3-debian-onbuild
+FROM fluent/fluentd:v1.3.2-debian-onbuild
 
 # below RUN includes plugin as examples elasticsearch is not required
 # you may customize including plugins as you wish
@@ -240,14 +293,6 @@ RUN buildDeps="sudo make gcc g++ libc-dev ruby-dev" \
  && rm -rf /var/lib/apt/lists/* \
            /home/fluent/.gem/ruby/2.3.0/cache/*.gem
 ```
-
-#### Note
-
-These example run `apk add`/`apt-get install` to be able to install
-Fluentd plugins which require native extensions (they are removed immediately
-after plugin installation).
-If you're sure that plugins don't include native extensions, you can omit it
-to make image build faster.
 
 ### 4. Build image
 
