@@ -138,7 +138,7 @@ Same as current images.
 To create endpoint that collects logs on your host just run:
 
 ```bash
-docker run -d -p 24224:24224 -p 24224:24224/udp -v /data:/fluentd/log fluent/fluentd:v1.3-debian
+docker run -d -p 24224:24224 -p 24224:24224/udp -v /data:/fluentd/log fluent/fluentd:v1.3-debian-1
 ```
 
 Default configurations are to:
@@ -159,6 +159,12 @@ For example, to provide a bespoke config and make `fluentd` verbose, then:
 The first `-v` tells Docker to share '/path/to/dir' as a volume and mount it at /fluentd/etc
 The `-c` after the container name (fluentd) tells `fluentd` where to find the config file
 The second `-v` is passed to `fluentd` to tell it to be verbose
+
+## Change running user
+
+Use `-u` option with `docker run`.
+
+`docker run -p 24224:24224 -u foo -v ...`
 
 ## How to build your own image
 
