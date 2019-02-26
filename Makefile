@@ -17,17 +17,17 @@ X86_IMAGES := \
 	v0.12/alpine-onbuild:v0.12.43-onbuild-1.0,v0.12-onbuild-1 \
 	v0.12/debian:v0.12.43-debian-1.0,v0.12-debian-1 \
 	v0.12/debian-onbuild:v0.12.43-debian-onbuild-1.0,v0.12-debian-onbuild-1 \
-	v1.3/alpine:v1.3.3-1.0,v1.3-1,edge \
-	v1.3/alpine-onbuild:v1.3.3-onbuild-1.0,v1.3-onbuild-1,edge-onbuild \
-	v1.3/debian:v1.3.3-debian-1.0,v1.3-debian-1,edge-debian \
-	v1.3/debian-onbuild:v1.3.3-debian-onbuild-1.0,v1.3-debian-onbuild-1,edge-debian-onbuild \
-	v1.3/windows:v1.3.3-windows-1.0,v1.3-windows-1
+	v1.4/alpine:v1.4.0-1.0,v1.4-1,edge \
+	v1.4/alpine-onbuild:v1.4.0-onbuild-1.0,v1.4-onbuild-1,edge-onbuild \
+	v1.4/debian:v1.4.0-debian-1.0,v1.4-debian-1,edge-debian \
+	v1.4/debian-onbuild:v1.4.0-debian-onbuild-1.0,v1.4-debian-onbuild-1,edge-debian-onbuild \
+	v1.4/windows:v1.4.0-windows-1.0,v1.4-windows-1
 #	<Dockerfile>:<version>,<tag1>,<tag2>,...
 
 # Define images for running on ARM platforms
 ARM_IMAGES := \
-	v1.3/armhf/debian:v1.3.3-debian-armhf-1.0,v1.3-debian-armhf-1,edge-debian-armhf \
-	v1.3/armhf/debian-onbuild:v1.3.3-debian-armhf-onbuild-1.0,v1.3-debian-armhf-onbuild-1,edge-debian-armhf-onbuild
+	v1.4/armhf/debian:v1.4.0-debian-armhf-1.0,v1.4-debian-armhf-1,edge-debian-armhf \
+	v1.4/armhf/debian-onbuild:v1.4.0-debian-armhf-onbuild-1.0,v1.4-debian-armhf-onbuild-1,edge-debian-armhf-onbuild
 
 ALL_IMAGES := $(X86_IMAGES) $(ARM_IMAGES)
 
