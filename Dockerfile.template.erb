@@ -152,6 +152,8 @@ ONBUILD COPY fluent.conf /fluentd/etc/
 ONBUILD COPY plugins /fluentd/plugins/
 <% end %>
 
+ENV FLUENTD_CONF="fluent.conf"
+
 <% if not is_windows %>
 <% if is_alpine %>
 ENV LD_PRELOAD=""

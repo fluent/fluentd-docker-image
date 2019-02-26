@@ -36,6 +36,8 @@ COPY fluent.conf /fluentd/etc/
 COPY entrypoint.sh /bin/
 
 
+ENV FLUENTD_CONF="fluent.conf"
+
 ENV LD_PRELOAD=""
 EXPOSE 24224 5140
 

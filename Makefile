@@ -13,10 +13,10 @@
 
 IMAGE_NAME := fluent/fluentd
 X86_IMAGES := \
-	v0.12/alpine:v0.12.43-1.0,v0.12-1 \
-	v0.12/alpine-onbuild:v0.12.43-onbuild-1.0,v0.12-onbuild-1 \
-	v0.12/debian:v0.12.43-debian-1.0,v0.12-debian-1 \
-	v0.12/debian-onbuild:v0.12.43-debian-onbuild-1.0,v0.12-debian-onbuild-1 \
+	v0.12/alpine:v0.12.43-1.1,v0.12-1 \
+	v0.12/alpine-onbuild:v0.12.43-onbuild-1.1,v0.12-onbuild-1 \
+	v0.12/debian:v0.12.43-debian-1.1,v0.12-debian-1 \
+	v0.12/debian-onbuild:v0.12.43-debian-onbuild-1.1,v0.12-debian-onbuild-1 \
 	v1.4/alpine:v1.4.0-1.0,v1.4-1,edge \
 	v1.4/alpine-onbuild:v1.4.0-onbuild-1.0,v1.4-onbuild-1,edge-onbuild \
 	v1.4/debian:v1.4.0-debian-1.0,v1.4-debian-1,edge-debian \
