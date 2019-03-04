@@ -22,14 +22,14 @@ collection and consumption for a better use and understanding of data.
 
 These tags have image version postfix. This updates many places so we need feedback for improve/fix the images.
 
-- `v1.3.3-1.0`, `v1.3-1`, `edge`
-  [(v1.3/alpine/Dockerfile)][113]
-- `v1.3.3-onbuild-1.0`, `v1.3-onbuild-1`, `edge-onbuild`
-  [(v1.3/alpine-onbuild/Dockerfile)][114]
-- `v1.3.3-debian-1.0`, `v1.3-debian-1`, `edge-debian`
-  [(v1.3/debian/Dockerfile)][115]
-- `v1.3.3-debian-onbuild-1.0`, `v1.3-debian-onbuild-1`, `edge-debian-onbuild`
-  [(v1.3/debian-onbuild/Dockerfile)][116]
+- `v1.4.0-1.0`, `v1.4-1`, `edge`
+  [(v1.4/alpine/Dockerfile)][113]
+- `v1.4.0-onbuild-1.0`, `v1.4-onbuild-1`, `edge-onbuild`
+  [(v1.4/alpine-onbuild/Dockerfile)][114]
+- `v1.4.0-debian-1.0`, `v1.4-debian-1`, `edge-debian`
+  [(v1.4/debian/Dockerfile)][115]
+- `v1.4.0-debian-onbuild-1.0`, `v1.4-debian-onbuild-1`, `edge-debian-onbuild`
+  [(v1.4/debian-onbuild/Dockerfile)][116]
 - `v0.12.43-1.0`, `v0.12-1`
   [(v0.12/alpine/Dockerfile)][101]
 - `v0.12.43-onbuild-1.0`, `v0.12-onbuild-1`
