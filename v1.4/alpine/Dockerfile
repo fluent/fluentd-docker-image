@@ -3,7 +3,7 @@
 
 FROM alpine:3.8
 LABEL maintainer "Fluentd developers <fluentd@googlegroups.com>"
-LABEL Description="Fluentd docker image" Vendor="Fluent Organization" Version="1.4.0"
+LABEL Description="Fluentd docker image" Vendor="Fluent Organization" Version="1.4.1"
 
 # Do not split this into multiple RUN!
 # Docker creates a layer for every RUN-Statement
@@ -19,7 +19,7 @@ RUN apk update \
  && echo 'gem: --no-document' >> /etc/gemrc \
  && gem install oj -v 3.3.10 \
  && gem install json -v 2.1.0 \
- && gem install fluentd -v 1.4.0 \
+ && gem install fluentd -v 1.4.1 \
  && gem install bigdecimal -v 1.3.5 \
  && apk del .build-deps \
  && rm -rf /tmp/* /var/tmp/* /usr/lib/ruby/gems/*/cache/*.gem
