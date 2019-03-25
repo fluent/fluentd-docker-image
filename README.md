@@ -22,21 +22,21 @@ collection and consumption for a better use and understanding of data.
 
 These tags have image version postfix. This updates many places so we need feedback for improve/fix the images.
 
-- `v1.4.1-1.0`, `v1.4-1`, `edge`
+- `v1.4.1-1.1`, `v1.4-1`, `edge`
   [(v1.4/alpine/Dockerfile)][113]
-- `v1.4.1-onbuild-1.0`, `v1.4-onbuild-1`, `edge-onbuild`
+- `v1.4.1-onbuild-1.1`, `v1.4-onbuild-1`, `edge-onbuild`
   [(v1.4/alpine-onbuild/Dockerfile)][114]
-- `v1.4.1-debian-1.0`, `v1.4-debian-1`, `edge-debian`
+- `v1.4.1-debian-1.1`, `v1.4-debian-1`, `edge-debian`
   [(v1.4/debian/Dockerfile)][115]
-- `v1.4.1-debian-onbuild-1.0`, `v1.4-debian-onbuild-1`, `edge-debian-onbuild`
+- `v1.4.1-debian-onbuild-1.1`, `v1.4-debian-onbuild-1`, `edge-debian-onbuild`
   [(v1.4/debian-onbuild/Dockerfile)][116]
-- `v0.12.43-1.0`, `v0.12-1`
+- `v0.12.43-1.2`, `v0.12-1`
   [(v0.12/alpine/Dockerfile)][101]
-- `v0.12.43-onbuild-1.0`, `v0.12-onbuild-1`
+- `v0.12.43-onbuild-1.2`, `v0.12-onbuild-1`
   [(v0.12/alpine-onbuild/Dockerfile)][102]
-- `v0.12.43-debian-1.0`, `v0.12-debian-1`
+- `v0.12.43-debian-1.2`, `v0.12-debian-1`
   [(v0.12/debian/Dockerfile)][105]
-- `v0.12.43-debian-onbuild-1.0`, `v0.12-debian-onbuild-1`
+- `v0.12.43-debian-onbuild-1.2`, `v0.12-debian-onbuild-1`
   [(v0.12/debian-onbuild/Dockerfile)][106]
 
 ### Older images (before official image)

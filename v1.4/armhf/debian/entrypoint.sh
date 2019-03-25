@@ -5,7 +5,7 @@ DEFAULT=/etc/default/fluentd
 
 if [ -r $DEFAULT ]; then
     set -o allexport
-    source $DEFAULT
+    . $DEFAULT
     set +o allexport
 fi
 
