@@ -18,9 +18,9 @@ FROM alpine:3.8
 <% end %>
 <% else %>
 <% if is_armhf %>
-FROM resin/armv7hf-debian:stretch
+FROM arm32v7/ruby:2.6-stretch
 <% else %>
-FROM debian:stretch-slim
+FROM ruby:2.6-slim-stretch
 <% end %>
 <% end %>
 <% end %>
@@ -86,10 +86,8 @@ RUN apk update \
 RUN apt-get update \
  && apt-get install -y --no-install-recommends \
             ca-certificates \
-            ruby \
  && buildDeps=" \
       make gcc g++ libc-dev \
-      ruby-dev \
       wget bzip2 gnupg dirmngr \
     " \
  && apt-get install -y --no-install-recommends $buildDeps \
