@@ -116,11 +116,11 @@ RUN apt-get update \
  && chmod +x /usr/local/bin/tini \
  && tini -h \
 <% if fluentd_ver.start_with?('1') %>
- && wget -O /tmp/jemalloc-4.5.0.tar.bz2 https://github.com/jemalloc/jemalloc/releases/download/4.5.0/jemalloc-4.5.0.tar.bz2 \
- && cd /tmp && tar -xjf jemalloc-4.5.0.tar.bz2 && cd jemalloc-4.5.0/ \
+ && wget -O /tmp/jemalloc-5.2.0.tar.bz2 https://github.com/jemalloc/jemalloc/releases/download/5.2.0/jemalloc-5.2.0.tar.bz2 \
+ && cd /tmp && tar -xjf jemalloc-5.2.0.tar.bz2 && cd jemalloc-5.2.0/ \
 <% else %>
- && wget -O /tmp/jemalloc-4.4.0.tar.bz2 https://github.com/jemalloc/jemalloc/releases/download/4.4.0/jemalloc-4.4.0.tar.bz2 \
- && cd /tmp && tar -xjf jemalloc-4.4.0.tar.bz2 && cd jemalloc-4.4.0/ \
+ && wget -O /tmp/jemalloc-5.2.0.tar.bz2 https://github.com/jemalloc/jemalloc/releases/download/5.2.0/jemalloc-5.2.0.tar.bz2 \
+ && cd /tmp && tar -xjf jemalloc-5.2.0.tar.bz2 && cd jemalloc-5.2.0/ \
 <% end %>
  && ./configure && make \
  && mv lib/libjemalloc.so.2 /usr/lib \
