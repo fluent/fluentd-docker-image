@@ -23,40 +23,40 @@ collection and consumption for a better use and understanding of data.
 These tags have image version postfix. This updates many places so we need feedback for improve/fix the images.
 
 - `v1.4.2-1.0`, `v1.4-1`, `edge`
-  [(v1.4/alpine/Dockerfile)][113]
+  [(v1.4/alpine/Dockerfile)][fluentd-alpine-1-4]
 - `v1.4.2-onbuild-1.0`, `v1.4-onbuild-1`, `edge-onbuild`
-  [(v1.4/alpine-onbuild/Dockerfile)][114]
+  [(v1.4/alpine-onbuild/Dockerfile)][fluentd-alpine-1-4-onbuild]
 - `v1.4.2-debian-1.0`, `v1.4-debian-1`, `edge-debian`
-  [(v1.4/debian/Dockerfile)][115]
+  [(v1.4/debian/Dockerfile)][fluentd-debian-1-4]
 - `v1.4.2-debian-onbuild-1.0`, `v1.4-debian-onbuild-1`, `edge-debian-onbuild`
-  [(v1.4/debian-onbuild/Dockerfile)][116]
+  [(v1.4/debian-onbuild/Dockerfile)][fluentd-debian-1-4-onbuild]
 - `v0.12.43-1.2`, `v0.12-1`
-  [(v0.12/alpine/Dockerfile)][101]
+  [(v0.12/alpine/Dockerfile)][fluentd-0-12-alpine]
 - `v0.12.43-onbuild-1.2`, `v0.12-onbuild-1`
-  [(v0.12/alpine-onbuild/Dockerfile)][102]
+  [(v0.12/alpine-onbuild/Dockerfile)][fluentd-0-12-alpine-onbuild]
 - `v0.12.43-debian-1.2`, `v0.12-debian-1`
-  [(v0.12/debian/Dockerfile)][105]
+  [(v0.12/debian/Dockerfile)][fluentd-0-12-debian]
 - `v0.12.43-debian-onbuild-1.2`, `v0.12-debian-onbuild-1`
-  [(v0.12/debian-onbuild/Dockerfile)][106]
+  [(v0.12/debian-onbuild/Dockerfile)][fluentd-0-12-debian-onbuild]
 
 ### Older images (before official image)
 
 - `v1.3.2`, `v1.3`, `stable`, `latest`
-  [(v1.3/alpine/Dockerfile)][113]
+  [(v1.3/alpine/Dockerfile)][fluentd-alpine-1-3]
 - `v1.3.2-onbuild`, `v1.3-onbuild`, `stable-onbuild`, `onbuild`
-  [(v1.3/alpine-onbuild/Dockerfile)][114]
+  [(v1.3/alpine-onbuild/Dockerfile)][fluentd-alpine-1-3-onbuild]
 - `v1.3.2-debian`, `v1.3-debian`, `stable-debian`, `debian`
-  [(v1.3/debian/Dockerfile)][115]
+  [(v1.3/debian/Dockerfile)][fluentd-debian-1-3]
 - `v1.3.2-debian-onbuild`, `v1.3-debian-onbuild`, `stable-debian-onbuild`,
-  [(v1.3/debian-onbuild/Dockerfile)][116]
+  [(v1.3/debian-onbuild/Dockerfile)][fluentd-debian-1-3-onbuild]
 - `v0.12.43`, `v0.12`
-  [(v0.12/alpine/Dockerfile)][101]
+  [(v0.12/alpine/Dockerfile)][fluentd-0-12-alpine]
 - `v0.12.43-onbuild`, `v0.12-onbuild`
-  [(v0.12/alpine-onbuild/Dockerfile)][102]
+  [(v0.12/alpine-onbuild/Dockerfile)][fluentd-0-12-alpine-onbuild]
 - `v0.12.43-debian`, `v0.12-debian`
-  [(v0.12/debian/Dockerfile)][105]
+  [(v0.12/debian/Dockerfile)][fluentd-0-12-debian]
 - `v0.12.43-debian-onbuild`, `v0.12-debian-onbuild`
-  [(v0.12/debian-onbuild/Dockerfile)][106]
+  [(v0.12/debian-onbuild/Dockerfile)][fluentd-0-12-debian-onbuild]
 
 We recommend to use debian version for production because it uses jemalloc to mitigate memory fragmentation issue.
 
@@ -358,11 +358,15 @@ through a [GitHub issue](https://github.com/fluent/fluentd-docker-image/issues).
 [5]: https://www.fluentd.org/guides/recipes/docker-logging
 [6]: https://docs.docker.com/engine/reference/logging/fluentd
 [7]: https://hub.docker.com/_/debian
-[101]: https://github.com/fluent/fluentd-docker-image/blob/master/v0.12/alpine/Dockerfile
-[102]: https://github.com/fluent/fluentd-docker-image/blob/master/v0.12/alpine-onbuild/Dockerfile
-[105]: https://github.com/fluent/fluentd-docker-image/blob/master/v0.12/debian/Dockerfile
-[106]: https://github.com/fluent/fluentd-docker-image/blob/master/v0.12/debian-onbuild/Dockerfile
-[113]: https://github.com/fluent/fluentd-docker-image/blob/master/v1.3/alpine/Dockerfile
-[114]: https://github.com/fluent/fluentd-docker-image/blob/master/v1.3/alpine-onbuild/Dockerfile
-[115]: https://github.com/fluent/fluentd-docker-image/blob/master/v1.3/debian/Dockerfile
-[116]: https://github.com/fluent/fluentd-docker-image/blob/master/v1.3/debian-onbuild/Dockerfile
+[fluentd-0-12-alpine]: https://github.com/fluent/fluentd-docker-image/blob/master/v0.12/alpine/Dockerfile
+[fluentd-0-12-alpine-onbuild]: https://github.com/fluent/fluentd-docker-image/blob/master/v0.12/alpine-onbuild/Dockerfile
+[fluentd-0-12-debian]: https://github.com/fluent/fluentd-docker-image/blob/master/v0.12/debian/Dockerfile
+[fluentd-0-12-debian-onbuild]: https://github.com/fluent/fluentd-docker-image/blob/master/v0.12/debian-onbuild/Dockerfile
+[fluentd-1-3-alpine]: https://github.com/fluent/fluentd-docker-image/blob/master/v1.3/alpine/Dockerfile
+[fluentd-1-4-alpine]: https://github.com/fluent/fluentd-docker-image/blob/master/v1.4/alpine/Dockerfile
+[fluentd-1-3-alpine-onbuild]: https://github.com/fluent/fluentd-docker-image/blob/master/v1.3/alpine-onbuild/Dockerfile
+[fluentd-1-4-alpine-onbuild]: https://github.com/fluent/fluentd-docker-image/blob/master/v1.4/alpine-onbuild/Dockerfile
+[fluentd-1-3-debian]: https://github.com/fluent/fluentd-docker-image/blob/master/v1.3/debian/Dockerfile
+[fluentd-1-4-debian]: https://github.com/fluent/fluentd-docker-image/blob/master/v1.4/debian/Dockerfile
+[fluentd-1-3-debian-onbuild]: https://github.com/fluent/fluentd-docker-image/blob/master/v1.3/debian-onbuild/Dockerfile
+[fluentd-1-4-debian-onbuild]: https://github.com/fluent/fluentd-docker-image/blob/master/v1.4/debian-onbuild/Dockerfile
