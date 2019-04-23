@@ -29,7 +29,7 @@
   major=$(echo "$output" | cut -d '.' -f 1)
   minor=$(echo "$output" | cut -d '.' -f 2)
   [ "$major" -eq "2" ]
-  [[ "$minor" =~ [3-6]+ ]]
+  [[ "$minor" =~ [56] ]]
 }
 
 
