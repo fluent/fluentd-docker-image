@@ -228,14 +228,14 @@ USER fluent
 #### Debian version
 
 ```Dockerfile
-FROM fluent/fluentd:v1.3-debian-onbuild-1
+FROM fluent/fluentd:v1.4-debian-onbuild-1
 
 # Use root account to use apt
 USER root
 
 # below RUN includes plugin as examples elasticsearch is not required
 # you may customize including plugins as you wish
-RUN buildDeps="sudo make gcc g++ libc-dev ruby-dev" \
+RUN buildDeps="sudo make gcc g++ libc-dev" \
  && apt-get update \
  && apt-get install -y --no-install-recommends $buildDeps \
  && sudo gem install \
@@ -246,7 +246,7 @@ RUN buildDeps="sudo make gcc g++ libc-dev ruby-dev" \
                   -o APT::AutoRemove::RecommendsImportant=false \
                   $buildDeps \
  && rm -rf /var/lib/apt/lists/* \
-           /home/fluent/.gem/ruby/2.3.0/cache/*.gem
+           /home/fluent/.gem/ruby/2.6.0/cache/*.gem
 
 USER fluent
 ```
