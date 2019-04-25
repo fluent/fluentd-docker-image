@@ -22,21 +22,21 @@ collection and consumption for a better use and understanding of data.
 
 These tags have image version postfix. This updates many places so we need feedback for improve/fix the images.
 
-- `v1.4.2-1.0`, `v1.4-1`, `edge`
+- `v1.4.2-2.0`, `v1.4-2`, `edge`
   [(v1.4/alpine/Dockerfile)][fluentd-alpine-1-4]
-- `v1.4.2-onbuild-1.0`, `v1.4-onbuild-1`, `edge-onbuild`
+- `v1.4.2-onbuild-2.0`, `v1.4-onbuild-2`, `edge-onbuild`
   [(v1.4/alpine-onbuild/Dockerfile)][fluentd-alpine-1-4-onbuild]
-- `v1.4.2-debian-1.0`, `v1.4-debian-1`, `edge-debian`
+- `v1.4.2-debian-2.0`, `v1.4-debian-2`, `edge-debian`
   [(v1.4/debian/Dockerfile)][fluentd-debian-1-4]
-- `v1.4.2-debian-onbuild-1.0`, `v1.4-debian-onbuild-1`, `edge-debian-onbuild`
+- `v1.4.2-debian-onbuild-2.0`, `v1.4-debian-onbuild-2`, `edge-debian-onbuild`
   [(v1.4/debian-onbuild/Dockerfile)][fluentd-debian-1-4-onbuild]
-- `v0.12.43-1.2`, `v0.12-1`
+- `v0.12.43-2.0`, `v0.12-2`
   [(v0.12/alpine/Dockerfile)][fluentd-0-12-alpine]
-- `v0.12.43-onbuild-1.2`, `v0.12-onbuild-1`
+- `v0.12.43-onbuild-2.0`, `v0.12-onbuild-2`
   [(v0.12/alpine-onbuild/Dockerfile)][fluentd-0-12-alpine-onbuild]
-- `v0.12.43-debian-1.2`, `v0.12-debian-1`
+- `v0.12.43-debian-2.0`, `v0.12-debian-2`
   [(v0.12/debian/Dockerfile)][fluentd-0-12-debian]
-- `v0.12.43-debian-onbuild-1.2`, `v0.12-debian-onbuild-1`
+- `v0.12.43-debian-onbuild-2.0`, `v0.12-debian-onbuild-2`
   [(v0.12/debian-onbuild/Dockerfile)][fluentd-0-12-debian-onbuild]
 
 ### Older images (before official image)
