@@ -14,7 +14,7 @@ FROM microsoft/windowsservercore:1803
 <% if is_armhf %>
 FROM resin/armhf-alpine:3.7
 <% else %>
-FROM alpine:3.8
+FROM alpine:3.9
 <% end %>
 <% else %>
 <% if is_armhf %>
@@ -58,7 +58,7 @@ RUN choco install -y ruby --version 2.4.2.2 --params "'/InstallDir:C:\'" \
 <% else %>
 && gem install oj -v 2.18.3 \
 <% end %>
-&& gem install json -v 2.1.0 \
+&& gem install json -v 2.2.0 \
 && gem install fluentd -v <%= fluentd_ver %> \
 && gem install win32-service -v 1.0.1 \
 && gem install win32-ipc -v 0.7.0 \
@@ -98,7 +98,7 @@ RUN apt-get update \
 <% else %>
  && gem install oj -v 2.18.3 \
 <% end %>
- && gem install json -v 2.1.0 \
+ && gem install json -v 2.2.0 \
  && gem install fluentd -v <%= fluentd_ver %> \
 <% if is_alpine %>
  && gem install bigdecimal -v 1.3.5 \
@@ -129,17 +129,22 @@ RUN apt-get update \
 <% end %>
  && rm -rf /tmp/* /var/tmp/* /usr/lib/ruby/gems/*/cache/*.gem
 
-# for log storage (maybe shared with host)
-RUN mkdir -p /fluentd/log
-# configuration/plugins path (default: copied from .)
-RUN mkdir -p /fluentd/etc /fluentd/plugins
-
 <% if is_alpine %>
-RUN addgroup -S fluent && adduser -S -g fluent fluent
+RUN addgroup -S fluent && adduser -S -g fluent fluent \
+    # for log storage (maybe shared with host)
+    && mkdir -p /fluentd/log \
+    # configuration/plugins path (default: copied from .)
+    && mkdir -p /fluentd/etc /fluentd/plugins \
+    && chown -R fluent /fluentd && chgrp -R fluent /fluentd
 <% else %>
-RUN groupadd -r fluent && useradd -r -g fluent fluent
+RUN groupadd -r fluent && useradd -r -g fluent fluent \
+    # for log storage (maybe shared with host)
+    && mkdir -p /fluentd/log \
+    # configuration/plugins path (default: copied from .)
+    && mkdir -p /fluentd/etc /fluentd/plugins \
+    && chown -R fluent /fluentd && chgrp -R fluent /fluentd
 <% end %>
-RUN chown -R fluent /fluentd && chgrp -R fluent /fluentd
+
 
 COPY fluent.conf /fluentd/etc/
 COPY entrypoint.sh /bin/

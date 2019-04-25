@@ -22,21 +22,21 @@ collection and consumption for a better use and understanding of data.
 
 These tags have image version postfix. This updates many places so we need feedback for improve/fix the images.
 
-- `v1.4.2-1.0`, `v1.4-1`, `edge`
+- `v1.4.2-2.0`, `v1.4-2`, `edge`
   [(v1.4/alpine/Dockerfile)][fluentd-alpine-1-4]
-- `v1.4.2-onbuild-1.0`, `v1.4-onbuild-1`, `edge-onbuild`
+- `v1.4.2-onbuild-2.0`, `v1.4-onbuild-2`, `edge-onbuild`
   [(v1.4/alpine-onbuild/Dockerfile)][fluentd-alpine-1-4-onbuild]
-- `v1.4.2-debian-1.0`, `v1.4-debian-1`, `edge-debian`
+- `v1.4.2-debian-2.0`, `v1.4-debian-2`, `edge-debian`
   [(v1.4/debian/Dockerfile)][fluentd-debian-1-4]
-- `v1.4.2-debian-onbuild-1.0`, `v1.4-debian-onbuild-1`, `edge-debian-onbuild`
+- `v1.4.2-debian-onbuild-2.0`, `v1.4-debian-onbuild-2`, `edge-debian-onbuild`
   [(v1.4/debian-onbuild/Dockerfile)][fluentd-debian-1-4-onbuild]
-- `v0.12.43-1.2`, `v0.12-1`
+- `v0.12.43-2.0`, `v0.12-2`
   [(v0.12/alpine/Dockerfile)][fluentd-0-12-alpine]
-- `v0.12.43-onbuild-1.2`, `v0.12-onbuild-1`
+- `v0.12.43-onbuild-2.0`, `v0.12-onbuild-2`
   [(v0.12/alpine-onbuild/Dockerfile)][fluentd-0-12-alpine-onbuild]
-- `v0.12.43-debian-1.2`, `v0.12-debian-1`
+- `v0.12.43-debian-2.0`, `v0.12-debian-2`
   [(v0.12/debian/Dockerfile)][fluentd-0-12-debian]
-- `v0.12.43-debian-onbuild-1.2`, `v0.12-debian-onbuild-1`
+- `v0.12.43-debian-onbuild-2.0`, `v0.12-debian-onbuild-2`
   [(v0.12/debian-onbuild/Dockerfile)][fluentd-0-12-debian-onbuild]
 
 ### Older images (before official image)
@@ -86,6 +86,8 @@ Latest version of `vX.Y` Fluentd branch.
 
 `A` will be incremented when image has major changes.
 
+When fluentd version is updated, A is reset to `1`.
+
 #### `vX.Y.Z-A.B`
 
 Concrete `vX.Y.Z` version of Fluentd.
@@ -93,10 +95,12 @@ Concrete `vX.Y.Z` version of Fluentd.
 `A` will be incremented when image has major changes.
 `B` will be incremented when image has small changes, e.g. library update or bug fixes.
 
+When fluentd version is updated, `A.B` is reset to `1.0`.
+
 #### `onbuild` included tag
 
-This image makes building derivative images easier.
-See ["How to build your own image"](#how-to-build-your-own-image) section for more details.
+`onbuild` images are deprecated. Use non-`onbuild ` images instead to build your image.
+New images don't provide `onbuild` version.
 
 #### `debian` included tag
 
@@ -182,8 +186,8 @@ mkdir custom-fluentd
 cd custom-fluentd
 
 # Download default fluent.conf. This file will be copied to the new image.
-# VERSION is v1.3 or v0.12 like fluentd version and OS is alpine or debian.
-# Full example is https://raw.githubusercontent.com/fluent/fluentd-docker-image/master/v0.12/debian-onbuild/fluent.conf
+# VERSION is v1.4 or v0.12 like fluentd version and OS is alpine or debian.
+# Full example is https://raw.githubusercontent.com/fluent/fluentd-docker-image/master/v1.4/debian-onbuild/fluent.conf
 curl https://raw.githubusercontent.com/fluent/fluentd-docker-image/master/VERSION/OS-onbuild/fluent.conf > fluent.conf
 
 # Create plugins directory. plugins scripts put here will be copied to the new image.
@@ -207,7 +211,7 @@ To add plugins, edit `Dockerfile` as following:
 #### Alpine version
 
 ```Dockerfile
-FROM fluent/fluentd:v1.3-onbuild-1
+FROM fluent/fluentd:v1.4-2
 
 # Use root account to use apk
 USER root
@@ -216,11 +220,13 @@ USER root
 # you may customize including plugins as you wish
 RUN apk add --no-cache --update --virtual .build-deps \
         sudo build-base ruby-dev \
- && sudo gem install \
-        fluent-plugin-elasticsearch \
+ && sudo gem install fluent-plugin-elasticsearch \
  && sudo gem sources --clear-all \
  && apk del .build-deps \
  && rm -rf /home/fluent/.gem/ruby/2.5.0/cache/*.gem
+
+COPY fluent.conf /fluentd/etc/
+COPY entrypoint.sh /bin/
 
 USER fluent
 ```
@@ -228,7 +234,7 @@ USER fluent
 #### Debian version
 
 ```Dockerfile
-FROM fluent/fluentd:v1.4-debian-onbuild-1
+FROM fluent/fluentd:v1.4-debian-2
 
 # Use root account to use apt
 USER root
@@ -238,8 +244,7 @@ USER root
 RUN buildDeps="sudo make gcc g++ libc-dev" \
  && apt-get update \
  && apt-get install -y --no-install-recommends $buildDeps \
- && sudo gem install \
-        fluent-plugin-elasticsearch \
+ && sudo gem install fluent-plugin-elasticsearch \
  && sudo gem sources --clear-all \
  && SUDO_FORCE_REMOVE=yes \
     apt-get purge -y --auto-remove \
@@ -247,6 +252,9 @@ RUN buildDeps="sudo make gcc g++ libc-dev" \
                   $buildDeps \
  && rm -rf /var/lib/apt/lists/* \
            /home/fluent/.gem/ruby/2.6.0/cache/*.gem
+
+COPY fluent.conf /fluentd/etc/
+COPY entrypoint.sh /bin/
 
 USER fluent
 ```

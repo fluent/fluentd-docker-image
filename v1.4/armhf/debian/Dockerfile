@@ -22,7 +22,7 @@ RUN apt-get update \
  && apt-get install -y --no-install-recommends $buildDeps \
  && echo 'gem: --no-document' >> /etc/gemrc \
  && gem install oj -v 3.3.10 \
- && gem install json -v 2.1.0 \
+ && gem install json -v 2.2.0 \
  && gem install fluentd -v 1.4.2 \
  && dpkgArch="$(dpkg --print-architecture | awk -F- '{ print $NF }')" \
  && wget -O /usr/local/bin/tini "https://github.com/krallin/tini/releases/download/v$TINI_VERSION/tini-$dpkgArch" \
@@ -43,13 +43,13 @@ RUN apt-get update \
  && rm -rf /var/lib/apt/lists/* \
  && rm -rf /tmp/* /var/tmp/* /usr/lib/ruby/gems/*/cache/*.gem
 
-# for log storage (maybe shared with host)
-RUN mkdir -p /fluentd/log
-# configuration/plugins path (default: copied from .)
-RUN mkdir -p /fluentd/etc /fluentd/plugins
+RUN groupadd -r fluent && useradd -r -g fluent fluent \
+    # for log storage (maybe shared with host)
+    && mkdir -p /fluentd/log \
+    # configuration/plugins path (default: copied from .)
+    && mkdir -p /fluentd/etc /fluentd/plugins \
+    && chown -R fluent /fluentd && chgrp -R fluent /fluentd
 
-RUN groupadd -r fluent && useradd -r -g fluent fluent
-RUN chown -R fluent /fluentd && chgrp -R fluent /fluentd
 
 COPY fluent.conf /fluentd/etc/
 COPY entrypoint.sh /bin/
