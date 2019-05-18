@@ -12,8 +12,8 @@ services:
 env:
   - Dockerfile=v0.12/alpine
   - Dockerfile=v0.12/debian
-  - Dockerfile=v1.4/alpine
-  - Dockerfile=v1.4/debian
+  - Dockerfile=v1.5/alpine
+  - Dockerfile=v1.5/debian
 
 before_script:
   - make image DOCKERFILE=$Dockerfile VERSION=test
