@@ -204,7 +204,7 @@ To add plugins, edit `Dockerfile` as following:
 #### Alpine version
 
 ```Dockerfile
-FROM fluent/fluentd:v1.4-2
+FROM fluent/fluentd:v1.5-1
 
 # Use root account to use apk
 USER root
@@ -227,7 +227,7 @@ USER fluent
 #### Debian version
 
 ```Dockerfile
-FROM fluent/fluentd:v1.4-debian-2
+FROM fluent/fluentd:v1.5-debian-1
 
 # Use root account to use apt
 USER root
