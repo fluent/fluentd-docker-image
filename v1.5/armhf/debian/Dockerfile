@@ -3,7 +3,7 @@
 
 FROM arm32v7/ruby:2.6-stretch
 LABEL maintainer "Fluentd developers <fluentd@googlegroups.com>"
-LABEL Description="Fluentd docker image" Vendor="Fluent Organization" Version="1.5.0"
+LABEL Description="Fluentd docker image" Vendor="Fluent Organization" Version="1.5.1"
 ARG CROSS_BUILD_START="cross-build-start"
 ARG CROSS_BUILD_END="cross-build-end"
 RUN [ ${CROSS_BUILD_START} ]
@@ -23,7 +23,7 @@ RUN apt-get update \
  && echo 'gem: --no-document' >> /etc/gemrc \
  && gem install oj -v 3.3.10 \
  && gem install json -v 2.2.0 \
- && gem install fluentd -v 1.5.0 \
+ && gem install fluentd -v 1.5.1 \
  && dpkgArch="$(dpkg --print-architecture | awk -F- '{ print $NF }')" \
  && wget -O /usr/local/bin/tini "https://github.com/krallin/tini/releases/download/v$TINI_VERSION/tini-$dpkgArch" \
  && wget -O /usr/local/bin/tini.asc "https://github.com/krallin/tini/releases/download/v$TINI_VERSION/tini-$dpkgArch.asc" \
