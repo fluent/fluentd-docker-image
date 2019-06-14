@@ -3,7 +3,7 @@
 
 FROM ruby:2.6-slim-stretch
 LABEL maintainer "Fluentd developers <fluentd@googlegroups.com>"
-LABEL Description="Fluentd docker image" Vendor="Fluent Organization" Version="1.5.1"
+LABEL Description="Fluentd docker image" Vendor="Fluent Organization" Version="1.5.2"
 ENV TINI_VERSION=0.18.0
 
 # Do not split this into multiple RUN!
@@ -20,7 +20,7 @@ RUN apt-get update \
  && echo 'gem: --no-document' >> /etc/gemrc \
  && gem install oj -v 3.3.10 \
  && gem install json -v 2.2.0 \
- && gem install fluentd -v 1.5.1 \
+ && gem install fluentd -v 1.5.2 \
  && dpkgArch="$(dpkg --print-architecture | awk -F- '{ print $NF }')" \
  && wget -O /usr/local/bin/tini "https://github.com/krallin/tini/releases/download/v$TINI_VERSION/tini-$dpkgArch" \
  && wget -O /usr/local/bin/tini.asc "https://github.com/krallin/tini/releases/download/v$TINI_VERSION/tini-$dpkgArch.asc" \
