@@ -22,11 +22,11 @@ collection and consumption for a better use and understanding of data.
 
 These tags have image version postfix. This updates many places so we need feedback for improve/fix the images.
 
-- `v1.6.0-1.0`, `v1.6-1`, `edge`
+- `v1.6.1-1.0`, `v1.6-1`, `edge`
   [(v1.6/alpine/Dockerfile)][fluentd-1-6-alpine]
-- `v1.6.0-debian-1.0`, `v1.6-debian-1`, `edge-debian`
+- `v1.6.1-debian-1.0`, `v1.6-debian-1`, `edge-debian`
   [(v1.6/debian/Dockerfile)][fluentd-1-6-debian]
-- `v1.6.0-windows-1.0`, `v1.6-windows-1`
+- `v1.6.1-windows-1.0`, `v1.6-windows-1`
   [(v1.6/windows/Dockerfile)][fluentd-1-6-windows]
 
 ### Old v1.4 images
