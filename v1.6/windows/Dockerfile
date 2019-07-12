@@ -3,7 +3,7 @@
 
 FROM microsoft/windowsservercore:1803
 LABEL maintainer "Fluentd developers <fluentd@googlegroups.com>"
-LABEL Description="Fluentd docker image" Vendor="Fluent Organization" Version="1.6.1"
+LABEL Description="Fluentd docker image" Vendor="Fluent Organization" Version="1.6.2"
 
 # Do not split this into multiple RUN!
 # Docker creates a layer for every RUN-Statement
@@ -18,7 +18,7 @@ RUN choco install -y ruby --version 2.4.2.2 --params "'/InstallDir:C:\'" \
 && gem install cool.io -v 1.5.3 \
 && gem install oj -v 3.3.10 \
 && gem install json -v 2.2.0 \
-&& gem install fluentd -v 1.6.1 \
+&& gem install fluentd -v 1.6.2 \
 && gem install win32-service -v 1.0.1 \
 && gem install win32-ipc -v 0.7.0 \
 && gem install win32-event -v 0.6.3 \
