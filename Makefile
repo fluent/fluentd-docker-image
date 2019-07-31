@@ -18,13 +18,13 @@ X86_IMAGES := \
 	v0.12/debian:v0.12.43-debian-2.0,v0.12-debian-2 \
 	v0.12/debian-onbuild:v0.12.43-debian-onbuild-2.0,v0.12-debian-onbuild-2 \
 	v1.6/alpine:v1.6.3-1.0,v1.6-1,edge \
-	v1.6/debian:v1.6.3-debian-1.0,v1.6-debian-1,edge-debian \
+	v1.6/debian:v1.6.3-debian-1.1,v1.6-debian-1,edge-debian \
 	v1.6/windows:v1.6.3-windows-1.0,v1.6-windows-1
 #	<Dockerfile>:<version>,<tag1>,<tag2>,...
 
 # Define images for running on ARM platforms
 ARM_IMAGES := \
-	v1.6/armhf/debian:v1.6.3-debian-armhf-1.0,v1.6-debian-armhf-1,edge-debian-armhf \
+	v1.6/armhf/debian:v1.6.3-debian-armhf-1.1,v1.6-debian-armhf-1,edge-debian-armhf \
 
 ALL_IMAGES := $(X86_IMAGES) $(ARM_IMAGES)
 
