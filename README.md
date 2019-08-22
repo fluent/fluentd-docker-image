@@ -22,12 +22,12 @@ collection and consumption for a better use and understanding of data.
 
 These tags have image version postfix. This updates many places so we need feedback for improve/fix the images.
 
-- `v1.6.3-1.0`, `v1.6-1`, `edge`
-  [(v1.6/alpine/Dockerfile)][fluentd-1-6-alpine]
-- `v1.6.3-debian-1.0`, `v1.6-debian-1`, `edge-debian`
-  [(v1.6/debian/Dockerfile)][fluentd-1-6-debian]
-- `v1.6.3-windows-1.0`, `v1.6-windows-1`
-  [(v1.6/windows/Dockerfile)][fluentd-1-6-windows]
+- `v1.7.0-1.0`, `v1.7-1`, `edge`
+  [(v1.7/alpine/Dockerfile)][fluentd-1-7-alpine]
+- `v1.7.0-debian-1.0`, `v1.7-debian-1`, `edge-debian`
+  [(v1.7/debian/Dockerfile)][fluentd-1-7-debian]
+- `v1.7.0-windows-1.0`, `v1.7-windows-1`
+  [(v1.7/windows/Dockerfile)][fluentd-1-7-windows]
 
 ### Old v1.4 images
 
@@ -71,7 +71,7 @@ This image is based on the popular [Alpine Linux project][1], available in
 
 #### `edge`
 
-Latest version of edge Fluentd branch (currently `v1.6-1`).
+Latest version of edge Fluentd branch (currently `v1.7-1`).
 
 #### `vX.Y-A`
 
@@ -206,7 +206,7 @@ To add plugins, edit `Dockerfile` as following:
 #### Alpine version
 
 ```Dockerfile
-FROM fluent/fluentd:v1.6-1
+FROM fluent/fluentd:v1.7-1
 
 # Use root account to use apk
 USER root
@@ -229,7 +229,7 @@ USER fluent
 #### Debian version
 
 ```Dockerfile
-FROM fluent/fluentd:v1.6-debian-1
+FROM fluent/fluentd:v1.7-debian-1
 
 # Use root account to use apt
 USER root
@@ -370,6 +370,6 @@ through a [GitHub issue](https://github.com/fluent/fluentd-docker-image/issues).
 [fluentd-1-4-debian]: https://github.com/fluent/fluentd-docker-image/blob/master/v1.4/debian/Dockerfile
 [fluentd-1-4-debian-onbuild]: https://github.com/fluent/fluentd-docker-image/blob/master/v1.4/debian-onbuild/Dockerfile
 [fluentd-1-4-windows]: https://github.com/fluent/fluentd-docker-image/blob/master/v1.4/windows/Dockerfile
-[fluentd-1-6-alpine]: https://github.com/fluent/fluentd-docker-image/blob/master/v1.6/alpine/Dockerfile
-[fluentd-1-6-debian]: https://github.com/fluent/fluentd-docker-image/blob/master/v1.6/debian/Dockerfile
-[fluentd-1-6-windows]: https://github.com/fluent/fluentd-docker-image/blob/master/v1.6/windows/Dockerfile
+[fluentd-1-7-alpine]: https://github.com/fluent/fluentd-docker-image/blob/master/v1.7/alpine/Dockerfile
+[fluentd-1-7-debian]: https://github.com/fluent/fluentd-docker-image/blob/master/v1.7/debian/Dockerfile
+[fluentd-1-7-windows]: https://github.com/fluent/fluentd-docker-image/blob/master/v1.7/windows/Dockerfile
