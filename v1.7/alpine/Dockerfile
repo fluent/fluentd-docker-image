@@ -10,7 +10,7 @@ LABEL Description="Fluentd docker image" Vendor="Fluent Organization" Version="1
 # therefore an 'apk delete' has no effect
 RUN apk update \
  && apk add --no-cache \
-        ca-certificates \
+        ca-certificates linux-headers \
         ruby ruby-irb ruby-etc ruby-webrick \
         tini \
  && apk add --no-cache --virtual .build-deps \
