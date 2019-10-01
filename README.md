@@ -22,6 +22,8 @@ collection and consumption for a better use and understanding of data.
 
 These tags have image version postfix. This updates many places so we need feedback for improve/fix the images.
 
+Current images use fluentd v1 serise.
+
 - `v1.7.2-1.0`, `v1.7-1`, `edge`
   [(v1.7/alpine/Dockerfile)][fluentd-1-7-alpine]
 - `v1.7.2-debian-1.0`, `v1.7-debian-1`, `edge-debian`
@@ -30,6 +32,8 @@ These tags have image version postfix. This updates many places so we need feedb
   [(v1.7/windows/Dockerfile)][fluentd-1-7-windows]
 
 ### Old v1.4 images
+
+This is for backward compatibility. Use "Current images" instead.
 
 - `v1.4.2-2.0`, `v1.4-2`
   [(v1.4/alpine/Dockerfile)][fluentd-1-4-alpine]
@@ -71,7 +75,7 @@ This image is based on the popular [Alpine Linux project][1], available in
 
 #### `edge`
 
-Latest version of edge Fluentd branch (currently `v1.7-1`).
+Latest released version of Fluentd. This tag is mainly for testing.
 
 #### `vX.Y-A`
 
@@ -83,7 +87,7 @@ When fluentd version is updated, A is reset to `1`.
 
 #### `vX.Y.Z-A.B`
 
-Concrete `vX.Y.Z` version of Fluentd.
+Concrete `vX.Y.Z` version of Fluentd. This tag is recommeded for the production environment.
 
 `A` will be incremented when image has major changes.
 `B` will be incremented when image has small changes, e.g. library update or bug fixes.
@@ -114,7 +118,7 @@ docker build --build-arg CROSS_BUILD_START=":" --build-arg CROSS_BUILD_END=":" -
 
 ### For older images
 
-These images/tags are kept for backward compatibility. No update anymore. Use "current images" instead.
+These images/tags are kept for backward compatibility. No update anymore and don't use for new deployment. Use "current images" instead.
 
 #### `stable`, `latest`
 
