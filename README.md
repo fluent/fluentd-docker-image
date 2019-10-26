@@ -24,11 +24,11 @@ These tags have image version postfix. This updates many places so we need feedb
 
 Current images use fluentd v1 serise.
 
-- `v1.7.3-1.0`, `v1.7-1`, `edge`
+- `v1.7.4-1.0`, `v1.7-1`, `edge`
   [(v1.7/alpine/Dockerfile)][fluentd-1-7-alpine]
-- `v1.7.3-debian-1.0`, `v1.7-debian-1`, `edge-debian`
+- `v1.7.4-debian-1.0`, `v1.7-debian-1`, `edge-debian`
   [(v1.7/debian/Dockerfile)][fluentd-1-7-debian]
-- `v1.7.3-windows-1.0`, `v1.7-windows-1`
+- `v1.7.4-windows-1.0`, `v1.7-windows-1`
   [(v1.7/windows/Dockerfile)][fluentd-1-7-windows]
 
 ### Old v1.4 images
