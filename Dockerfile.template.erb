@@ -46,13 +46,13 @@ ENV TINI_VERSION=0.18.0
 <% if is_windows %>
 RUN powershell -Command "Set-ExecutionPolicy Bypass -Scope Process -Force; iex ((New-Object System.Net.WebClient).DownloadString('https://chocolatey.org/install.ps1'))"
 
-# Fluentd depends on cool.io which is only available for Ruby < 2.5, so need to install Ruby < 2.5 and install msys2 to get dev tools
-RUN choco install -y ruby --version 2.4.2.2 --params "'/InstallDir:C:\'" \
-&& choco install -y msys2 --params "'/NoPath /NoUpdate /InstallDir:C:\ruby24\msys64'" \
-&& refreshenv \
+# Fluentd depends on cool.io whose fat gem is only available for Ruby < 2.5, so need to specify --platform ruby when install Ruby > 2.5 and install msys2 to get dev tools
+RUN choco install -y ruby --version 2.6.5.1 --params "'/InstallDir:C:\ruby26'" \
+&& choco install -y msys2 --params "'/NoPath /NoUpdate /InstallDir:C:\ruby26\msys64'"
+RUN refreshenv \
 && ridk install 2 3 \
 && echo gem: --no-document >> C:\ProgramData\gemrc \
-&& gem install cool.io -v 1.5.3 \
+&& gem install cool.io -v 1.5.4 --platform ruby \
 <% if fluentd_ver.start_with?('1') %>
 && gem install oj -v 3.3.10 \
 <% else %>
@@ -67,7 +67,7 @@ RUN choco install -y ruby --version 2.4.2.2 --params "'/InstallDir:C:\'" \
 && gem sources --clear-all
 
 # Remove gem cache and chocolatey
-RUN powershell -Command "del C:\ruby24\lib\ruby\gems\2.4.0\cache\*.gem; Remove-Item -Recurse -Force C:\ProgramData\chocolatey"
+RUN powershell -Command "Remove-Item -Force C:\ruby26\lib\ruby\gems\2.6.0\cache\*.gem; Remove-Item -Recurse -Force 'C:\ProgramData\chocolatey'"
 
 COPY fluent.conf /fluent/conf/fluent.conf
 <% else %>
