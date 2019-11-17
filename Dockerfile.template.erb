@@ -18,9 +18,9 @@ FROM alpine:3.9
 <% end %>
 <% else %>
 <% if is_armhf %>
-FROM arm32v7/ruby:2.6-stretch
+FROM arm32v7/ruby:2.6-buster
 <% else %>
-FROM ruby:2.6-slim-stretch
+FROM ruby:2.6-slim-buster
 <% end %>
 <% end %>
 <% end %>
