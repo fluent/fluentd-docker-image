@@ -24,10 +24,10 @@ These tags have image version postfix. This updates many places so we need feedb
 
 Current images use fluentd v1 serise.
 
-- `v1.7.4-1.0`, `v1.7-1`, `edge`
-  [(v1.7/alpine/Dockerfile)][fluentd-1-7-alpine]
-- `v1.7.4-debian-2.0`, `v1.7-debian-2`, `edge-debian`
-  [(v1.7/debian/Dockerfile)][fluentd-1-7-debian]
+- `v1.8.0-1.0`, `v1.8-1`, `edge`
+  [(v1.8/alpine/Dockerfile)][fluentd-1-8-alpine]
+- `v1.8.0-debian-1.0`, `v1.8-debian-1`, `edge-debian`
+  [(v1.8/debian/Dockerfile)][fluentd-1-8-debian]
 - `v1.7.4-windows-1.0`, `v1.7-windows-1`
   [(v1.7/windows/Dockerfile)][fluentd-1-7-windows]
 
@@ -377,3 +377,6 @@ through a [GitHub issue](https://github.com/fluent/fluentd-docker-image/issues).
 [fluentd-1-7-alpine]: https://github.com/fluent/fluentd-docker-image/blob/master/v1.7/alpine/Dockerfile
 [fluentd-1-7-debian]: https://github.com/fluent/fluentd-docker-image/blob/master/v1.7/debian/Dockerfile
 [fluentd-1-7-windows]: https://github.com/fluent/fluentd-docker-image/blob/master/v1.7/windows/Dockerfile
+[fluentd-1-8-alpine]: https://github.com/fluent/fluentd-docker-image/blob/master/v1.8/alpine/Dockerfile
+[fluentd-1-8-debian]: https://github.com/fluent/fluentd-docker-image/blob/master/v1.8/debian/Dockerfile
+[fluentd-1-8-windows]: https://github.com/fluent/fluentd-docker-image/blob/master/v1.8/windows/Dockerfile
