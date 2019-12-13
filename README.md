@@ -28,8 +28,8 @@ Current images use fluentd v1 serise.
   [(v1.8/alpine/Dockerfile)][fluentd-1-8-alpine]
 - `v1.8.0-debian-1.0`, `v1.8-debian-1`, `edge-debian`
   [(v1.8/debian/Dockerfile)][fluentd-1-8-debian]
-- `v1.7.4-windows-1.0`, `v1.7-windows-1`
-  [(v1.7/windows/Dockerfile)][fluentd-1-7-windows]
+- `v1.8.0-windows-1.0`, `v1.8-windows-1`
+  [(v1.8/windows/Dockerfile)][fluentd-1-8-windows]
 
 ### Old v1.4 images
 
