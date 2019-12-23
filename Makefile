@@ -26,7 +26,11 @@ X86_IMAGES := \
 ARM_IMAGES := \
 	v1.8/armhf/debian:v1.8.0-debian-armhf-1.0,v1.8-debian-armhf-1,edge-debian-armhf \
 
-ALL_IMAGES := $(X86_IMAGES) $(ARM_IMAGES)
+# Define images for running on ARM64 platforms
+ARM64_IMAGES := \
+	v1.8/arm64/debian:v1.8.0-debian-arm64-1.0,v1.8-debian-arm64-1,edge-debian-arm64 \
+
+ALL_IMAGES := $(X86_IMAGES) $(ARM_IMAGES) $(ARM64_IMAGES)
 
 # Default is first image from ALL_IMAGES list.
 DOCKERFILE ?= $(word 1,$(subst :, ,$(word 1,$(ALL_IMAGES))))
@@ -267,7 +271,7 @@ post-push-hook-all:
 #	make post-checkout-hook [DOCKERFILE=]
 
 post-checkout-hook:
-	if [ -n "$(findstring /armhf/,$(DOCKERFILE))" ]; then \
+	if [ -n "$(findstring /armhf/,$(DOCKERFILE))" ] || [ -n "$(findstring /arm64/,$(DOCKERFILE))" ]; then \
 		mkdir -p $(DOCKERFILE)/hooks; \
 		docker run --rm -i -v $(PWD)/post_checkout.erb:/post_checkout.erb:ro \
 			ruby:alpine erb -U \
