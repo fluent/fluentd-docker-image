@@ -19,9 +19,25 @@ FROM alpine:3.9
 <% end %>
 <% else %>
 <% if is_armhf %>
+# To set multiarch build for Docker hub automated build.
+FROM golang:alpine AS builder
+WORKDIR /go
+ENV QEMU_DOWNLOAD_SHA256 47ae430b0e7c25e1bde290ac447a720e2ea6c6e78cd84e44847edda289e020a8
+RUN apk add curl --no-cache
+RUN curl -sL -o qemu-3.0.0+resin-arm.tar.gz https://github.com/balena-io/qemu/releases/download/v3.0.0%2Bresin/qemu-3.0.0+resin-arm.tar.gz && echo "$QEMU_DOWNLOAD_SHA256 *qemu-3.0.0+resin-arm.tar.gz" | sha256sum -c - | tar zxvf qemu-3.0.0+resin-arm.tar.gz -C . && mv qemu-3.0.0+resin-arm/qemu-arm-static .
+
 FROM arm32v7/ruby:2.6-buster
+COPY --from=builder /go/qemu-arm-static /usr/bin/
 <% elsif is_arm64 %>
+# To set multiarch build for Docker hub automated build.
+FROM golang:alpine AS builder
+WORKDIR /go
+ENV QEMU_DOWNLOAD_SHA256 a1ef52971537e11915565233f48aa179839f676008d7911c05b3ae94c08c4f5c
+RUN apk add curl --no-cache
+RUN curl -sL -o qemu-3.0.0+resin-aarch64.tar.gz https://github.com/balena-io/qemu/releases/download/v3.0.0%2Bresin/qemu-3.0.0+resin-aarch64.tar.gz && echo "$QEMU_DOWNLOAD_SHA256 *qemu-3.0.0+resin-aarch64.tar.gz" | sha256sum -c - | tar zxvf qemu-3.0.0+resin-aarch64.tar.gz -C . && mv qemu-3.0.0+resin-aarch64/qemu-aarch64-static .
+
 FROM arm64v8/ruby:2.6-buster
+COPY --from=builder /go/qemu-aarch64-static /usr/bin/
 <% else %>
 FROM ruby:2.6-slim-buster
 <% end %>
@@ -30,6 +46,10 @@ FROM ruby:2.6-slim-buster
 LABEL maintainer "Fluentd developers <fluentd@googlegroups.com>"
 LABEL Description="Fluentd docker image" Vendor="Fluent Organization" Version="<%= fluentd_ver %>"
 <% if is_armhf %>
+ARG CROSS_BUILD_START="cross-build-start"
+ARG CROSS_BUILD_END="cross-build-end"
+RUN [ ${CROSS_BUILD_START} ]
+<% elsif is_arm64 %>
 ARG CROSS_BUILD_START="cross-build-start"
 ARG CROSS_BUILD_END="cross-build-end"
 RUN [ ${CROSS_BUILD_START} ]
@@ -179,7 +199,7 @@ USER fluent
 ENTRYPOINT ["tini",  "--", "/bin/entrypoint.sh"]
 CMD ["fluentd"]
 
-<% if is_armhf %>
+<% if is_armhf || is_arm64 %>
 RUN [ ${CROSS_BUILD_END} ]
 <% end %>
 <% end %>
