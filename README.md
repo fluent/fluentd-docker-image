@@ -24,12 +24,16 @@ These tags have image version postfix. This updates many places so we need feedb
 
 Current images use fluentd v1 serise.
 
-- `v1.8.0-1.0`, `v1.8-1`, `edge`
-  [(v1.8/alpine/Dockerfile)][fluentd-1-8-alpine]
-- `v1.8.0-debian-1.0`, `v1.8-debian-1`, `edge-debian`
-  [(v1.8/debian/Dockerfile)][fluentd-1-8-debian]
-- `v1.8.0-windows-1.0`, `v1.8-windows-1`
-  [(v1.8/windows/Dockerfile)][fluentd-1-8-windows]
+- `v1.8.1-1.0`, `v1.8-1`, `edge`
+  [(v1.8/alpine/Dockerfile)][fluentd-1-alpine]
+- `v1.8.1-debian-1.0`, `v1.8-debian-1`, `edge-debian`
+  [(v1.8/debian/Dockerfile)][fluentd-1-debian]
+- `v1.8.1-debian-arm64-1.0`, `v1.8-debian-arm64-1`, `edge-debian-arm64`
+  [(v1.8/arm64/debian/Dockerfile)][fluentd-1-debian-arm64]
+- `v1.8.1-debian-armhf-1.0`, `v1.8-debian-armhf-1`, `edge-debian-arm64`
+  [(v1.8/armhf/debian/Dockerfile)][fluentd-1-debian-armhf]
+- `v1.8.1-windows-1.0`, `v1.8-windows-1`
+  [(v1.8/windows/Dockerfile)][fluentd-1-windows]
 
 ### Old v1.4 images
 
@@ -374,9 +378,8 @@ through a [GitHub issue](https://github.com/fluent/fluentd-docker-image/issues).
 [fluentd-1-4-debian]: https://github.com/fluent/fluentd-docker-image/blob/master/v1.4/debian/Dockerfile
 [fluentd-1-4-debian-onbuild]: https://github.com/fluent/fluentd-docker-image/blob/master/v1.4/debian-onbuild/Dockerfile
 [fluentd-1-4-windows]: https://github.com/fluent/fluentd-docker-image/blob/master/v1.4/windows/Dockerfile
-[fluentd-1-7-alpine]: https://github.com/fluent/fluentd-docker-image/blob/master/v1.7/alpine/Dockerfile
-[fluentd-1-7-debian]: https://github.com/fluent/fluentd-docker-image/blob/master/v1.7/debian/Dockerfile
-[fluentd-1-7-windows]: https://github.com/fluent/fluentd-docker-image/blob/master/v1.7/windows/Dockerfile
-[fluentd-1-8-alpine]: https://github.com/fluent/fluentd-docker-image/blob/master/v1.8/alpine/Dockerfile
-[fluentd-1-8-debian]: https://github.com/fluent/fluentd-docker-image/blob/master/v1.8/debian/Dockerfile
-[fluentd-1-8-windows]: https://github.com/fluent/fluentd-docker-image/blob/master/v1.8/windows/Dockerfile
+[fluentd-1-alpine]: https://github.com/fluent/fluentd-docker-image/blob/master/v1.8/alpine/Dockerfile
+[fluentd-1-debian]: https://github.com/fluent/fluentd-docker-image/blob/master/v1.8/debian/Dockerfile
+[fluentd-1-debian-arm64]: https://github.com/fluent/fluentd-docker-image/blob/master/v1.8/arm64/debian/Dockerfile
+[fluentd-1-debian-armhf]: https://github.com/fluent/fluentd-docker-image/blob/master/v1.8/armhf/debian/Dockerfile
+[fluentd-1-windows]: https://github.com/fluent/fluentd-docker-image/blob/master/v1.8/windows/Dockerfile
