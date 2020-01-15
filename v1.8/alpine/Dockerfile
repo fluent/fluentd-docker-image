@@ -10,11 +10,11 @@ LABEL Description="Fluentd docker image" Vendor="Fluent Organization" Version="1
 # therefore an 'apk delete' has no effect
 RUN apk update \
  && apk add --no-cache \
-        ca-certificates linux-headers \
+        ca-certificates \
         ruby ruby-irb ruby-etc ruby-webrick \
         tini \
  && apk add --no-cache --virtual .build-deps \
-        build-base \
+        build-base linux-headers \
         ruby-dev gnupg \
  && echo 'gem: --no-document' >> /etc/gemrc \
  && gem install oj -v 3.8.1 \
