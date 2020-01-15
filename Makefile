@@ -17,7 +17,7 @@ X86_IMAGES := \
 	v0.12/alpine-onbuild:v0.12.43-onbuild-2.0,v0.12-onbuild-2 \
 	v0.12/debian:v0.12.43-debian-2.0,v0.12-debian-2 \
 	v0.12/debian-onbuild:v0.12.43-debian-onbuild-2.0,v0.12-debian-onbuild-2 \
-	v1.8/alpine:v1.8.1-1.0,v1.8-1,edge \
+	v1.8/alpine:v1.8.1-1.1,v1.8-1,edge \
 	v1.8/debian:v1.8.1-debian-1.0,v1.8-debian-1,edge-debian \
 	v1.8/windows:v1.8.1-windows-1.0,v1.8-windows-1
 #	<Dockerfile>:<version>,<tag1>,<tag2>,...
