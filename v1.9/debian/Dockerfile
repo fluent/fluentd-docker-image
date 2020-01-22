@@ -19,8 +19,9 @@ RUN apt-get update \
  && apt-get install -y --no-install-recommends $buildDeps \
  && echo 'gem: --no-document' >> /etc/gemrc \
  && gem install oj -v 3.8.1 \
- && gem install json -v 2.2.0 \
- && gem install async-http -v 0.49.1 \
+ && gem install json -v 2.3.0 \
+ && gem install async-http -v 0.50.0 \
+ && gem install ext_monitor -v 0.1.1 \
  && gem install fluentd -v 1.9.0 \
  && dpkgArch="$(dpkg --print-architecture | awk -F- '{ print $NF }')" \
  && wget -O /usr/local/bin/tini "https://github.com/krallin/tini/releases/download/v$TINI_VERSION/tini-$dpkgArch" \
