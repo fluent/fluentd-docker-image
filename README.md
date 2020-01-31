@@ -188,11 +188,11 @@ Type following commands on a terminal to prepare a minimal project first:
 mkdir custom-fluentd
 cd custom-fluentd
 
-# Download default fluent.conf, and the . This file will be copied to the new image.
+# Download default fluent.conf and entrypoint.sh. This file will be copied to the new image.
 # VERSION is v1.7 or v0.12 like fluentd version and OS is alpine or debian.
 # Full example is https://raw.githubusercontent.com/fluent/fluentd-docker-image/master/v1.7/debian/fluent.conf
-curl https://raw.githubusercontent.com/fluent/fluentd-docker-image/master/VERSION/OS/fluent.conf > fluent.conf
 
+curl https://raw.githubusercontent.com/fluent/fluentd-docker-image/master/VERSION/OS/fluent.conf > fluent.conf
 curl https://raw.githubusercontent.com/fluent/fluentd-docker-image/master/VERSION/OS/entrypoint.sh > entrypoint.sh
 
 # Create plugins directory. plugins scripts put here will be copied to the new image.
