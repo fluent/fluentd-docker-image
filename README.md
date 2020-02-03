@@ -52,6 +52,8 @@ This is for backward compatibility. Use "Current images" instead.
 
 ### v0.12 images
 
+Support of fluentd v0.12 has ended in 2019. We don't recommend v0.12 for new deployment.
+
 - `v0.12.43-2.0`, `v0.12-2`
   [(v0.12/alpine/Dockerfile)][fluentd-0-12-alpine]
 - `v0.12.43-onbuild-2.0`, `v0.12-onbuild-2`

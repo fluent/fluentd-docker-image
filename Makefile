@@ -13,10 +13,6 @@
 
 IMAGE_NAME := fluent/fluentd
 X86_IMAGES := \
-	v0.12/alpine:v0.12.43-2.0,v0.12-2 \
-	v0.12/alpine-onbuild:v0.12.43-onbuild-2.0,v0.12-onbuild-2 \
-	v0.12/debian:v0.12.43-debian-2.0,v0.12-debian-2 \
-	v0.12/debian-onbuild:v0.12.43-debian-onbuild-2.0,v0.12-debian-onbuild-2 \
 	v1.9/alpine:v1.9.0-1.0,v1.9-1,edge \
 	v1.9/debian:v1.9.0-debian-1.0,v1.9-debian-1,edge-debian \
 	v1.9/windows:v1.9.0-windows-1.0,v1.9-windows-1
