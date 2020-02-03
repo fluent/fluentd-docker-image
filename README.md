@@ -30,7 +30,7 @@ Current images use fluentd v1 serise.
   [(v1.9/debian/Dockerfile)][fluentd-1-debian]
 - `v1.9.0-debian-arm64-1.0`, `v1.9-debian-arm64-1`, `edge-debian-arm64`
   [(v1.9/arm64/debian/Dockerfile)][fluentd-1-debian-arm64]
-- `v1.9.0-debian-armhf-1.0`, `v1.9-debian-armhf-1`, `edge-debian-arm64`
+- `v1.9.0-debian-armhf-1.0`, `v1.9-debian-armhf-1`, `edge-debian-armhf`
   [(v1.9/armhf/debian/Dockerfile)][fluentd-1-debian-armhf]
 - `v1.9.0-windows-1.0`, `v1.9-windows-1`
   [(v1.9/windows/Dockerfile)][fluentd-1-windows]
