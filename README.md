@@ -30,7 +30,7 @@ Current images use fluentd v1 serise.
   [(v1.9/debian/Dockerfile)][fluentd-1-debian]
 - `v1.9.2-debian-arm64-1.0`, `v1.9-debian-arm64-1`, `edge-debian-arm64`
   [(v1.9/arm64/debian/Dockerfile)][fluentd-1-debian-arm64]
-- `v1.9.2-debian-armhf-1.0`, `v1.9-debian-armhf-1`, `edge-debian-arm64`
+- `v1.9.2-debian-armhf-1.0`, `v1.9-debian-armhf-1`, `edge-debian-armhf`
   [(v1.9/armhf/debian/Dockerfile)][fluentd-1-debian-armhf]
 - `v1.9.2-windows-1.0`, `v1.9-windows-1`
   [(v1.9/windows/Dockerfile)][fluentd-1-windows]
@@ -190,10 +190,13 @@ Type following commands on a terminal to prepare a minimal project first:
 mkdir custom-fluentd
 cd custom-fluentd
 
-# Download default fluent.conf. This file will be copied to the new image.
-# VERSION is v1.4 or v0.12 like fluentd version and OS is alpine or debian.
-# Full example is https://raw.githubusercontent.com/fluent/fluentd-docker-image/master/v1.4/debian-onbuild/fluent.conf
-curl https://raw.githubusercontent.com/fluent/fluentd-docker-image/master/VERSION/OS-onbuild/fluent.conf > fluent.conf
+# Download default fluent.conf and entrypoint.sh. This file will be copied to the new image.
+# VERSION is v1.7 or v0.12 like fluentd version and OS is alpine or debian.
+# Full example is https://raw.githubusercontent.com/fluent/fluentd-docker-image/master/v1.7/debian/fluent.conf
+
+curl https://raw.githubusercontent.com/fluent/fluentd-docker-image/master/VERSION/OS/fluent.conf > fluent.conf
+
+curl https://raw.githubusercontent.com/fluent/fluentd-docker-image/master/VERSION/OS/entrypoint.sh > entrypoint.sh
 
 # Create plugins directory. plugins scripts put here will be copied to the new image.
 mkdir plugins
