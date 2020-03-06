@@ -3,7 +3,7 @@
 
 FROM ruby:2.6-slim-buster
 LABEL maintainer "Fluentd developers <fluentd@googlegroups.com>"
-LABEL Description="Fluentd docker image" Vendor="Fluent Organization" Version="1.9.2"
+LABEL Description="Fluentd docker image" Vendor="Fluent Organization" Version="1.9.3"
 ENV TINI_VERSION=0.18.0
 
 # Do not split this into multiple RUN!
@@ -22,7 +22,7 @@ RUN apt-get update \
  && gem install json -v 2.3.0 \
  && gem install async-http -v 0.50.0 \
  && gem install ext_monitor -v 0.1.2 \
- && gem install fluentd -v 1.9.2 \
+ && gem install fluentd -v 1.9.3 \
  && dpkgArch="$(dpkg --print-architecture | awk -F- '{ print $NF }')" \
  && wget -O /usr/local/bin/tini "https://github.com/krallin/tini/releases/download/v$TINI_VERSION/tini-$dpkgArch" \
  && wget -O /usr/local/bin/tini.asc "https://github.com/krallin/tini/releases/download/v$TINI_VERSION/tini-$dpkgArch.asc" \
