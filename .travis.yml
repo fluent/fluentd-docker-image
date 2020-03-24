@@ -4,14 +4,14 @@ sudo: false
 
 os:
   - linux
-  - linux-ppc64le
+  # - linux-ppc64le
 
 services:
   - docker
 
 env:
-  - Dockerfile=v1.9/alpine
-  - Dockerfile=v1.9/debian
+  - Dockerfile=v1.10/alpine
+  - Dockerfile=v1.10/debian
 
 before_script:
   - make image DOCKERFILE=$Dockerfile VERSION=test
