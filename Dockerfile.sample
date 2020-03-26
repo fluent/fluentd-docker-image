@@ -1,4 +1,4 @@
-FROM fluent/fluentd:v1.4-1
+FROM fluent/fluentd:v1.10-1
 MAINTAINER YOUR_NAME <...@...>
 
 USER root
