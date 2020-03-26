@@ -177,7 +177,7 @@ Use `-u` option with `docker run`.
 
 ## How to build your own image
 
-You can build a customized image based on Fluentd's `onbuild` image.
+You can build a customized image based on Fluentd's image.
 Customized image can include plugins and `fluent.conf` file.
 
 ### 1. Create a working directory
@@ -191,8 +191,8 @@ mkdir custom-fluentd
 cd custom-fluentd
 
 # Download default fluent.conf and entrypoint.sh. This file will be copied to the new image.
-# VERSION is v1.7 or v0.12 like fluentd version and OS is alpine or debian.
-# Full example is https://raw.githubusercontent.com/fluent/fluentd-docker-image/master/v1.7/debian/fluent.conf
+# VERSION is v1.7 like fluentd version and OS is alpine or debian.
+# Full example is https://raw.githubusercontent.com/fluent/fluentd-docker-image/master/v1.10/debian/fluent.conf
 
 curl https://raw.githubusercontent.com/fluent/fluentd-docker-image/master/VERSION/OS/fluent.conf > fluent.conf
 
@@ -219,7 +219,7 @@ To add plugins, edit `Dockerfile` as following:
 #### Alpine version
 
 ```Dockerfile
-FROM fluent/fluentd:v1.7-1
+FROM fluent/fluentd:v1.10-1
 
 # Use root account to use apk
 USER root
@@ -242,7 +242,7 @@ USER fluent
 #### Debian version
 
 ```Dockerfile
-FROM fluent/fluentd:v1.7-debian-1
+FROM fluent/fluentd:v1.10-debian-1
 
 # Use root account to use apt
 USER root
@@ -276,6 +276,8 @@ If you're sure that plugins don't include native extensions, you can omit it
 to make image build faster.
 
 ### 3.2 For older images
+
+This section is for existing users. Don't recommend for new deployment.
 
 #### Alpine version
 
