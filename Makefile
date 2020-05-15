@@ -13,20 +13,20 @@
 
 IMAGE_NAME := fluent/fluentd
 X86_IMAGES := \
-	v0.12/alpine:v0.12.43-2.0,v0.12-2 \
-	v0.12/alpine-onbuild:v0.12.43-onbuild-2.0,v0.12-onbuild-2 \
-	v0.12/debian:v0.12.43-debian-2.0,v0.12-debian-2 \
-	v0.12/debian-onbuild:v0.12.43-debian-onbuild-2.0,v0.12-debian-onbuild-2 \
-	v1.7/alpine:v1.7.1-1.0,v1.7-1,edge \
-	v1.7/debian:v1.7.1-debian-1.0,v1.7-debian-1,edge-debian \
-	v1.7/windows:v1.7.1-windows-1.0,v1.7-windows-1
+	v1.10/alpine:v1.10.4-1.0,v1.10-1,edge \
+	v1.10/debian:v1.10.4-debian-1.0,v1.10-debian-1,edge-debian \
+	v1.10/windows:v1.10.4-windows-1.0,v1.10-windows-1
 #	<Dockerfile>:<version>,<tag1>,<tag2>,...
 
 # Define images for running on ARM platforms
 ARM_IMAGES := \
-	v1.7/armhf/debian:v1.7.1-debian-armhf-1.0,v1.7-debian-armhf-1,edge-debian-armhf \
+	v1.10/armhf/debian:v1.10.4-debian-armhf-1.0,v1.10-debian-armhf-1,edge-debian-armhf \
 
-ALL_IMAGES := $(X86_IMAGES) $(ARM_IMAGES)
+# Define images for running on ARM64 platforms
+ARM64_IMAGES := \
+	v1.10/arm64/debian:v1.10.4-debian-arm64-1.0,v1.10-debian-arm64-1,edge-debian-arm64 \
+
+ALL_IMAGES := $(X86_IMAGES) $(ARM_IMAGES) $(ARM64_IMAGES)
 
 # Default is first image from ALL_IMAGES list.
 DOCKERFILE ?= $(word 1,$(subst :, ,$(word 1,$(ALL_IMAGES))))
@@ -267,7 +267,7 @@ post-push-hook-all:
 #	make post-checkout-hook [DOCKERFILE=]
 
 post-checkout-hook:
-	if [ -n "$(findstring /armhf/,$(DOCKERFILE))" ]; then \
+	if [ -n "$(findstring /armhf/,$(DOCKERFILE))" ] || [ -n "$(findstring /arm64/,$(DOCKERFILE))" ]; then \
 		mkdir -p $(DOCKERFILE)/hooks; \
 		docker run --rm -i -v $(PWD)/post_checkout.erb:/post_checkout.erb:ro \
 			ruby:alpine erb -U \

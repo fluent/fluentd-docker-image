@@ -22,14 +22,22 @@ collection and consumption for a better use and understanding of data.
 
 These tags have image version postfix. This updates many places so we need feedback for improve/fix the images.
 
-- `v1.7.1-1.0`, `v1.7-1`, `edge`
-  [(v1.7/alpine/Dockerfile)][fluentd-1-7-alpine]
-- `v1.7.1-debian-1.0`, `v1.7-debian-1`, `edge-debian`
-  [(v1.7/debian/Dockerfile)][fluentd-1-7-debian]
-- `v1.7.1-windows-1.0`, `v1.7-windows-1`
-  [(v1.7/windows/Dockerfile)][fluentd-1-7-windows]
+Current images use fluentd v1 serise.
+
+- `v1.10.4-1.0`, `v1.10-1`, `edge`
+  [(v1.10/alpine/Dockerfile)][fluentd-1-alpine]
+- `v1.10.4-debian-1.0`, `v1.10-debian-1`, `edge-debian`
+  [(v1.10/debian/Dockerfile)][fluentd-1-debian]
+- `v1.10.4-debian-arm64-1.0`, `v1.10-debian-arm64-1`, `edge-debian-arm64`
+  [(v1.10/arm64/debian/Dockerfile)][fluentd-1-debian-arm64]
+- `v1.10.4-debian-armhf-1.0`, `v1.10-debian-armhf-1`, `edge-debian-armhf`
+  [(v1.10/armhf/debian/Dockerfile)][fluentd-1-debian-armhf]
+- `v1.10.4-windows-1.0`, `v1.10-windows-1`
+  [(v1.10/windows/Dockerfile)][fluentd-1-windows]
 
 ### Old v1.4 images
+
+This is for backward compatibility. Use "Current images" instead.
 
 - `v1.4.2-2.0`, `v1.4-2`
   [(v1.4/alpine/Dockerfile)][fluentd-1-4-alpine]
@@ -43,6 +51,8 @@ These tags have image version postfix. This updates many places so we need feedb
   [(v1.4/windows/Dockerfile)][fluentd-1-4-windows]
 
 ### v0.12 images
+
+Support of fluentd v0.12 has ended in 2019. We don't recommend v0.12 for new deployment.
 
 - `v0.12.43-2.0`, `v0.12-2`
   [(v0.12/alpine/Dockerfile)][fluentd-0-12-alpine]
@@ -71,7 +81,7 @@ This image is based on the popular [Alpine Linux project][1], available in
 
 #### `edge`
 
-Latest version of edge Fluentd branch (currently `v1.7-1`).
+Latest released version of Fluentd. This tag is mainly for testing.
 
 #### `vX.Y-A`
 
@@ -83,7 +93,7 @@ When fluentd version is updated, A is reset to `1`.
 
 #### `vX.Y.Z-A.B`
 
-Concrete `vX.Y.Z` version of Fluentd.
+Concrete `vX.Y.Z` version of Fluentd. This tag is recommeded for the production environment.
 
 `A` will be incremented when image has major changes.
 `B` will be incremented when image has small changes, e.g. library update or bug fixes.
@@ -114,7 +124,7 @@ docker build --build-arg CROSS_BUILD_START=":" --build-arg CROSS_BUILD_END=":" -
 
 ### For older images
 
-These images/tags are kept for backward compatibility. No update anymore. Use "current images" instead.
+These images/tags are kept for backward compatibility. No update anymore and don't use for new deployment. Use "current images" instead.
 
 #### `stable`, `latest`
 
@@ -167,7 +177,7 @@ Use `-u` option with `docker run`.
 
 ## How to build your own image
 
-You can build a customized image based on Fluentd's `onbuild` image.
+You can build a customized image based on Fluentd's image.
 Customized image can include plugins and `fluent.conf` file.
 
 ### 1. Create a working directory
@@ -180,10 +190,13 @@ Type following commands on a terminal to prepare a minimal project first:
 mkdir custom-fluentd
 cd custom-fluentd
 
-# Download default fluent.conf. This file will be copied to the new image.
-# VERSION is v1.4 or v0.12 like fluentd version and OS is alpine or debian.
-# Full example is https://raw.githubusercontent.com/fluent/fluentd-docker-image/master/v1.4/debian-onbuild/fluent.conf
-curl https://raw.githubusercontent.com/fluent/fluentd-docker-image/master/VERSION/OS-onbuild/fluent.conf > fluent.conf
+# Download default fluent.conf and entrypoint.sh. This file will be copied to the new image.
+# VERSION is v1.7 like fluentd version and OS is alpine or debian.
+# Full example is https://raw.githubusercontent.com/fluent/fluentd-docker-image/master/v1.10/debian/fluent.conf
+
+curl https://raw.githubusercontent.com/fluent/fluentd-docker-image/master/VERSION/OS/fluent.conf > fluent.conf
+
+curl https://raw.githubusercontent.com/fluent/fluentd-docker-image/master/VERSION/OS/entrypoint.sh > entrypoint.sh
 
 # Create plugins directory. plugins scripts put here will be copied to the new image.
 mkdir plugins
@@ -206,7 +219,7 @@ To add plugins, edit `Dockerfile` as following:
 #### Alpine version
 
 ```Dockerfile
-FROM fluent/fluentd:v1.7-1
+FROM fluent/fluentd:v1.10-1
 
 # Use root account to use apk
 USER root
@@ -229,7 +242,7 @@ USER fluent
 #### Debian version
 
 ```Dockerfile
-FROM fluent/fluentd:v1.7-debian-1
+FROM fluent/fluentd:v1.10-debian-1
 
 # Use root account to use apt
 USER root
@@ -263,6 +276,8 @@ If you're sure that plugins don't include native extensions, you can omit it
 to make image build faster.
 
 ### 3.2 For older images
+
+This section is for existing users. Don't recommend for new deployment.
 
 #### Alpine version
 
@@ -370,6 +385,8 @@ through a [GitHub issue](https://github.com/fluent/fluentd-docker-image/issues).
 [fluentd-1-4-debian]: https://github.com/fluent/fluentd-docker-image/blob/master/v1.4/debian/Dockerfile
 [fluentd-1-4-debian-onbuild]: https://github.com/fluent/fluentd-docker-image/blob/master/v1.4/debian-onbuild/Dockerfile
 [fluentd-1-4-windows]: https://github.com/fluent/fluentd-docker-image/blob/master/v1.4/windows/Dockerfile
-[fluentd-1-7-alpine]: https://github.com/fluent/fluentd-docker-image/blob/master/v1.7/alpine/Dockerfile
-[fluentd-1-7-debian]: https://github.com/fluent/fluentd-docker-image/blob/master/v1.7/debian/Dockerfile
-[fluentd-1-7-windows]: https://github.com/fluent/fluentd-docker-image/blob/master/v1.7/windows/Dockerfile
+[fluentd-1-alpine]: https://github.com/fluent/fluentd-docker-image/blob/master/v1.10/alpine/Dockerfile
+[fluentd-1-debian]: https://github.com/fluent/fluentd-docker-image/blob/master/v1.10/debian/Dockerfile
+[fluentd-1-debian-arm64]: https://github.com/fluent/fluentd-docker-image/blob/master/v1.10/arm64/debian/Dockerfile
+[fluentd-1-debian-armhf]: https://github.com/fluent/fluentd-docker-image/blob/master/v1.10/armhf/debian/Dockerfile
+[fluentd-1-windows]: https://github.com/fluent/fluentd-docker-image/blob/master/v1.10/windows/Dockerfile
