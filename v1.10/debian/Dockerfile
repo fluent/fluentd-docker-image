@@ -12,6 +12,8 @@ ENV TINI_VERSION=0.18.0
 RUN apt-get update \
  && apt-get install -y --no-install-recommends \
             ca-certificates \
+            git \
+            librdkafka-dev \
  && buildDeps=" \
       make gcc g++ libc-dev \
       wget bzip2 gnupg dirmngr \
@@ -26,6 +28,7 @@ RUN apt-get update \
  && dpkgArch="$(dpkg --print-architecture | awk -F- '{ print $NF }')" \
  && wget -O /usr/local/bin/tini "https://github.com/krallin/tini/releases/download/v$TINI_VERSION/tini-$dpkgArch" \
  && wget -O /usr/local/bin/tini.asc "https://github.com/krallin/tini/releases/download/v$TINI_VERSION/tini-$dpkgArch.asc" \
+ && mkdir ~/.gnupg && echo "disable-ipv6" >> ~/.gnupg/dirmngr.conf \
  && export GNUPGHOME="$(mktemp -d)" \
  && gpg --batch --keyserver hkp://p80.pool.sks-keyservers.net:80 --recv-keys 6380DC428747F6C393FEACA59A84159D7001A4E5 \
  && gpg --batch --verify /usr/local/bin/tini.asc /usr/local/bin/tini \
@@ -36,6 +39,20 @@ RUN apt-get update \
  && cd /tmp && tar -xjf jemalloc-4.5.0.tar.bz2 && cd jemalloc-4.5.0/ \
  && ./configure && make \
  && mv lib/libjemalloc.so.2 /usr/lib \
+ && gem install \
+    fluent-config-regexp-type \
+    fluent-logger \
+    fluent-plugin-elasticsearch \
+    fluent-plugin-kafka \
+    fluent-plugin-record-modifier \
+    fluent-plugin-rewrite-tag-filter \
+    fluent-plugin-s3 \
+    fluent-plugin-td \
+    fluent-plugin-td-monitoring \
+    fluent-plugin-webhdfs \
+    fluent-plugin-grok-parser \
+    fluent-plugin-prometheus \
+ && gem sources --clear-all \
  && apt-get purge -y --auto-remove \
                   -o APT::AutoRemove::RecommendsImportant=false \
                   $buildDeps \
