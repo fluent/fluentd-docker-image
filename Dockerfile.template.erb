@@ -154,7 +154,7 @@ RUN apt-get update \
                   $buildDeps \
  && rm -rf /var/lib/apt/lists/* \
 <% end %>
- && rm -rf /tmp/* /var/tmp/* /usr/lib/ruby/gems/*/cache/*.gem
+ && rm -rf /tmp/* /var/tmp/* /usr/lib/ruby/gems/*/cache/*.gem /usr/lib/ruby/gems/2.*/gems/fluentd-*/test
 
 <% if is_alpine %>
 RUN addgroup -S fluent && adduser -S -g fluent fluent \
