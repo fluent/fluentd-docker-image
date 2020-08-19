@@ -13,7 +13,7 @@
 
 IMAGE_NAME := fluent/fluentd
 X86_IMAGES := \
-	v1.11/alpine:v1.11.2-1.0,v1.11-1,edge \
+	v1.11/alpine:v1.11.2-2.0,v1.11-2,edge \
 	v1.11/debian:v1.11.2-debian-1.0,v1.11-debian-1,edge-debian \
 	v1.11/windows:v1.11.2-windows-1.0,v1.11-windows-1
 #	<Dockerfile>:<version>,<tag1>,<tag2>,...
