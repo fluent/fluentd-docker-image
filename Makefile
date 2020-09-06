@@ -24,7 +24,7 @@ ARM_IMAGES := \
 
 # Define images for running on ARM64 platforms
 ARM64_IMAGES := \
-	v1.11/arm64/debian:v1.11.2-debian-arm64-1.0,v1.11-debian-arm64-1,edge-debian-arm64 \
+	v1.11/arm64/debian:v1.11.2-debian-arm64-1.1,v1.11-debian-arm64-1,edge-debian-arm64 \
 
 ALL_IMAGES := $(X86_IMAGES) $(ARM_IMAGES) $(ARM64_IMAGES)
 
