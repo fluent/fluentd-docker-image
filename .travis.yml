@@ -2,19 +2,57 @@ language: bash
 
 sudo: false
 
-os:
-  - linux
-  # - linux-ppc64le
-
 services:
   - docker
 
-env:
-  - Dockerfile=v1.11/alpine
-  - Dockerfile=v1.11/debian
+jobs:
+  inclue:
+    - os: linux
+      env: Dockerfile=v1.11/alpine
+    - os: linux
+      env: Dockerfile=v1.11/debian
+    - os: windows
+      env: Dockerfile=v1.11/windows
 
 before_script:
-  - make image DOCKERFILE=$Dockerfile VERSION=test
+- |-
+    case $TRAVIS_OS_NAME in
+      windows)
+        [[ ! -f C:/tools/msys64/msys2_shell.cmd ]] && rm -rf C:/tools/msys64
+        choco uninstall -y mingw
+        choco upgrade --no-progress -y msys2
+        choco install -y ruby -v 2.7.1.1
+        export msys2='cmd //C RefreshEnv.cmd '
+        export msys2+='& set MSYS=winsymlinks:nativestrict '
+        export msys2+='& C:\\tools\\msys64\\msys2_shell.cmd -defterm -no-start'
+        export mingw64="$msys2 -mingw64 -full-path -here -c "\"\$@"\" --"
+        export msys2+=" -msys2 -c "\"\$@"\" --"
+        $msys2 pacman --sync --noconfirm --needed mingw-w64-x86_64-toolchain
+        ## Install more MSYS2 packages from https://packages.msys2.org/base here
+        taskkill //IM gpg-agent.exe //F  # https://travis-ci.community/t/4967
+        export PATH=/C/tools/msys64/mingw64/bin:$PATH
+        C:/tools/ruby27/bin/ridk.cmd install 3
+        C:/tools/ruby27/bin/ridk.cmd enable
+        ;;
+    esac
+- docker version
+- |-
+    case $TRAVIS_OS_NAME in
+      windows)
+        C:/tools/ruby27/bin/ridk.cmd exec make image DOCKERFILE=$Dockerfile VERSION=test
+        ;;
+      *)
+        make image DOCKERFILE=$Dockerfile VERSION=test
+        ;;
+    esac
 
 script:
-  - make test DOCKERFILE=$Dockerfile VERSION=test
+  - |-
+    case $TRAVIS_OS_NAME in
+      windows)
+        C:/tools/ruby27/bin/ridk.cmd exec make test DOCKERFILE=$Dockerfile VERSION=test
+        ;;
+      *)
+        make test DOCKERFILE=$Dockerfile VERSION=test
+        ;;
+    esac
