@@ -22,14 +22,14 @@
 }
 
 
-@test "ruby version is 2.6(debian) or 2.5(alpine)" {
+@test "ruby version is 2.6(debian) or 2.7(alpine)" {
   run docker run --rm $IMAGE sh -c "ruby --version | cut -d ' ' -f 2"
   [ "$status" -eq 0 ]
 
   major=$(echo "$output" | cut -d '.' -f 1)
   minor=$(echo "$output" | cut -d '.' -f 2)
   [ "$major" -eq "2" ]
-  [[ "$minor" =~ [56] ]]
+  [[ "$minor" =~ [67] ]]
 }
 
 
