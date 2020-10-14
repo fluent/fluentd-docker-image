@@ -13,18 +13,18 @@
 
 IMAGE_NAME := fluent/fluentd
 X86_IMAGES := \
-	v1.11/alpine:v1.11.3-2.0,v1.11-2,edge \
-	v1.11/debian:v1.11.3-debian-1.0,v1.11-debian-1,edge-debian \
-	v1.11/windows:v1.11.3-windows-1.0,v1.11-windows-1
+	v1.11/alpine:v1.11.4-2.0,v1.11-2,edge \
+	v1.11/debian:v1.11.4-debian-1.0,v1.11-debian-1,edge-debian \
+	v1.11/windows:v1.11.4-windows-1.0,v1.11-windows-1
 #	<Dockerfile>:<version>,<tag1>,<tag2>,...
 
 # Define images for running on ARM platforms
 ARM_IMAGES := \
-	v1.11/armhf/debian:v1.11.3-debian-armhf-1.1,v1.11-debian-armhf-1,edge-debian-armhf \
+	v1.11/armhf/debian:v1.11.4-debian-armhf-1.1,v1.11-debian-armhf-1,edge-debian-armhf \
 
 # Define images for running on ARM64 platforms
 ARM64_IMAGES := \
-	v1.11/arm64/debian:v1.11.3-debian-arm64-1.1,v1.11-debian-arm64-1,edge-debian-arm64 \
+	v1.11/arm64/debian:v1.11.4-debian-arm64-1.1,v1.11-debian-arm64-1,edge-debian-arm64 \
 
 ALL_IMAGES := $(X86_IMAGES) $(ARM_IMAGES) $(ARM64_IMAGES)
 
