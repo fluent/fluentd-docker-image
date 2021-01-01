@@ -14,8 +14,7 @@
 IMAGE_NAME := fluent/fluentd
 X86_IMAGES := \
 	v1.11/alpine:v1.11.5-1.0,v1.11-1,edge \
-	v1.11/debian:v1.11.5-debian-1.0,v1.11-debian-1,edge-debian \
-	v1.11/windows:v1.11.5-windows-1.0,v1.11-windows-1
+	v1.11/debian:v1.11.5-debian-1.0,v1.11-debian-1,edge-debian
 #	<Dockerfile>:<version>,<tag1>,<tag2>,...
 
 # Define images for running on ARM platforms
@@ -26,7 +25,13 @@ ARM_IMAGES := \
 ARM64_IMAGES := \
 	v1.11/arm64/debian:v1.11.5-debian-arm64-1.0,v1.11-debian-arm64-1,edge-debian-arm64 \
 
-ALL_IMAGES := $(X86_IMAGES) $(ARM_IMAGES) $(ARM64_IMAGES)
+# Define images for running on Windows platforms
+WINDOWS_IMAGES := \
+	v1.11/windows-1903:v1.11.5-windows-1903-1.0,v1.11-windows-1903-1 \
+	v1.11/windows-1909:v1.11.5-windows-1909-1.0,v1.11-windows-1909-1 \
+	v1.11/windows-2004:v1.11.5-windows-2004-1.0,v1.11-windows-2004-1 \
+
+ALL_IMAGES := $(X86_IMAGES) $(ARM_IMAGES) $(ARM64_IMAGES) $(WINDOWS_IMAGES)
 
 # Default is first image from ALL_IMAGES list.
 DOCKERFILE ?= $(word 1,$(subst :, ,$(word 1,$(ALL_IMAGES))))
