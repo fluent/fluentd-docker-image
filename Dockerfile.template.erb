@@ -117,13 +117,13 @@ RUN apt-get update \
 <% end %>
  && echo 'gem: --no-document' >> /etc/gemrc \
 <% if fluentd_ver.start_with?('1') %>
- && gem install oj -v 3.8.1 \
+ && gem install oj -v 3.10.18 \
 <% else %>
  && gem install oj -v 2.18.3 \
 <% end %>
- && gem install json -v 2.3.0 \
+ && gem install json -v 2.4.1 \
 <% if fluentd_ver.start_with?('1') %>
- && gem install async-http -v 0.50.7 \
+ && gem install async-http -v 0.54.0 \
  && gem install ext_monitor -v 0.1.2 \
 <% end %>
  && gem install fluentd -v <%= fluentd_ver %> \

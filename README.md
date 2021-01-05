@@ -24,16 +24,16 @@ These tags have image version postfix. This updates many places so we need feedb
 
 Current images use fluentd v1 serise.
 
-- `v1.11.5-1.0`, `v1.11-1`, `edge`
-  [(v1.10/alpine/Dockerfile)][fluentd-1-alpine]
-- `v1.11.5-debian-1.0`, `v1.11-debian-1`, `edge-debian`
-  [(v1.10/debian/Dockerfile)][fluentd-1-debian]
-- `v1.11.5-debian-arm64-1.0`, `v1.11-debian-arm64-1`, `edge-debian-arm64`
-  [(v1.10/arm64/debian/Dockerfile)][fluentd-1-debian-arm64]
-- `v1.11.5-debian-armhf-1.0`, `v1.11-debian-armhf-1`, `edge-debian-armhf`
-  [(v1.10/armhf/debian/Dockerfile)][fluentd-1-debian-armhf]
-- `v1.11.5-windows-1.0`, `v1.11-windows-1`
-  [(v1.10/windows/Dockerfile)][fluentd-1-windows]
+- `v1.12.0-1.0`, `v1.12-1`, `edge`
+  [(v1.12/alpine/Dockerfile)][fluentd-1-alpine]
+- `v1.12.0-debian-1.0`, `v1.12-debian-1`, `edge-debian`
+  [(v1.12/debian/Dockerfile)][fluentd-1-debian]
+- `v1.12.0-debian-arm64-1.0`, `v1.12-debian-arm64-1`, `edge-debian-arm64`
+  [(v1.12/arm64/debian/Dockerfile)][fluentd-1-debian-arm64]
+- `v1.12.0-debian-armhf-1.0`, `v1.12-debian-armhf-1`, `edge-debian-armhf`
+  [(v1.12/armhf/debian/Dockerfile)][fluentd-1-debian-armhf]
+- `v1.12.0-windows-1.0`, `v1.12-windows-1`
+  [(v1.12/windows/Dockerfile)][fluentd-1-windows]
 
 ### Old v1.4 images
 
@@ -219,7 +219,7 @@ To add plugins, edit `Dockerfile` as following:
 #### Alpine version
 
 ```Dockerfile
-FROM fluent/fluentd:v1.11-1
+FROM fluent/fluentd:v1.12-1
 
 # Use root account to use apk
 USER root
