@@ -27,6 +27,7 @@ ARM64_IMAGES := \
 
 # Define images for running on Windows platforms
 WINDOWS_IMAGES := \
+	v1.11/windows-1809:v1.11.5-windows-1809-1.0,v1.11-windows-1809-1 \
 	v1.11/windows-1903:v1.11.5-windows-1903-1.0,v1.11-windows-1903-1 \
 	v1.11/windows-1909:v1.11.5-windows-1909-1.0,v1.11-windows-1909-1 \
 	v1.11/windows-2004:v1.11.5-windows-2004-1.0,v1.11-windows-2004-1 \
