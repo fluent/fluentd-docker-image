@@ -22,7 +22,7 @@ collection and consumption for a better use and understanding of data.
 
 These tags have image version postfix. This updates many places so we need feedback for improve/fix the images.
 
-Current images use fluentd v1 serise.
+Current images use fluentd v1 series.
 
 - `v1.12.0-1.0`, `v1.12-1`, `edge`
   [(v1.12/alpine/Dockerfile)][fluentd-1-alpine]
