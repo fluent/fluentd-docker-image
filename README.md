@@ -389,10 +389,10 @@ through a [GitHub issue](https://github.com/fluent/fluentd-docker-image/issues).
 [fluentd-1-4-debian]: https://github.com/fluent/fluentd-docker-image/blob/master/v1.4/debian/Dockerfile
 [fluentd-1-4-debian-onbuild]: https://github.com/fluent/fluentd-docker-image/blob/master/v1.4/debian-onbuild/Dockerfile
 [fluentd-1-4-windows]: https://github.com/fluent/fluentd-docker-image/blob/master/v1.4/windows/Dockerfile
-[fluentd-1-alpine]: https://github.com/fluent/fluentd-docker-image/blob/master/v1.10/alpine/Dockerfile
-[fluentd-1-debian]: https://github.com/fluent/fluentd-docker-image/blob/master/v1.10/debian/Dockerfile
-[fluentd-1-debian-arm64]: https://github.com/fluent/fluentd-docker-image/blob/master/v1.10/arm64/debian/Dockerfile
-[fluentd-1-debian-armhf]: https://github.com/fluent/fluentd-docker-image/blob/master/v1.10/armhf/debian/Dockerfile
+[fluentd-1-alpine]: https://github.com/fluent/fluentd-docker-image/blob/master/v1.12/alpine/Dockerfile
+[fluentd-1-debian]: https://github.com/fluent/fluentd-docker-image/blob/master/v1.12/debian/Dockerfile
+[fluentd-1-debian-arm64]: https://github.com/fluent/fluentd-docker-image/blob/master/v1.12/arm64/debian/Dockerfile
+[fluentd-1-debian-armhf]: https://github.com/fluent/fluentd-docker-image/blob/master/v1.12/armhf/debian/Dockerfile
 [fluentd-1-ltsc2019-windows]: https://github.com/fluent/fluentd-docker-image/blob/master/v1.12/windows-ltsc2019/Dockerfile
 [fluentd-1-2004-windows]: https://github.com/fluent/fluentd-docker-image/blob/master/v1.12/windows-2004/Dockerfile
 [fluentd-1-20H2-windows]: https://github.com/fluent/fluentd-docker-image/blob/master/v1.12/windows-20H2/Dockerfile
