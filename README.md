@@ -201,6 +201,7 @@ cd custom-fluentd
 curl https://raw.githubusercontent.com/fluent/fluentd-docker-image/master/VERSION/OS/fluent.conf > fluent.conf
 
 curl https://raw.githubusercontent.com/fluent/fluentd-docker-image/master/VERSION/OS/entrypoint.sh > entrypoint.sh
+chmod +x entrypoint.sh
 
 # Create plugins directory. plugins scripts put here will be copied to the new image.
 mkdir plugins
