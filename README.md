@@ -167,7 +167,7 @@ Default configurations are to:
 
 For example, to provide a bespoke config and make `fluentd` verbose, then:
 
-`docker run -ti --rm -v /path/to/dir:/fluentd/etc fluentd -c /fluentd/etc/<conf> -v`
+`docker run -ti --rm -v /path/to/dir:/fluentd/etc fluent/fluentd -c /fluentd/etc/<conf> -v`
 
 The first `-v` tells Docker to share '/path/to/dir' as a volume and mount it at /fluentd/etc
 The `-c` after the container name (fluentd) tells `fluentd` where to find the config file
