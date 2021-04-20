@@ -17,7 +17,7 @@ FROM mcr.microsoft.com/windows/servercore:<%= windows_ver %>
 <% if is_armhf %>
 FROM resin/armhf-alpine:3.7
 <% else %>
-FROM alpine:3.12
+FROM alpine:3.13
 <% end %>
 <% else %>
 <% if is_armhf %>
