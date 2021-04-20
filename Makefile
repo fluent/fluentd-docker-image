@@ -13,22 +13,22 @@
 
 IMAGE_NAME := fluent/fluentd
 X86_IMAGES := \
-	v1.12/alpine:v1.12.2-1.0,v1.12-1,edge \
-	v1.12/debian:v1.12.2-debian-1.0,v1.12-debian-1,edge-debian
+	v1.12/alpine:v1.12.2-1.1,v1.12-1,edge \
+	v1.12/debian:v1.12.2-debian-1.1,v1.12-debian-1,edge-debian
 #	<Dockerfile>:<version>,<tag1>,<tag2>,...
 
 # Define images for running on ARM platforms
 ARM_IMAGES := \
-	v1.12/armhf/debian:v1.12.2-debian-armhf-1.0,v1.12-debian-armhf-1,edge-debian-armhf \
+	v1.12/armhf/debian:v1.12.2-debian-armhf-1.1,v1.12-debian-armhf-2,edge-debian-armhf \
 
 # Define images for running on ARM64 platforms
 ARM64_IMAGES := \
-	v1.12/arm64/debian:v1.12.2-debian-arm64-1.0,v1.12-debian-arm64-1,edge-debian-arm64 \
+	v1.12/arm64/debian:v1.12.2-debian-arm64-1.1,v1.12-debian-arm64-2,edge-debian-arm64 \
 
 WINDOWS_IMAGES := \
-	v1.12/windows-ltsc2019:v1.12.2-windows-ltsc2019-1.0,v1.12-windows-ltsc2019-1 \
-	v1.12/windows-2004:v1.12.2-windows-2004-1.0,v1.12-windows-2004-1 \
-	v1.12/windows-20H2:v1.12.2-windows-20H2-1.0,v1.12-windows-20H2-1
+	v1.12/windows-ltsc2019:v1.12.2-windows-ltsc2019-1.1,v1.12-windows-ltsc2019-1 \
+	v1.12/windows-2004:v1.12.2-windows-2004-1.1,v1.12-windows-2004-1 \
+	v1.12/windows-20H2:v1.12.2-windows-20H2-1.1,v1.12-windows-20H2-1
 
 ALL_IMAGES := $(X86_IMAGES) $(ARM_IMAGES) $(ARM64_IMAGES) $(WINDOWS_IMAGES)
 
