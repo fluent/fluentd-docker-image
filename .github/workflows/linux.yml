@@ -1,0 +1,20 @@
+name: Linux
+on:
+  push:
+  pull_request:
+jobs:
+  build:
+    name: Build & Test
+    strategy:
+      fail-fast: false
+      matrix:
+        include:
+          - dockerfile: v1.12/alpine
+          - dockerfile: v1.12/debian
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@master
+      - name: Build
+        run: make image DOCKERFILE=${{ matrix.dockerfile }} VERSION=test
+      - name: Test
+        run: make test DOCKERFILE=${{ matrix.dockerfile }} VERSION=test
