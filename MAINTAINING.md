@@ -76,7 +76,7 @@ Building Fluentd v1.12.2 and Windows Server Core 2004 image:
 
 ```console
 PS> ridk enable
-PS> make DOCKERFILE=v1.12/windows20H2 VERSION=v1.12.2-windows-20H2-1.0
+PS> make DOCKERFILE=v1.12/windows-20H2 VERSION=v1.12.2-windows-20H2-1.0
 PS> docker push fluent/fluentd:v1.12.2-windows-20H2-1.0
 PS> make DOCKERFILE=v1.12/windows-20H2 VERSION=v1.12-windows-20H2-1
 PS> docker push fluent/fluentd:v1.12-windows-20H2-1
