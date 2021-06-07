@@ -2,6 +2,7 @@
 <% fluentd_tag = version.dup; fluentd_tag.slice!('-onbuild') %>
 <% is_onbuild = (version.include?("onbuild")) %>
 <% is_alpine = (dockerfile.split("/").last.split("-").first == "alpine") %>
+<% is_debian = (dockerfile.split("/").last.split("-").first == "debian") %>
 <% is_armhf = (dockerfile.split("/")[1] == "armhf") %>
 <% is_arm64 = (dockerfile.split("/")[1] == "arm64") %>
 <% is_windows = (dockerfile.split("/").last.split("-").first == "windows") %>
@@ -66,6 +67,10 @@ ENV TINI_VERSION=0.18.0
 <% end %>
 <% end %>
 
+<% if is_alpine || is_debian %>
+# NOTE: resolv v0.2.1 includes the fix for CPU spike issue due to DNS resolver.
+# This hack is needed for Ruby 2.6.7, 2.7.3 and 3.0.1.
+<% end %>
 # Do not split this into multiple RUN!
 # Docker creates a layer for every RUN-Statement
 <% if is_windows %>

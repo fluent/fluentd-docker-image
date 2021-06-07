@@ -6,6 +6,8 @@ LABEL maintainer "Fluentd developers <fluentd@googlegroups.com>"
 LABEL Description="Fluentd docker image" Vendor="Fluent Organization" Version="1.12.4"
 ENV TINI_VERSION=0.18.0
 
+# NOTE: resolv v0.2.1 includes the fix for CPU spike issue due to DNS resolver.
+# This hack is needed for Ruby 2.6.7, 2.7.3 and 3.0.1.
 # Do not split this into multiple RUN!
 # Docker creates a layer for every RUN-Statement
 # therefore an 'apt-get purge' has no effect
