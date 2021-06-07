@@ -124,6 +124,7 @@ RUN apt-get update \
  && gem install oj -v 2.18.3 \
 <% end %>
  && gem install json -v 2.4.1 \
+ && gem install resolv -v 0.2.1 \
 <% if fluentd_ver.start_with?('1') %>
  && gem install async-http -v 0.54.0 \
  && gem install ext_monitor -v 0.1.2 \
