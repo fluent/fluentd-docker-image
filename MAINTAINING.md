@@ -60,6 +60,8 @@ Built tags for debian and alpine images will be published at [TAGS page](https:/
 * RubyInstaller (only for `ridk` command)
 * Already logined in DockerHub via `docker login`
 
+**NOTE:** Using the latest version of MSYS2 is recommended. Windows Docker Engine sometimes stuck due to plenty of updates for MSYS2 packages. We should keep minimum changes on the MSYS2 installation step.
+
 #### Build procedures
 
 ```console
