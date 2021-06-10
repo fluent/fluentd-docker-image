@@ -24,19 +24,19 @@ These tags have image version postfix. This updates many places so we need feedb
 
 Current images use fluentd v1 series.
 
-- `v1.12.4-1.0`, `v1.12-1`, `edge`
+- `v1.13.0-1.0`, `v1.13-1`, `edge`
   [(v1.12/alpine/Dockerfile)][fluentd-1-alpine]
-- `v1.12.4-debian-1.0`, `v1.12-debian-1`, `edge-debian`
+- `v1.13.0-debian-1.0`, `v1.13-debian-1`, `edge-debian`
   [(v1.12/debian/Dockerfile)][fluentd-1-debian]
-- `v1.12.4-debian-arm64-1.0`, `v1.12-debian-arm64-1`, `edge-debian-arm64`
+- `v1.13.0-debian-arm64-1.0`, `v1.13-debian-arm64-1`, `edge-debian-arm64`
   [(v1.12/arm64/debian/Dockerfile)][fluentd-1-debian-arm64]
-- `v1.12.4-debian-armhf-1.0`, `v1.12-debian-armhf-1`, `edge-debian-armhf`
+- `v1.13.0-debian-armhf-1.0`, `v1.13-debian-armhf-1`, `edge-debian-armhf`
   [(v1.12/armhf/debian/Dockerfile)][fluentd-1-debian-armhf]
-- `v1.12.4-windows-ltsc2019-1.0`, `v1.12-windows-ltsc2019-1`
+- `v1.13.0-windows-ltsc2019-1.0`, `v1.13-windows-ltsc2019-1`
   [(v1.12/windows-ltsc2019/Dockerfile)][fluentd-1-ltsc2019-windows]
-- `v1.12.4-windows-2004-1.0`, `v1.12-windows-2004-1`
+- `v1.13.0-windows-2004-1.0`, `v1.13-windows-2004-1`
   [(v1.12/windows-2004/Dockerfile)][fluentd-1-2004-windows]
-- `v1.12.4-windows-20H2-1.0`, `v1.12-windows-20H2-1`
+- `v1.13.0-windows-20H2-1.0`, `v1.13-windows-20H2-1`
   [(v1.12/windows-20H2/Dockerfile)][fluentd-1-20H2-windows]
 
 ### Old v1.4 images
@@ -224,7 +224,7 @@ To add plugins, edit `Dockerfile` as following:
 #### Alpine version
 
 ```Dockerfile
-FROM fluent/fluentd:v1.12-1
+FROM fluent/fluentd:v1.13-1
 
 # Use root account to use apk
 USER root
@@ -247,7 +247,7 @@ USER fluent
 #### Debian version
 
 ```Dockerfile
-FROM fluent/fluentd:v1.12-debian-1
+FROM fluent/fluentd:v1.13-debian-1
 
 # Use root account to use apt
 USER root

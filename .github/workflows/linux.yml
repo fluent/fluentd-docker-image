@@ -9,8 +9,8 @@ jobs:
       fail-fast: false
       matrix:
         include:
-          - dockerfile: v1.12/alpine
-          - dockerfile: v1.12/debian
+          - dockerfile: v1.13/alpine
+          - dockerfile: v1.13/debian
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@master
