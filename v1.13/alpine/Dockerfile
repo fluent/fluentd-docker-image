@@ -46,7 +46,7 @@ ENV FLUENTD_CONF="fluent.conf"
 ENV LD_PRELOAD=""
 # NOTE: resolv v0.2.1 includes the fix for CPU spike issue due to DNS resolver.
 # Forcing to load specific version of resolv (instead of bundled by default) is needed for Ruby 2.6.7, 2.7.3 and 3.0.1.
-ENV RUBYLIB="/usr/local/bundle/gems/resolv-0.2.1/lib"
+ENV RUBYLIB="/usr/lib/ruby/gems/2.7.0/gems/resolv-0.2.1/lib"
 EXPOSE 24224 5140
 
 USER fluent
