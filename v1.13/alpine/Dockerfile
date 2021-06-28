@@ -3,7 +3,7 @@
 
 FROM alpine:3.13
 LABEL maintainer "Fluentd developers <fluentd@googlegroups.com>"
-LABEL Description="Fluentd docker image" Vendor="Fluent Organization" Version="1.13.0"
+LABEL Description="Fluentd docker image" Vendor="Fluent Organization" Version="1.13.1"
 
 # NOTE: resolv v0.2.1 includes the fix for CPU spike issue due to DNS resolver.
 # This hack is needed for Ruby 2.6.7, 2.7.3 and 3.0.1.
@@ -24,7 +24,7 @@ RUN apk update \
  && gem install resolv -v 0.2.1 \
  && gem install async-http -v 0.54.0 \
  && gem install ext_monitor -v 0.1.2 \
- && gem install fluentd -v 1.13.0 \
+ && gem install fluentd -v 1.13.1 \
  && gem install bigdecimal -v 1.4.4 \
  && apk del .build-deps \
  && rm -rf /tmp/* /var/tmp/* /usr/lib/ruby/gems/*/cache/*.gem /usr/lib/ruby/gems/2.*/gems/fluentd-*/test
