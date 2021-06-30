@@ -10,10 +10,11 @@ LABEL Description="Fluentd docker image" Vendor="Fluent Organization" Version="1
 RUN powershell -Command "Set-ExecutionPolicy Bypass -Scope Process -Force; iex ((New-Object System.Net.WebClient).DownloadString('https://chocolatey.org/install.ps1'))"
 
 # Fluentd depends on cool.io whose fat gem is only available for Ruby < 2.5, so need to specify --platform ruby when install Ruby > 2.5 and install msys2 to get dev tools
+# NOTE: For avoiding stalling with docker build on windows, we must use latest version of msys2.
 RUN choco install -y ruby --version 2.6.5.1 --params "'/InstallDir:C:\ruby26'" \
 && choco install -y msys2 --version 20210604.0.0 --params "'/NoPath /NoUpdate /InstallDir:C:\ruby26\msys64'"
 RUN refreshenv \
-&& ridk install 2 3 \
+&& ridk install 3 \
 && echo gem: --no-document >> C:\ProgramData\gemrc \
 && gem install cool.io -v 1.5.4 --platform ruby \
 && gem install oj -v 3.3.10 \
