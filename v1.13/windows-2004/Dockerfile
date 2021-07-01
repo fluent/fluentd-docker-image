@@ -3,22 +3,23 @@
 
 FROM mcr.microsoft.com/windows/servercore:2004
 LABEL maintainer "Fluentd developers <fluentd@googlegroups.com>"
-LABEL Description="Fluentd docker image" Vendor="Fluent Organization" Version="1.13.0"
+LABEL Description="Fluentd docker image" Vendor="Fluent Organization" Version="1.13.1"
 
 # Do not split this into multiple RUN!
 # Docker creates a layer for every RUN-Statement
 RUN powershell -Command "Set-ExecutionPolicy Bypass -Scope Process -Force; iex ((New-Object System.Net.WebClient).DownloadString('https://chocolatey.org/install.ps1'))"
 
 # Fluentd depends on cool.io whose fat gem is only available for Ruby < 2.5, so need to specify --platform ruby when install Ruby > 2.5 and install msys2 to get dev tools
+# NOTE: For avoiding stalling with docker build on windows, we must use latest version of msys2.
 RUN choco install -y ruby --version 2.6.5.1 --params "'/InstallDir:C:\ruby26'" \
 && choco install -y msys2 --version 20210604.0.0 --params "'/NoPath /NoUpdate /InstallDir:C:\ruby26\msys64'"
 RUN refreshenv \
-&& ridk install 2 3 \
+&& ridk install 3 \
 && echo gem: --no-document >> C:\ProgramData\gemrc \
 && gem install cool.io -v 1.5.4 --platform ruby \
 && gem install oj -v 3.3.10 \
 && gem install json -v 2.2.0 \
-&& gem install fluentd -v 1.13.0 \
+&& gem install fluentd -v 1.13.1 \
 && gem install win32-service -v 2.1.6 \
 && gem install win32-ipc -v 0.7.0 \
 && gem install win32-event -v 0.6.3 \
