@@ -3,7 +3,7 @@
 
 FROM ruby:2.6-slim-buster
 LABEL maintainer "Fluentd developers <fluentd@googlegroups.com>"
-LABEL Description="Fluentd docker image" Vendor="Fluent Organization" Version="1.13.1"
+LABEL Description="Fluentd docker image" Vendor="Fluent Organization" Version="1.13.2"
 ENV TINI_VERSION=0.18.0
 
 # NOTE: resolv v0.2.1 includes the fix for CPU spike issue due to DNS resolver.
@@ -25,7 +25,7 @@ RUN apt-get update \
  && gem install resolv -v 0.2.1 \
  && gem install async-http -v 0.54.0 \
  && gem install ext_monitor -v 0.1.2 \
- && gem install fluentd -v 1.13.1 \
+ && gem install fluentd -v 1.13.2 \
  && dpkgArch="$(dpkg --print-architecture | awk -F- '{ print $NF }')" \
  && wget -O /usr/local/bin/tini "https://github.com/krallin/tini/releases/download/v$TINI_VERSION/tini-$dpkgArch" \
 # NOTE: sks-keyservers is not available anymore, update when https://github.com/krallin/tini/issues/184 was fixed
