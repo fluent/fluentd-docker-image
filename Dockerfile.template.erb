@@ -67,10 +67,6 @@ ENV TINI_VERSION=0.18.0
 <% end %>
 <% end %>
 
-<% if is_alpine || is_debian %>
-# NOTE: resolv v0.2.1 includes the fix for CPU spike issue due to DNS resolver.
-# This hack is needed for Ruby 2.6.7, 2.7.3 and 3.0.1.
-<% end %>
 # Do not split this into multiple RUN!
 # Docker creates a layer for every RUN-Statement
 <% if is_windows %>
@@ -130,7 +126,6 @@ RUN apt-get update \
  && gem install oj -v 2.18.3 \
 <% end %>
  && gem install json -v 2.4.1 \
- && gem install resolv -v 0.2.1 \
 <% if fluentd_ver.start_with?('1') %>
  && gem install async-http -v 0.54.0 \
  && gem install ext_monitor -v 0.1.2 \
@@ -199,13 +194,6 @@ ENV FLUENTD_CONF="fluent.conf"
 ENV LD_PRELOAD=""
 <% else %>
 ENV LD_PRELOAD="/usr/lib/libjemalloc.so.2"
-<% end %>
-# NOTE: resolv v0.2.1 includes the fix for CPU spike issue due to DNS resolver.
-# Forcing to load specific version of resolv (instead of bundled by default) is needed for Ruby 2.6.7, 2.7.3 and 3.0.1.
-<% if is_alpine %>
-ENV RUBYLIB="/usr/lib/ruby/gems/2.7.0/gems/resolv-0.2.1/lib"
-<% else %>
-ENV RUBYLIB="/usr/local/bundle/gems/resolv-0.2.1/lib"
 <% end %>
 <% end %>
 EXPOSE 24224 5140
