@@ -35,4 +35,4 @@ ENV FLUENTD_CONF="fluent.conf"
 
 EXPOSE 24224 5140
 
-ENTRYPOINT ["cmd", "/k", "fluentd", "-c", "C:\\fluent\\conf\\fluent.conf"]
+ENTRYPOINT ["cmd", "/k", "fluentd", "--config", "C:\\fluent\\conf\\fluent.conf"]

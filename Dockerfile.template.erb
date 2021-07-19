@@ -199,7 +199,7 @@ ENV LD_PRELOAD="/usr/lib/libjemalloc.so.2"
 EXPOSE 24224 5140
 
 <% if is_windows %>
-ENTRYPOINT ["cmd", "/k", "fluentd", "-c", "C:\\fluent\\conf\\fluent.conf"]
+ENTRYPOINT ["cmd", "/k", "fluentd", "--config", "C:\\fluent\\conf\\fluent.conf"]
 <% else %>
 USER fluent
 ENTRYPOINT ["tini",  "--", "/bin/entrypoint.sh"]
