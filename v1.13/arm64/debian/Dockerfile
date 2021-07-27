@@ -11,14 +11,12 @@ RUN curl -sL -o qemu-3.0.0+resin-aarch64.tar.gz https://github.com/balena-io/qem
 FROM arm64v8/ruby:2.6-slim-buster
 COPY --from=builder /go/qemu-aarch64-static /usr/bin/
 LABEL maintainer "Fluentd developers <fluentd@googlegroups.com>"
-LABEL Description="Fluentd docker image" Vendor="Fluent Organization" Version="1.13.2"
+LABEL Description="Fluentd docker image" Vendor="Fluent Organization" Version="1.13.3"
 ARG CROSS_BUILD_START="cross-build-start"
 ARG CROSS_BUILD_END="cross-build-end"
 RUN [ ${CROSS_BUILD_START} ]
 ENV TINI_VERSION=0.18.0
 
-# NOTE: resolv v0.2.1 includes the fix for CPU spike issue due to DNS resolver.
-# This hack is needed for Ruby 2.6.7, 2.7.3 and 3.0.1.
 # Do not split this into multiple RUN!
 # Docker creates a layer for every RUN-Statement
 # therefore an 'apt-get purge' has no effect
@@ -33,10 +31,9 @@ RUN apt-get update \
  && echo 'gem: --no-document' >> /etc/gemrc \
  && gem install oj -v 3.10.18 \
  && gem install json -v 2.4.1 \
- && gem install resolv -v 0.2.1 \
  && gem install async-http -v 0.54.0 \
  && gem install ext_monitor -v 0.1.2 \
- && gem install fluentd -v 1.13.2 \
+ && gem install fluentd -v 1.13.3 \
  && dpkgArch="$(dpkg --print-architecture | awk -F- '{ print $NF }')" \
  && wget -O /usr/local/bin/tini "https://github.com/krallin/tini/releases/download/v$TINI_VERSION/tini-$dpkgArch" \
  && wget -O /usr/local/bin/tini.asc "https://github.com/krallin/tini/releases/download/v$TINI_VERSION/tini-$dpkgArch.asc" \
@@ -71,9 +68,6 @@ COPY entrypoint.sh /bin/
 ENV FLUENTD_CONF="fluent.conf"
 
 ENV LD_PRELOAD="/usr/lib/libjemalloc.so.2"
-# NOTE: resolv v0.2.1 includes the fix for CPU spike issue due to DNS resolver.
-# Forcing to load specific version of resolv (instead of bundled by default) is needed for Ruby 2.6.7, 2.7.3 and 3.0.1.
-ENV RUBYLIB="/usr/local/bundle/gems/resolv-0.2.1/lib"
 EXPOSE 24224 5140
 
 USER fluent
