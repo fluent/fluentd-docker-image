@@ -133,6 +133,9 @@ RUN apt-get update \
  && gem install fluentd -v <%= fluentd_ver %> \
 <% if is_alpine %>
  && gem install bigdecimal -v 1.4.4 \
+# NOTE: resolv v0.2.1 includes the fix for CPU spike issue due to DNS resolver.
+# This hack is needed for Ruby 2.6.7, 2.7.3 and 3.0.1. (alpine image is still kept on 2.7.3)
+ && gem install resolv -v 0.2.1 \
  && apk del .build-deps \
 <% else %>
  && dpkgArch="$(dpkg --print-architecture | awk -F- '{ print $NF }')" \
@@ -191,6 +194,10 @@ ENV FLUENTD_CONF="fluent.conf"
 <% if not is_windows %>
 <% if is_alpine %>
 ENV LD_PRELOAD=""
+# NOTE: resolv v0.2.1 includes the fix for CPU spike issue due to DNS resolver.
+# Forcing to load specific version of resolv (instead of bundled by default) is needed for Ruby 2.6.7, 2.7.3 and 3.0.1.
+# alpine image is still kept on 2.7.3. See https://pkgs.alpinelinux.org/packages?name=ruby&branch=v3.13
+ENV RUBYLIB="/usr/lib/ruby/gems/2.7.0/gems/resolv-0.2.1/lib"
 <% else %>
 ENV LD_PRELOAD="/usr/lib/libjemalloc.so.2"
 <% end %>
