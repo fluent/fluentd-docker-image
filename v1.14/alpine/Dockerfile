@@ -29,7 +29,7 @@ RUN apk update \
  && apk del .build-deps \
  && rm -rf /tmp/* /var/tmp/* /usr/lib/ruby/gems/*/cache/*.gem /usr/lib/ruby/gems/2.*/gems/fluentd-*/test
 
-RUN addgroup -S fluent && adduser -S -g fluent fluent \
+RUN addgroup -S fluent && adduser -S -G fluent fluent \
     # for log storage (maybe shared with host)
     && mkdir -p /fluentd/log \
     # configuration/plugins path (default: copied from .)
