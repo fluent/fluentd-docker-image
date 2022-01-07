@@ -26,11 +26,11 @@ Current images use fluentd v1 series.
 
 - `v1.14.4-1.0`, `v1.14-1`, `edge`
   [(v1.14/alpine/Dockerfile)][fluentd-1-alpine]
-- `v1.14.4-debian-1.1`, `v1.14-debian-1`, `edge-debian`
+- `v1.14.4-debian-1.0`, `v1.14-debian-1`, `edge-debian`
   [(v1.14/debian/Dockerfile)][fluentd-1-debian]
-- `v1.14.4-debian-arm64-1.1`, `v1.14-debian-arm64-1`, `edge-debian-arm64`
+- `v1.14.4-debian-arm64-1.0`, `v1.14-debian-arm64-1`, `edge-debian-arm64`
   [(v1.14/arm64/debian/Dockerfile)][fluentd-1-debian-arm64]
-- `v1.14.4-debian-armhf-1.1`, `v1.14-debian-armhf-1`, `edge-debian-armhf`
+- `v1.14.4-debian-armhf-1.0`, `v1.14-debian-armhf-1`, `edge-debian-armhf`
   [(v1.14/armhf/debian/Dockerfile)][fluentd-1-debian-armhf]
 - `v1.14.4-windows-ltsc2019-1.0`, `v1.14-windows-ltsc2019-1`
   [(v1.14/windows-ltsc2019/Dockerfile)][fluentd-1-ltsc2019-windows]
