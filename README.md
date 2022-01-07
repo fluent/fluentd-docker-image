@@ -24,7 +24,7 @@ These tags have image version postfix. This updates many places so we need feedb
 
 Current images use fluentd v1 series.
 
-- `v1.14.0-1.1`, `v1.14-1`, `edge`
+- `v1.14.0-1.0`, `v1.14-1`, `edge`
   [(v1.14/alpine/Dockerfile)][fluentd-1-alpine]
 - `v1.14.0-debian-1.1`, `v1.14-debian-1`, `edge-debian`
   [(v1.14/debian/Dockerfile)][fluentd-1-debian]
