@@ -34,8 +34,6 @@ Current images use fluentd v1 series.
   [(v1.14/armhf/debian/Dockerfile)][fluentd-1-debian-armhf]
 - `v1.14.4-windows-ltsc2019-1.0`, `v1.14-windows-ltsc2019-1`
   [(v1.14/windows-ltsc2019/Dockerfile)][fluentd-1-ltsc2019-windows]
-- `v1.14.4-windows-2004-1.0`, `v1.14-windows-2004-1`
-  [(v1.14/windows-2004/Dockerfile)][fluentd-1-2004-windows]
 - `v1.14.4-windows-20H2-1.0`, `v1.14-windows-20H2-1`
   [(v1.14/windows-20H2/Dockerfile)][fluentd-1-20H2-windows]
 
@@ -395,5 +393,4 @@ through a [GitHub issue](https://github.com/fluent/fluentd-docker-image/issues).
 [fluentd-1-debian-arm64]: https://github.com/fluent/fluentd-docker-image/blob/master/v1.14/arm64/debian/Dockerfile
 [fluentd-1-debian-armhf]: https://github.com/fluent/fluentd-docker-image/blob/master/v1.14/armhf/debian/Dockerfile
 [fluentd-1-ltsc2019-windows]: https://github.com/fluent/fluentd-docker-image/blob/master/v1.14/windows-ltsc2019/Dockerfile
-[fluentd-1-2004-windows]: https://github.com/fluent/fluentd-docker-image/blob/master/v1.14/windows-2004/Dockerfile
 [fluentd-1-20H2-windows]: https://github.com/fluent/fluentd-docker-image/blob/master/v1.14/windows-20H2/Dockerfile
