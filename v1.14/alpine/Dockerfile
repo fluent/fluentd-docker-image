@@ -3,7 +3,7 @@
 
 FROM alpine:3.13
 LABEL maintainer "Fluentd developers <fluentd@googlegroups.com>"
-LABEL Description="Fluentd docker image" Vendor="Fluent Organization" Version="1.14.4"
+LABEL Description="Fluentd docker image" Vendor="Fluent Organization" Version="1.14.5"
 
 # Do not split this into multiple RUN!
 # Docker creates a layer for every RUN-Statement
@@ -21,11 +21,8 @@ RUN apk update \
  && gem install json -v 2.4.1 \
  && gem install async-http -v 0.54.0 \
  && gem install ext_monitor -v 0.1.2 \
- && gem install fluentd -v 1.14.4 \
+ && gem install fluentd -v 1.14.5 \
  && gem install bigdecimal -v 1.4.4 \
-# NOTE: resolv v0.2.1 includes the fix for CPU spike issue due to DNS resolver.
-# This hack is needed for Ruby 2.6.7, 2.7.3 and 3.0.1. (alpine image is still kept on 2.7.3)
- && gem install resolv -v 0.2.1 \
  && apk del .build-deps \
  && rm -rf /tmp/* /var/tmp/* /usr/lib/ruby/gems/*/cache/*.gem /usr/lib/ruby/gems/2.*/gems/fluentd-*/test
 
@@ -44,10 +41,6 @@ COPY entrypoint.sh /bin/
 ENV FLUENTD_CONF="fluent.conf"
 
 ENV LD_PRELOAD=""
-# NOTE: resolv v0.2.1 includes the fix for CPU spike issue due to DNS resolver.
-# Forcing to load specific version of resolv (instead of bundled by default) is needed for Ruby 2.6.7, 2.7.3 and 3.0.1.
-# alpine image is still kept on 2.7.3. See https://pkgs.alpinelinux.org/packages?name=ruby&branch=v3.13
-ENV RUBYLIB="/usr/lib/ruby/gems/2.7.0/gems/resolv-0.2.1/lib"
 EXPOSE 24224 5140
 
 USER fluent

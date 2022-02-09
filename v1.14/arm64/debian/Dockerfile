@@ -8,10 +8,10 @@ ENV QEMU_DOWNLOAD_SHA256 a1ef52971537e11915565233f48aa179839f676008d7911c05b3ae9
 RUN apk add curl --no-cache
 RUN curl -sL -o qemu-3.0.0+resin-aarch64.tar.gz https://github.com/balena-io/qemu/releases/download/v3.0.0%2Bresin/qemu-3.0.0+resin-aarch64.tar.gz && echo "$QEMU_DOWNLOAD_SHA256 *qemu-3.0.0+resin-aarch64.tar.gz" | sha256sum -c - | tar zxvf qemu-3.0.0+resin-aarch64.tar.gz -C . && mv qemu-3.0.0+resin-aarch64/qemu-aarch64-static .
 
-FROM arm64v8/ruby:2.6-slim-buster
+FROM arm64v8/ruby:2.7-slim-bullseye
 COPY --from=builder /go/qemu-aarch64-static /usr/bin/
 LABEL maintainer "Fluentd developers <fluentd@googlegroups.com>"
-LABEL Description="Fluentd docker image" Vendor="Fluent Organization" Version="1.14.4"
+LABEL Description="Fluentd docker image" Vendor="Fluent Organization" Version="1.14.5"
 ARG CROSS_BUILD_START="cross-build-start"
 ARG CROSS_BUILD_END="cross-build-end"
 RUN [ ${CROSS_BUILD_START} ]
@@ -33,7 +33,7 @@ RUN apt-get update \
  && gem install json -v 2.4.1 \
  && gem install async-http -v 0.54.0 \
  && gem install ext_monitor -v 0.1.2 \
- && gem install fluentd -v 1.14.4 \
+ && gem install fluentd -v 1.14.5 \
  && dpkgArch="$(dpkg --print-architecture | awk -F- '{ print $NF }')" \
  && wget -O /usr/local/bin/tini "https://github.com/krallin/tini/releases/download/v$TINI_VERSION/tini-$dpkgArch" \
  && wget -O /usr/local/bin/tini.asc "https://github.com/krallin/tini/releases/download/v$TINI_VERSION/tini-$dpkgArch.asc" \
