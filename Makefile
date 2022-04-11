@@ -27,7 +27,8 @@ ARM64_IMAGES := \
 
 WINDOWS_IMAGES := \
 	v1.14/windows-ltsc2019:v1.14.6-windows-ltsc2019-1.0,v1.14-windows-ltsc2019-1 \
-	v1.14/windows-20H2:v1.14.6-windows-20H2-1.0,v1.14-windows-20H2-1
+	v1.14/windows-20H2:v1.14.6-windows-20H2-1.0,v1.14-windows-20H2-1 \
+	v1.14/windows-ltsc2022:v1.14.6-windows-ltsc2022-1.0,v1.14-windows-ltsc2022-1
 
 ALL_IMAGES := $(X86_IMAGES) $(ARM_IMAGES) $(ARM64_IMAGES) $(WINDOWS_IMAGES)
 
