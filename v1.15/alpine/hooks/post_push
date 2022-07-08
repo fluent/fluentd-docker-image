@@ -12,4 +12,5 @@ repoName=${IMAGE_NAME:0:tagStart-1}
 for tag in {v1.15.0-1.0,v1.15-1,edge}; do
   docker tag $IMAGE_NAME ${repoName}:${tag}
   docker push ${repoName}:${tag}
+
 done
