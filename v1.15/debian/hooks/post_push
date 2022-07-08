@@ -19,13 +19,11 @@ for tag in {v1.15.0-debian-amd64-1.0,v1.15-debian-amd64-1,edge-debian-amd64}; do
 
   archTag=${tag/amd64/ARCH}
   archTag=${archTag/arm64/ARCH}
-  archTag=${archTag/armhf/ARCH}
   noArchTag=${tag/-amd64/}
   noArchTag=${noArchTag/-arm64/}
-  noArchTag=${noArchTag/-armhf/}
-  # Note: this will fail until three of the amd64, armv7, and arm64 images have been pushed
+  # Note: this will fail until three of the amd64 and arm64 images have been pushed
   ./manifest-tool push from-args \
-      --platforms linux/amd64,linux/arm/v7,linux/arm64 \
+      --platforms linux/amd64,linux/arm64 \
       --template ${repoName}:${archTag} \
       --target ${repoName}:${noArchTag} || true
 
