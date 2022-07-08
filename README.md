@@ -27,6 +27,8 @@ Current images use fluentd v1 series.
 - `v1.15.0-1.0`, `v1.15-1`, `edge`
   [(v1.15/alpine/Dockerfile)][fluentd-1-alpine]
 - `v1.15.0-debian-1.0`, `v1.15-debian-1`, `edge-debian`
+  (multiarch image)
+- `v1.15.0-debian-amd64-1.0`, `v1.15-debian-amd64-1`, `edge-debian-amd64`
   [(v1.15/debian/Dockerfile)][fluentd-1-debian]
 - `v1.15.0-debian-arm64-1.0`, `v1.15-debian-arm64-1`, `edge-debian-arm64`
   [(v1.15/arm64/debian/Dockerfile)][fluentd-1-debian-arm64]

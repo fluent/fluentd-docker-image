@@ -14,7 +14,7 @@
 IMAGE_NAME := fluent/fluentd
 X86_IMAGES := \
 	v1.15/alpine:v1.15.0-1.0,v1.15-1,edge \
-	v1.15/debian:v1.15.0-debian-1.0,v1.15-debian-1,edge-debian
+	v1.15/debian:v1.15.0-debian-amd64-1.0,v1.15-debian-amd64-1,edge-debian-amd64
 #	<Dockerfile>:<version>,<tag1>,<tag2>,...
 
 # Define images for running on ARM platforms
