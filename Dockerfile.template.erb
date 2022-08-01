@@ -78,11 +78,7 @@ RUN choco install -y ruby --version 3.1.2.1 --params "'/InstallDir:C:\ruby31'" \
 RUN refreshenv \
 && ridk install 3 \
 && echo gem: --no-document >> C:\ProgramData\gemrc \
-<% if fluentd_ver.start_with?('1') %>
-&& gem install oj -v 3.13.5 \
-<% else %>
-&& gem install oj -v 2.18.3 \
-<% end %>
+&& gem install oj -v 3.13.19 \
 && gem install json -v 2.6.2 \
 && gem install fluentd -v <%= fluentd_ver %> \
 && gem install win32-service -v 2.3.2 \
@@ -118,15 +114,9 @@ RUN apt-get update \
  && apt-get install -y --no-install-recommends $buildDeps \
 <% end %>
  && echo 'gem: --no-document' >> /etc/gemrc \
-<% if fluentd_ver.start_with?('1') %>
- && gem install oj -v 3.10.18 \
-<% else %>
- && gem install oj -v 2.18.3 \
-<% end %>
- && gem install json -v 2.4.1 \
-<% if fluentd_ver.start_with?('1') %>
- && gem install async-http -v 0.54.0 \
-<% end %>
+ && gem install oj -v 3.13.19 \
+ && gem install json -v 2.6.2 \
+ && gem install async-http -v 0.56.6 \
  && gem install fluentd -v <%= fluentd_ver %> \
 <% if is_alpine %>
  && gem install bigdecimal -v 1.4.4 \
@@ -141,13 +131,8 @@ RUN apt-get update \
  && rm -r /usr/local/bin/tini.asc \
  && chmod +x /usr/local/bin/tini \
  && tini -h \
-<% if fluentd_ver.start_with?('1') %>
  && wget -O /tmp/jemalloc-5.3.0.tar.bz2 https://github.com/jemalloc/jemalloc/releases/download/5.3.0/jemalloc-5.3.0.tar.bz2 \
  && cd /tmp && tar -xjf jemalloc-5.3.0.tar.bz2 && cd jemalloc-5.3.0/ \
-<% else %>
- && wget -O /tmp/jemalloc-4.4.0.tar.bz2 https://github.com/jemalloc/jemalloc/releases/download/4.4.0/jemalloc-4.4.0.tar.bz2 \
- && cd /tmp && tar -xjf jemalloc-4.4.0.tar.bz2 && cd jemalloc-4.4.0/ \
-<% end %>
  && ./configure && make \
  && mv lib/libjemalloc.so.2 /usr/lib \
  && apt-get purge -y --auto-remove \
