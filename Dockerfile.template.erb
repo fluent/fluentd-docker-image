@@ -79,7 +79,7 @@ RUN refreshenv \
 && ridk install 3 \
 && echo gem: --no-document >> C:\ProgramData\gemrc \
 <% if fluentd_ver.start_with?('1') %>
-&& gem install oj -v 3.13.5 \
+&& gem install oj -v 3.13.19 \
 <% else %>
 && gem install oj -v 2.18.3 \
 <% end %>
@@ -119,13 +119,13 @@ RUN apt-get update \
 <% end %>
  && echo 'gem: --no-document' >> /etc/gemrc \
 <% if fluentd_ver.start_with?('1') %>
- && gem install oj -v 3.10.18 \
+ && gem install oj -v 3.13.19 \
 <% else %>
  && gem install oj -v 2.18.3 \
 <% end %>
- && gem install json -v 2.4.1 \
+ && gem install json -v 2.6.2 \
 <% if fluentd_ver.start_with?('1') %>
- && gem install async-http -v 0.54.0 \
+ && gem install async-http -v 0.56.6 \
 <% end %>
  && gem install fluentd -v <%= fluentd_ver %> \
 <% if is_alpine %>
