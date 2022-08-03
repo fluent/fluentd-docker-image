@@ -9,7 +9,7 @@ tagStart=$(expr index "$IMAGE_NAME" :)
 repoName=${IMAGE_NAME:0:tagStart-1}
 
 # Tag and push image for each additional tag
-for tag in {v1.15.1-windows-20H2-1.0,v1.15-windows-20H2-1}; do
+for tag in {v1.15.1-windows-20H2-1.1,v1.15-windows-20H2-1}; do
   docker tag $IMAGE_NAME ${repoName}:${tag}
   docker push ${repoName}:${tag}
 

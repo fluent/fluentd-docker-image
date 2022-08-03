@@ -31,6 +31,7 @@ RUN apt-get update \
  && echo 'gem: --no-document' >> /etc/gemrc \
  && gem install oj -v 3.13.19 \
  && gem install json -v 2.6.2 \
+ && gem install async -v 1.30.3 \
  && gem install async-http -v 0.56.6 \
  && gem install fluentd -v 1.15.1 \
  && dpkgArch="$(dpkg --print-architecture | awk -F- '{ print $NF }')" \
