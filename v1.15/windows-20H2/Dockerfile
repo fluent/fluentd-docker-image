@@ -3,7 +3,7 @@
 
 FROM mcr.microsoft.com/windows/servercore:20H2
 LABEL maintainer "Fluentd developers <fluentd@googlegroups.com>"
-LABEL Description="Fluentd docker image" Vendor="Fluent Organization" Version="1.15.1"
+LABEL Description="Fluentd docker image" Vendor="Fluent Organization" Version="1.15.2"
 
 # Do not split this into multiple RUN!
 # Docker creates a layer for every RUN-Statement
@@ -17,11 +17,10 @@ RUN refreshenv \
 && echo gem: --no-document >> C:\ProgramData\gemrc \
 && gem install oj -v 3.13.19 \
 && gem install json -v 2.6.2 \
-&& gem install fluentd -v 1.15.1 \
+&& gem install fluentd -v 1.15.2 \
 && gem install win32-service -v 2.3.2 \
 && gem install win32-ipc -v 0.7.0 \
 && gem install win32-event -v 0.6.3 \
-&& gem install windows-pr -v 1.2.6 \
 && gem sources --clear-all
 
 # Remove gem cache and chocolatey
