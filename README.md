@@ -14,7 +14,7 @@ collection and consumption for a better use and understanding of data.
 
 > [www.fluentd.org](https://www.fluentd.org/)
 
-![Fluentd Logo](https://www.fluentd.org/assets/img/miscellany/fluentd-logo.png)
+![Fluentd Logo](https://www.fluentd.org/images/miscellany/fluentd-logo.png)
 
 ## Supported tags and respective `Dockerfile` links
 
