@@ -78,8 +78,8 @@ RUN choco install -y ruby --version 3.1.3.1 --params "'/InstallDir:C:\ruby31'" \
 RUN refreshenv \
 && ridk install 3 \
 && echo gem: --no-document >> C:\ProgramData\gemrc \
-&& gem install oj -v 3.13.22 \
-&& gem install json -v 2.6.2 \
+&& gem install oj -v 3.14.2 \
+&& gem install json -v 2.6.3 \
 && gem install rexml -v 3.2.5 \
 && gem install fluentd -v <%= fluentd_ver %> \
 && gem install win32-service -v 2.3.2 \
@@ -114,8 +114,8 @@ RUN apt-get update \
  && apt-get install -y --no-install-recommends $buildDeps \
 <% end %>
  && echo 'gem: --no-document' >> /etc/gemrc \
- && gem install oj -v 3.13.22 \
- && gem install json -v 2.6.2 \
+ && gem install oj -v 3.14.2 \
+ && gem install json -v 2.6.3 \
  && gem install rexml -v 3.2.5 \
  && gem install async -v 1.30.3 \
  && gem install async-http -v 0.56.6 \
