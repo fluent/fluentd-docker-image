@@ -18,8 +18,8 @@ RUN apt-get update \
     " \
  && apt-get install -y --no-install-recommends $buildDeps \
  && echo 'gem: --no-document' >> /etc/gemrc \
- && gem install oj -v 3.13.22 \
- && gem install json -v 2.6.2 \
+ && gem install oj -v 3.14.2 \
+ && gem install json -v 2.6.3 \
  && gem install rexml -v 3.2.5 \
  && gem install async -v 1.30.3 \
  && gem install async-http -v 0.56.6 \
