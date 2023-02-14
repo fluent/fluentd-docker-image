@@ -10,13 +10,13 @@ LABEL Description="Fluentd docker image" Vendor="Fluent Organization" Version="1
 RUN powershell -Command "Set-ExecutionPolicy Bypass -Scope Process -Force; iex ((New-Object System.Net.WebClient).DownloadString('https://chocolatey.org/install.ps1'))"
 
 # NOTE: For avoiding stalling with docker build on windows, we must use latest version of msys2.
-RUN choco install -y ruby --version 3.1.2.1 --params "'/InstallDir:C:\ruby31'" \
-&& choco install -y msys2 --version 20220904.0.0 --params "'/NoPath /NoUpdate /InstallDir:C:\ruby31\msys64'"
+RUN choco install -y ruby --version 3.1.3.1 --params "'/InstallDir:C:\ruby31'" \
+&& choco install -y msys2 --version 20230127.0.0 --params "'/NoPath /NoUpdate /InstallDir:C:\ruby31\msys64'"
 RUN refreshenv \
 && ridk install 3 \
 && echo gem: --no-document >> C:\ProgramData\gemrc \
-&& gem install oj -v 3.13.22 \
-&& gem install json -v 2.6.2 \
+&& gem install oj -v 3.14.2 \
+&& gem install json -v 2.6.3 \
 && gem install rexml -v 3.2.5 \
 && gem install fluentd -v 1.15.3 \
 && gem install win32-service -v 2.3.2 \
