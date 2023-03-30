@@ -24,20 +24,20 @@ These tags have image version postfix. This updates many places so we need feedb
 
 Current images use fluentd v1 series.
 
-- `v1.15.3-1.2`, `v1.15-1`, `edge`
-  [(v1.15/alpine/Dockerfile)][fluentd-1-alpine]
-- `v1.15.3-debian-1.2`, `v1.15-debian-1`, `edge-debian`
+- `v1.16.0-1.0`, `v1.16-1`, `edge`
+  [(v1.16/alpine/Dockerfile)][fluentd-1-alpine]
+- `v1.16.0-debian-1.0`, `v1.16-debian-1`, `edge-debian`
   (multiarch image for arm64(AArch64) and amd64(x86_64))
-- `v1.15.3-debian-amd64-1.2`, `v1.15-debian-amd64-1`, `edge-debian-amd64`
-  [(v1.15/debian/Dockerfile)][fluentd-1-debian]
-- `v1.15.3-debian-arm64-1.2`, `v1.15-debian-arm64-1`, `edge-debian-arm64`
-  [(v1.15/arm64/debian/Dockerfile)][fluentd-1-debian-arm64]
-- `v1.15.3-debian-armhf-1.2`, `v1.15-debian-armhf-1`, `edge-debian-armhf`
-  [(v1.15/armhf/debian/Dockerfile)][fluentd-1-debian-armhf]
-- `v1.15.3-windows-ltsc2019-1.2`, `v1.15-windows-ltsc2019-1`
-  [(v1.15/windows-ltsc2019/Dockerfile)][fluentd-1-ltsc2019-windows]
-- `v1.15.3-windows-ltsc2022-1.2`, `v1.15-windows-ltsc2022-1`
-  [(v1.15/windows-ltsc2022/Dockerfile)][fluentd-1-ltsc2022-windows]
+- `v1.16.0-debian-amd64-1.0`, `v1.16-debian-amd64-1`, `edge-debian-amd64`
+  [(v1.16/debian/Dockerfile)][fluentd-1-debian]
+- `v1.16.0-debian-arm64-1.0`, `v1.16-debian-arm64-1`, `edge-debian-arm64`
+  [(v1.16/arm64/debian/Dockerfile)][fluentd-1-debian-arm64]
+- `v1.16.0-debian-armhf-1.0`, `v1.16-debian-armhf-1`, `edge-debian-armhf`
+  [(v1.16/armhf/debian/Dockerfile)][fluentd-1-debian-armhf]
+- `v1.16.0-windows-ltsc2019-1.0`, `v1.16-windows-ltsc2019-1`
+  [(v1.16/windows-ltsc2019/Dockerfile)][fluentd-1-ltsc2019-windows]
+- `v1.16.0-windows-ltsc2022-1.0`, `v1.16-windows-ltsc2022-1`
+  [(v1.16/windows-ltsc2022/Dockerfile)][fluentd-1-ltsc2022-windows]
 
 ### Old v1.4 images
 
@@ -224,7 +224,7 @@ To add plugins, edit `Dockerfile` as following:
 #### Alpine version
 
 ```Dockerfile
-FROM fluent/fluentd:v1.15-1
+FROM fluent/fluentd:v1.16-1
 
 # Use root account to use apk
 USER root
@@ -247,7 +247,7 @@ USER fluent
 #### Debian version
 
 ```Dockerfile
-FROM fluent/fluentd:v1.15-debian-1
+FROM fluent/fluentd:v1.16-debian-1
 
 # Use root account to use apt
 USER root
@@ -390,9 +390,9 @@ through a [GitHub issue](https://github.com/fluent/fluentd-docker-image/issues).
 [fluentd-1-4-debian]: https://github.com/fluent/fluentd-docker-image/blob/master/v1.4/debian/Dockerfile
 [fluentd-1-4-debian-onbuild]: https://github.com/fluent/fluentd-docker-image/blob/master/v1.4/debian-onbuild/Dockerfile
 [fluentd-1-4-windows]: https://github.com/fluent/fluentd-docker-image/blob/master/v1.4/windows/Dockerfile
-[fluentd-1-alpine]: https://github.com/fluent/fluentd-docker-image/blob/master/v1.15/alpine/Dockerfile
-[fluentd-1-debian]: https://github.com/fluent/fluentd-docker-image/blob/master/v1.15/debian/Dockerfile
-[fluentd-1-debian-arm64]: https://github.com/fluent/fluentd-docker-image/blob/master/v1.15/arm64/debian/Dockerfile
-[fluentd-1-debian-armhf]: https://github.com/fluent/fluentd-docker-image/blob/master/v1.15/armhf/debian/Dockerfile
-[fluentd-1-ltsc2019-windows]: https://github.com/fluent/fluentd-docker-image/blob/master/v1.15/windows-ltsc2019/Dockerfile
-[fluentd-1-ltsc2022-windows]: https://github.com/fluent/fluentd-docker-image/blob/master/v1.15/windows-ltsc2019/Dockerfile
+[fluentd-1-alpine]: https://github.com/fluent/fluentd-docker-image/blob/master/v1.16/alpine/Dockerfile
+[fluentd-1-debian]: https://github.com/fluent/fluentd-docker-image/blob/master/v1.16/debian/Dockerfile
+[fluentd-1-debian-arm64]: https://github.com/fluent/fluentd-docker-image/blob/master/v1.16/arm64/debian/Dockerfile
+[fluentd-1-debian-armhf]: https://github.com/fluent/fluentd-docker-image/blob/master/v1.16/armhf/debian/Dockerfile
+[fluentd-1-ltsc2019-windows]: https://github.com/fluent/fluentd-docker-image/blob/master/v1.16/windows-ltsc2019/Dockerfile
+[fluentd-1-ltsc2022-windows]: https://github.com/fluent/fluentd-docker-image/blob/master/v1.16/windows-ltsc2019/Dockerfile
