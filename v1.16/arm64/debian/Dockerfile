@@ -11,7 +11,7 @@ RUN curl -sL -o qemu-6.0.0.balena1-aarch64.tar.gz https://github.com/balena-io/q
 FROM arm64v8/ruby:3.1-slim-bullseye
 COPY --from=builder /go/qemu-aarch64-static /usr/bin/
 LABEL maintainer "Fluentd developers <fluentd@googlegroups.com>"
-LABEL Description="Fluentd docker image" Vendor="Fluent Organization" Version="1.16.0"
+LABEL Description="Fluentd docker image" Vendor="Fluent Organization" Version="1.16.1"
 ARG CROSS_BUILD_START="cross-build-start"
 ARG CROSS_BUILD_END="cross-build-end"
 RUN [ ${CROSS_BUILD_START} ]
@@ -29,12 +29,12 @@ RUN apt-get update \
     " \
  && apt-get install -y --no-install-recommends $buildDeps \
  && echo 'gem: --no-document' >> /etc/gemrc \
- && gem install oj -v 3.14.2 \
+ && gem install oj -v 3.14.3 \
  && gem install json -v 2.6.3 \
  && gem install rexml -v 3.2.5 \
- && gem install async -v 1.30.3 \
- && gem install async-http -v 0.56.6 \
- && gem install fluentd -v 1.16.0 \
+ && gem install async -v 1.31.0 \
+ && gem install async-http -v 0.60.1 \
+ && gem install fluentd -v 1.16.1 \
  && dpkgArch="$(dpkg --print-architecture | awk -F- '{ print $NF }')" \
  && wget -O /usr/local/bin/tini "https://github.com/krallin/tini/releases/download/v$TINI_VERSION/tini-$dpkgArch" \
  && wget -O /usr/local/bin/tini.asc "https://github.com/krallin/tini/releases/download/v$TINI_VERSION/tini-$dpkgArch.asc" \
