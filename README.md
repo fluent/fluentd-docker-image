@@ -1,11 +1,9 @@
 Fluentd Docker Image
 ====================
 
-[![Build Status](https://travis-ci.org/fluent/fluentd-docker-image.svg?branch=master)](https://travis-ci.org/fluent/fluentd-docker-image)
+[![Build Status](https://github.com/fluent/fluentd-docker-image/actions/workflows/linux.yml/badge.svg?branch=master)](https://github.com/fluent/fluentd-docker-image/actions/workflows/linux.yml)
 [![Docker Stars](https://img.shields.io/docker/stars/fluent/fluentd.svg)](https://hub.docker.com/r/fluent/fluentd)
 [![Docker Pulls](https://img.shields.io/docker/pulls/fluent/fluentd.svg)](https://hub.docker.com/r/fluent/fluentd)
-[![ImageLayers Size](https://img.shields.io/imagelayers/image-size/fluent/fluentd/latest.svg)](https://hub.docker.com/r/fluent/fluentd)
-[![ImageLayers Layers](https://img.shields.io/imagelayers/layers/fluent/fluentd/latest.svg)](https://hub.docker.com/r/fluent/fluentd)
 
 ## What is Fluentd?
 
@@ -14,7 +12,7 @@ collection and consumption for a better use and understanding of data.
 
 > [www.fluentd.org](https://www.fluentd.org/)
 
-![Fluentd Logo](https://www.fluentd.org/assets/img/miscellany/fluentd-logo.png)
+![Fluentd Logo](https://www.fluentd.org/images/miscellany/fluentd-logo.png)
 
 ## Supported tags and respective `Dockerfile` links
 
