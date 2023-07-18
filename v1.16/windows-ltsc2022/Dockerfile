@@ -3,7 +3,7 @@
 
 FROM mcr.microsoft.com/windows/servercore:ltsc2022
 LABEL maintainer "Fluentd developers <fluentd@googlegroups.com>"
-LABEL Description="Fluentd docker image" Vendor="Fluent Organization" Version="1.16.1"
+LABEL Description="Fluentd docker image" Vendor="Fluent Organization" Version="1.16.2"
 
 # Do not split this into multiple RUN!
 # Docker creates a layer for every RUN-Statement
@@ -15,10 +15,10 @@ RUN choco install -y ruby --version 3.1.3.1 --params "'/InstallDir:C:\ruby31'" \
 RUN refreshenv \
 && ridk install 3 \
 && echo gem: --no-document >> C:\ProgramData\gemrc \
-&& gem install oj -v 3.14.2 \
+&& gem install oj -v 3.15.0 \
 && gem install json -v 2.6.3 \
 && gem install rexml -v 3.2.5 \
-&& gem install fluentd -v 1.16.1 \
+&& gem install fluentd -v 1.16.2 \
 && gem install win32-service -v 2.3.2 \
 && gem install win32-ipc -v 0.7.0 \
 && gem install win32-event -v 0.6.3 \
