@@ -3,7 +3,7 @@
 
 FROM ruby:3.1-slim-bullseye
 LABEL maintainer "Fluentd developers <fluentd@googlegroups.com>"
-LABEL Description="Fluentd docker image" Vendor="Fluent Organization" Version="1.16.1"
+LABEL Description="Fluentd docker image" Vendor="Fluent Organization" Version="1.16.2"
 ENV TINI_VERSION=0.18.0
 
 # Do not split this into multiple RUN!
@@ -18,12 +18,12 @@ RUN apt-get update \
     " \
  && apt-get install -y --no-install-recommends $buildDeps \
  && echo 'gem: --no-document' >> /etc/gemrc \
- && gem install oj -v 3.14.3 \
+ && gem install oj -v 3.15.0 \
  && gem install json -v 2.6.3 \
  && gem install rexml -v 3.2.5 \
  && gem install async -v 1.31.0 \
- && gem install async-http -v 0.60.1 \
- && gem install fluentd -v 1.16.1 \
+ && gem install async-http -v 0.60.2 \
+ && gem install fluentd -v 1.16.2 \
  && dpkgArch="$(dpkg --print-architecture | awk -F- '{ print $NF }')" \
  && wget -O /usr/local/bin/tini "https://github.com/krallin/tini/releases/download/v$TINI_VERSION/tini-$dpkgArch" \
  && wget -O /usr/local/bin/tini.asc "https://github.com/krallin/tini/releases/download/v$TINI_VERSION/tini-$dpkgArch.asc" \

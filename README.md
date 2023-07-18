@@ -1,11 +1,9 @@
 Fluentd Docker Image
 ====================
 
-[![Build Status](https://travis-ci.org/fluent/fluentd-docker-image.svg?branch=master)](https://travis-ci.org/fluent/fluentd-docker-image)
+[![Build Status](https://github.com/fluent/fluentd-docker-image/actions/workflows/linux.yml/badge.svg?branch=master)](https://github.com/fluent/fluentd-docker-image/actions/workflows/linux.yml)
 [![Docker Stars](https://img.shields.io/docker/stars/fluent/fluentd.svg)](https://hub.docker.com/r/fluent/fluentd)
 [![Docker Pulls](https://img.shields.io/docker/pulls/fluent/fluentd.svg)](https://hub.docker.com/r/fluent/fluentd)
-[![ImageLayers Size](https://img.shields.io/imagelayers/image-size/fluent/fluentd/latest.svg)](https://hub.docker.com/r/fluent/fluentd)
-[![ImageLayers Layers](https://img.shields.io/imagelayers/layers/fluent/fluentd/latest.svg)](https://hub.docker.com/r/fluent/fluentd)
 
 ## What is Fluentd?
 
@@ -14,7 +12,7 @@ collection and consumption for a better use and understanding of data.
 
 > [www.fluentd.org](https://www.fluentd.org/)
 
-![Fluentd Logo](https://www.fluentd.org/assets/img/miscellany/fluentd-logo.png)
+![Fluentd Logo](https://www.fluentd.org/images/miscellany/fluentd-logo.png)
 
 ## Supported tags and respective `Dockerfile` links
 
@@ -24,19 +22,19 @@ These tags have image version postfix. This updates many places so we need feedb
 
 Current images use fluentd v1 series.
 
-- `v1.16.1-1.0`, `v1.16-1`, `edge`
+- `v1.16.2-1.0`, `v1.16-1`, `edge`
   [(v1.16/alpine/Dockerfile)][fluentd-1-alpine]
-- `v1.16.1-debian-1.0`, `v1.16-debian-1`, `edge-debian`
+- `v1.16.2-debian-1.0`, `v1.16-debian-1`, `edge-debian`
   (multiarch image for arm64(AArch64) and amd64(x86_64))
-- `v1.16.1-debian-amd64-1.0`, `v1.16-debian-amd64-1`, `edge-debian-amd64`
+- `v1.16.2-debian-amd64-1.0`, `v1.16-debian-amd64-1`, `edge-debian-amd64`
   [(v1.16/debian/Dockerfile)][fluentd-1-debian]
-- `v1.16.1-debian-arm64-1.0`, `v1.16-debian-arm64-1`, `edge-debian-arm64`
+- `v1.16.2-debian-arm64-1.0`, `v1.16-debian-arm64-1`, `edge-debian-arm64`
   [(v1.16/arm64/debian/Dockerfile)][fluentd-1-debian-arm64]
-- `v1.16.1-debian-armhf-1.0`, `v1.16-debian-armhf-1`, `edge-debian-armhf`
+- `v1.16.2-debian-armhf-1.0`, `v1.16-debian-armhf-1`, `edge-debian-armhf`
   [(v1.16/armhf/debian/Dockerfile)][fluentd-1-debian-armhf]
-- `v1.16.1-windows-ltsc2019-1.0`, `v1.16-windows-ltsc2019-1`
+- `v1.16.2-windows-ltsc2019-1.0`, `v1.16-windows-ltsc2019-1`
   [(v1.16/windows-ltsc2019/Dockerfile)][fluentd-1-ltsc2019-windows]
-- `v1.16.1-windows-ltsc2022-1.0`, `v1.16-windows-ltsc2022-1`
+- `v1.16.2-windows-ltsc2022-1.0`, `v1.16-windows-ltsc2022-1`
   [(v1.16/windows-ltsc2022/Dockerfile)][fluentd-1-ltsc2022-windows]
 
 ### Old v1.4 images
@@ -85,7 +83,7 @@ This image is based on the popular [Alpine Linux project][1], available in
 
 #### `edge`
 
-Latest released version of Fluentd. This tag is mainly for testing.
+Latest released version of Fluentd.
 
 #### `vX.Y-A`
 
@@ -103,11 +101,6 @@ Concrete `vX.Y.Z` version of Fluentd. This tag is recommeded for the production 
 `B` will be incremented when image has small changes, e.g. library update or bug fixes.
 
 When fluentd version is updated, `A.B` is reset to `1.0`.
-
-#### `onbuild` included tag
-
-`onbuild` images are deprecated. Use non-`onbuild ` images instead to build your image.
-New images, v1.5 or later, don't provide `onbuild` version.
 
 #### `debian` included tag
 
@@ -132,7 +125,8 @@ These images/tags are kept for backward compatibility. No update anymore and don
 
 #### `stable`, `latest`
 
-Latest version of stable Fluentd branch (currently `v1.3-1`).
+These tags are obsolete, already removed to avoid confusing.
+Use `edge`, `vX.Y-A` or `vX.Y.Z-A.B` images instead.
 
 #### `vX.Y`
 
@@ -142,7 +136,12 @@ Latest version of `vX.Y` Fluentd branch.
 
 Concrete `vX.Y.Z` version of Fluentd.
 
-#### `onbuild` included tag, `debian` included tag, `armhf` included tag
+#### `onbuild` included tag
+
+`onbuild` images are deprecated. Use non-`onbuild ` images instead to build your image.
+New images, v1.5 or later, don't provide `onbuild` version.
+
+#### `debian` included tag, `armhf` included tag
 
 Same as current images.
 
