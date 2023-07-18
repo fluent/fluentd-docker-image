@@ -83,7 +83,7 @@ This image is based on the popular [Alpine Linux project][1], available in
 
 #### `edge`
 
-Latest released version of Fluentd. This tag is mainly for testing.
+Latest released version of Fluentd.
 
 #### `vX.Y-A`
 
@@ -101,11 +101,6 @@ Concrete `vX.Y.Z` version of Fluentd. This tag is recommeded for the production 
 `B` will be incremented when image has small changes, e.g. library update or bug fixes.
 
 When fluentd version is updated, `A.B` is reset to `1.0`.
-
-#### `onbuild` included tag
-
-`onbuild` images are deprecated. Use non-`onbuild ` images instead to build your image.
-New images, v1.5 or later, don't provide `onbuild` version.
 
 #### `debian` included tag
 
@@ -130,7 +125,8 @@ These images/tags are kept for backward compatibility. No update anymore and don
 
 #### `stable`, `latest`
 
-Latest version of stable Fluentd branch (currently `v1.3-1`).
+These tags are obsolete, already removed to avoid confusing.
+Use `edge`, `vX.Y-A` or `vX.Y.Z-A.B` images instead.
 
 #### `vX.Y`
 
@@ -140,7 +136,12 @@ Latest version of `vX.Y` Fluentd branch.
 
 Concrete `vX.Y.Z` version of Fluentd.
 
-#### `onbuild` included tag, `debian` included tag, `armhf` included tag
+#### `onbuild` included tag
+
+`onbuild` images are deprecated. Use non-`onbuild ` images instead to build your image.
+New images, v1.5 or later, don't provide `onbuild` version.
+
+#### `debian` included tag, `armhf` included tag
 
 Same as current images.
 
