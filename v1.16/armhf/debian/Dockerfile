@@ -29,11 +29,13 @@ RUN apt-get update \
     " \
  && apt-get install -y --no-install-recommends $buildDeps \
  && echo 'gem: --no-document' >> /etc/gemrc \
- && gem install oj -v 3.15.0 \
+ && gem install oj -v 3.16.1 \
  && gem install json -v 2.6.3 \
- && gem install rexml -v 3.2.5 \
+ && gem install rexml -v 3.2.6 \
  && gem install async -v 1.31.0 \
  && gem install async-http -v 0.60.2 \
+# CVE-2023-36617
+&& gem install uri -v 0.12.2 \
  && gem install fluentd -v 1.16.2 \
  && dpkgArch="$(dpkg --print-architecture | awk -F- '{ print $NF }')" \
  && wget -O /usr/local/bin/tini "https://github.com/krallin/tini/releases/download/v$TINI_VERSION/tini-$dpkgArch" \
