@@ -11,13 +11,15 @@ RUN powershell -Command "Set-ExecutionPolicy Bypass -Scope Process -Force; iex (
 
 # NOTE: For avoiding stalling with docker build on windows, we must use latest version of msys2.
 RUN choco install -y ruby --version 3.1.3.1 --params "'/InstallDir:C:\ruby31'" \
-&& choco install -y msys2 --version 20230318.0.0 --params "'/NoPath /NoUpdate /InstallDir:C:\ruby31\msys64'"
+&& choco install -y msys2 --version 20230718.0.0 --params "'/NoPath /NoUpdate /InstallDir:C:\ruby31\msys64'"
 RUN refreshenv \
 && ridk install 3 \
 && echo gem: --no-document >> C:\ProgramData\gemrc \
-&& gem install oj -v 3.15.0 \
+&& gem install oj -v 3.16.1 \
 && gem install json -v 2.6.3 \
-&& gem install rexml -v 3.2.5 \
+&& gem install rexml -v 3.2.6 \
+# CVE-2023-36617
+&& gem install uri -v 0.12.2 \
 && gem install fluentd -v 1.16.2 \
 && gem install win32-service -v 2.3.2 \
 && gem install win32-ipc -v 0.7.0 \
