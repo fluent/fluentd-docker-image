@@ -127,6 +127,7 @@ RUN apt-get update \
 <% if is_alpine %>
  && gem install bigdecimal -v 1.4.4 \
  && apk del .build-deps \
+ && rm -rf /var/cache/apk/* \
 <% else %>
  && dpkgArch="$(dpkg --print-architecture | awk -F- '{ print $NF }')" \
  && wget -O /usr/local/bin/tini "https://github.com/krallin/tini/releases/download/v$TINI_VERSION/tini-$dpkgArch" \

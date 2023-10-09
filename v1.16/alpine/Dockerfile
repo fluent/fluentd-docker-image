@@ -27,6 +27,7 @@ RUN apk update \
  && gem install fluentd -v 1.16.3 \
  && gem install bigdecimal -v 1.4.4 \
  && apk del .build-deps \
+ && rm -rf /var/cache/apk/* \
  && rm -rf /tmp/* /var/tmp/* /usr/lib/ruby/gems/*/cache/*.gem /usr/lib/ruby/gems/3.*/gems/fluentd-*/test
 
 RUN addgroup -S fluent && adduser -S -G fluent fluent \
