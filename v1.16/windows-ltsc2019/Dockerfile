@@ -3,7 +3,7 @@
 
 FROM mcr.microsoft.com/dotnet/framework/runtime:4.8-windowsservercore-ltsc2019
 LABEL maintainer "Fluentd developers <fluentd@googlegroups.com>"
-LABEL Description="Fluentd docker image" Vendor="Fluent Organization" Version="1.16.2"
+LABEL Description="Fluentd docker image" Vendor="Fluent Organization" Version="1.16.3"
 
 # Do not split this into multiple RUN!
 # Docker creates a layer for every RUN-Statement
@@ -11,7 +11,7 @@ RUN powershell -Command "Set-ExecutionPolicy Bypass -Scope Process -Force; iex (
 
 # NOTE: For avoiding stalling with docker build on windows, we must use latest version of msys2.
 RUN choco install -y ruby --version 3.1.3.1 --params "'/InstallDir:C:\ruby31'" \
-&& choco install -y msys2 --version 20230718.0.0 --params "'/NoPath /NoUpdate /InstallDir:C:\ruby31\msys64'"
+&& choco install -y msys2 --version 20231026.0.0 --params "'/NoPath /NoUpdate /InstallDir:C:\ruby31\msys64'"
 RUN refreshenv \
 && ridk install 3 \
 && echo gem: --no-document >> C:\ProgramData\gemrc \
@@ -20,7 +20,7 @@ RUN refreshenv \
 && gem install rexml -v 3.2.6 \
 # CVE-2023-36617
 && gem install uri -v 0.12.2 \
-&& gem install fluentd -v 1.16.2 \
+&& gem install fluentd -v 1.16.3 \
 && gem install win32-service -v 2.3.2 \
 && gem install win32-ipc -v 0.7.0 \
 && gem install win32-event -v 0.6.3 \
