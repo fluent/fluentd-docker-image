@@ -29,7 +29,8 @@ WINDOWS_IMAGES := \
 	v1.16/windows-ltsc2019:v1.16.3-windows-ltsc2019-1.0,v1.16-windows-ltsc2019-1 \
 	v1.16/windows-ltsc2022:v1.16.3-windows-ltsc2022-1.0,v1.16-windows-ltsc2022-1
 
-ALL_IMAGES := $(X86_IMAGES) $(ARM_IMAGES) $(ARM64_IMAGES) $(WINDOWS_IMAGES)
+LINUX_IMAGES := $(X86_IMAGES) $(ARM_IMAGES) $(ARM64_IMAGES)
+ALL_IMAGES := $(LINUX_IMAGES) $(WINDOWS_IMAGES)
 
 # Default is first image from ALL_IMAGES list.
 DOCKERFILE ?= $(word 1,$(subst :, ,$(word 1,$(ALL_IMAGES))))
@@ -110,6 +111,23 @@ release-all:
 			TAGS=$(word 2,$(subst :, ,$(img))) ; \
 	))
 
+sbom:
+	(set -e ; $(foreach tag, $(parsed-tags), \
+		rm -rf sbom; \
+		rm -rf spdx-json; \
+		mkdir -p $(DOCKERFILE)/licenses; \
+		docker sbom $(IMAGE_NAME):$(tag) --output $(DOCKERFILE)/licenses/fluentd-${VERSION}.spdx.json --format spdx-json; \
+		docker sbom $(IMAGE_NAME):$(tag) --output $(DOCKERFILE)/licenses/fluentd-${VERSION}.cyclonedx.json --format cyclonedx-json; \
+	))
+
+sbom-all:
+	(set -e ; $(foreach img,$(LINUX_IMAGES), \
+		make sbom \
+			DOCKERFILE=$(word 1,$(subst :, ,$(img))) \
+			VERSION=$(word 1,$(subst $(comma), ,\
+			                 $(word 2,$(subst :, ,$(img))))) \
+			TAGS=$(word 2,$(subst :, ,$(img))) ; \
+	))
 
 
 # Generate Docker image sources.
