@@ -22,14 +22,14 @@
 }
 
 
-@test "ruby version is 3.1" {
+@test "ruby version is 3.2" {
   run docker run --rm $IMAGE sh -c "ruby --version | cut -d ' ' -f 2"
   [ "$status" -eq 0 ]
 
   major=$(echo "$output" | cut -d '.' -f 1)
   minor=$(echo "$output" | cut -d '.' -f 2)
   [ "$major" -eq "3" ]
-  [[ "$minor" -eq "1" ]]
+  [[ "$minor" -eq "2" ]]
 }
 
 
