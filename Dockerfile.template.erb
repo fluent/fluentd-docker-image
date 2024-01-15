@@ -147,6 +147,7 @@ RUN apt-get update \
  && apt-get purge -y --auto-remove \
                   -o APT::AutoRemove::RecommendsImportant=false \
                   $buildDeps \
+                  '*-dev' \
  && rm -rf /var/lib/apt/lists/* \
 <% end %>
  && rm -rf /tmp/* /var/tmp/* /usr/lib/ruby/gems/*/cache/*.gem /usr/lib/ruby/gems/3.*/gems/fluentd-*/test
