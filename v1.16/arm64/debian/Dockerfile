@@ -8,7 +8,7 @@ ENV QEMU_DOWNLOAD_SHA256 5db25cccb40ac7b1ca857653b883376b931d91b06ff34ffe70dcf61
 RUN apk add curl --no-cache
 RUN curl -sL -o qemu-6.0.0.balena1-aarch64.tar.gz https://github.com/balena-io/qemu/releases/download/v6.0.0%2Bbalena1/qemu-6.0.0.balena1-aarch64.tar.gz && echo "$QEMU_DOWNLOAD_SHA256 *qemu-6.0.0.balena1-aarch64.tar.gz" | sha256sum -c - | tar zxvf qemu-6.0.0.balena1-aarch64.tar.gz -C . && mv qemu-6.0.0+balena1-aarch64/qemu-aarch64-static .
 
-FROM arm64v8/ruby:3.1-slim-bullseye
+FROM arm64v8/ruby:3.2-slim-bookworm
 COPY --from=builder /go/qemu-aarch64-static /usr/bin/
 LABEL maintainer "Fluentd developers <fluentd@googlegroups.com>"
 LABEL Description="Fluentd docker image" Vendor="Fluent Organization" Version="1.16.3"
@@ -55,6 +55,7 @@ RUN apt-get update \
  && apt-get purge -y --auto-remove \
                   -o APT::AutoRemove::RecommendsImportant=false \
                   $buildDeps \
+                  '*-dev' \
  && rm -rf /var/lib/apt/lists/* \
  && rm -rf /tmp/* /var/tmp/* /usr/lib/ruby/gems/*/cache/*.gem /usr/lib/ruby/gems/3.*/gems/fluentd-*/test
 
