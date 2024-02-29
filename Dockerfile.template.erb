@@ -120,6 +120,11 @@ RUN apt-get update \
  && gem install async -v 1.32.1 \
  && gem install async-http -v 0.64.2 \
  && gem install fluentd -v <%= fluentd_ver %> \
+ && export GEM_DIR=$(ruby -e 'puts Gem.dir') \
+ && echo GEM_DIR=$GEM_DIR \
+ && rm -rf $GEM_DIR/cache/*.gem \
+ && find $GEM_DIR -type d -name test -or -name ext -or -name spec -or -name benchmark | xargs -r rm -rf \
+ && find $GEM_DIR -name "*.so" | xargs -r strip \
 <% if is_alpine %>
  && gem install bigdecimal -v 1.4.4 \
  && apk del .build-deps \
@@ -146,7 +151,7 @@ RUN apt-get update \
                   '*-dev' \
  && rm -rf /var/lib/apt/lists/* \
 <% end %>
- && rm -rf /tmp/* /var/tmp/* /usr/lib/ruby/gems/*/cache/*.gem /usr/lib/ruby/gems/3.*/gems/fluentd-*/test
+ && rm -rf /tmp/* /var/tmp/*
 
 <% if is_alpine %>
 RUN addgroup -S fluent && adduser -S -G fluent fluent \

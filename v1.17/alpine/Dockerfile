@@ -23,10 +23,15 @@ RUN apk update \
  && gem install async -v 1.32.1 \
  && gem install async-http -v 0.64.2 \
  && gem install fluentd -v 1.17.1 \
+ && export GEM_DIR=$(ruby -e 'puts Gem.dir') \
+ && echo GEM_DIR=$GEM_DIR \
+ && rm -rf $GEM_DIR/cache/*.gem \
+ && find $GEM_DIR -type d -name test -or -name ext -or -name spec -or -name benchmark | xargs -r rm -rf \
+ && find $GEM_DIR -name "*.so" | xargs -r strip \
  && gem install bigdecimal -v 1.4.4 \
  && apk del .build-deps \
  && rm -rf /var/cache/apk/* \
- && rm -rf /tmp/* /var/tmp/* /usr/lib/ruby/gems/*/cache/*.gem /usr/lib/ruby/gems/3.*/gems/fluentd-*/test
+ && rm -rf /tmp/* /var/tmp/*
 
 RUN addgroup -S fluent && adduser -S -G fluent fluent \
     # for log storage (maybe shared with host)
