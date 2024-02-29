@@ -150,7 +150,15 @@ RUN apt-get update \
                   '*-dev' \
  && rm -rf /var/lib/apt/lists/* \
 <% end %>
- && rm -rf /tmp/* /var/tmp/* /usr/lib/ruby/gems/*/cache/*.gem /usr/lib/ruby/gems/3.*/gems/fluentd-*/test
+ && rm -rf \
+   /tmp/* \
+   /var/tmp/* \
+   /usr/lib/ruby/gems/*/cache/*.gem \
+   /usr/lib/ruby/gems/3.*/gems/fluentd-*/test \
+   /usr/lib/ruby/gems/3.*/gems/yajl-ruby-*/benchmark \
+   /usr/lib/ruby/gems/3.*/gems/yajl-ruby-*/ext \
+   /usr/lib/ruby/gems/3.*/gems/yajl-ruby-*/spec \
+   /usr/lib/ruby/gems/3.*/gems/oj-*/ext
 
 <% if is_alpine %>
 RUN addgroup -S fluent && adduser -S -G fluent fluent \
