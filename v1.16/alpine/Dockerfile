@@ -3,7 +3,7 @@
 
 FROM alpine:3.19
 LABEL maintainer "Fluentd developers <fluentd@googlegroups.com>"
-LABEL Description="Fluentd docker image" Vendor="Fluent Organization" Version="1.16.3"
+LABEL Description="Fluentd docker image" Vendor="Fluent Organization" Version="1.16.4"
 
 # Do not split this into multiple RUN!
 # Docker creates a layer for every RUN-Statement
@@ -22,9 +22,7 @@ RUN apk update \
  && gem install rexml -v 3.2.6 \
  && gem install async -v 1.31.0 \
  && gem install async-http -v 0.60.2 \
-# CVE-2023-36617
-&& gem install uri -v 0.12.2 \
- && gem install fluentd -v 1.16.3 \
+ && gem install fluentd -v 1.16.4 \
  && gem install bigdecimal -v 1.4.4 \
  && apk del .build-deps \
  && rm -rf /var/cache/apk/* \

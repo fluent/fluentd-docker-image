@@ -81,8 +81,6 @@ RUN refreshenv \
 && gem install oj -v 3.16.1 \
 && gem install json -v 2.6.3 \
 && gem install rexml -v 3.2.6 \
-# CVE-2023-36617
-&& gem install uri -v 0.12.2 \
 && gem install fluentd -v <%= fluentd_ver %> \
 && gem install win32-service -v 2.3.2 \
 && gem install win32-ipc -v 0.7.0 \
@@ -121,8 +119,6 @@ RUN apt-get update \
  && gem install rexml -v 3.2.6 \
  && gem install async -v 1.31.0 \
  && gem install async-http -v 0.60.2 \
-# CVE-2023-36617
-&& gem install uri -v 0.12.2 \
  && gem install fluentd -v <%= fluentd_ver %> \
 <% if is_alpine %>
  && gem install bigdecimal -v 1.4.4 \
