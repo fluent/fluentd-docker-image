@@ -26,7 +26,15 @@ RUN apk update \
  && gem install bigdecimal -v 1.4.4 \
  && apk del .build-deps \
  && rm -rf /var/cache/apk/* \
- && rm -rf /tmp/* /var/tmp/* /usr/lib/ruby/gems/*/cache/*.gem /usr/lib/ruby/gems/3.*/gems/fluentd-*/test
+ && rm -rf \
+   /tmp/* \
+   /var/tmp/* \
+   /usr/lib/ruby/gems/*/cache/*.gem \
+   /usr/lib/ruby/gems/3.*/gems/fluentd-*/test \
+   /usr/lib/ruby/gems/3.*/gems/yajl-ruby-*/benchmark \
+   /usr/lib/ruby/gems/3.*/gems/yajl-ruby-*/ext \
+   /usr/lib/ruby/gems/3.*/gems/yajl-ruby-*/spec \
+   /usr/lib/ruby/gems/3.*/gems/oj-*/ext
 
 RUN addgroup -S fluent && adduser -S -G fluent fluent \
     # for log storage (maybe shared with host)

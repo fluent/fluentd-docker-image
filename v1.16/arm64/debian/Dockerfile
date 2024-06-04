@@ -55,7 +55,15 @@ RUN apt-get update \
                   $buildDeps \
                   '*-dev' \
  && rm -rf /var/lib/apt/lists/* \
- && rm -rf /tmp/* /var/tmp/* /usr/lib/ruby/gems/*/cache/*.gem /usr/lib/ruby/gems/3.*/gems/fluentd-*/test
+ && rm -rf \
+   /tmp/* \
+   /var/tmp/* \
+   /usr/lib/ruby/gems/*/cache/*.gem \
+   /usr/lib/ruby/gems/3.*/gems/fluentd-*/test \
+   /usr/lib/ruby/gems/3.*/gems/yajl-ruby-*/benchmark \
+   /usr/lib/ruby/gems/3.*/gems/yajl-ruby-*/ext \
+   /usr/lib/ruby/gems/3.*/gems/yajl-ruby-*/spec \
+   /usr/lib/ruby/gems/3.*/gems/oj-*/ext
 
 RUN groupadd -r fluent && useradd -r -g fluent fluent \
     # for log storage (maybe shared with host)
