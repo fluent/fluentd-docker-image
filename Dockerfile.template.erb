@@ -140,10 +140,10 @@ RUN apt-get update \
  # https://github.com/fluent/fluentd-docker-image/pull/350
  && (echo "je_cv_madv_free=no" > config.cache) && ./configure -C && make \
  && mv lib/libjemalloc.so.2 /usr/lib \
- && apt-get purge -y --auto-remove \
+ && apt-get purge -y \
                   -o APT::AutoRemove::RecommendsImportant=false \
                   $buildDeps \
-                  '*-dev' \
+ && apt-get purge -y '*-dev' \
  && rm -rf /var/lib/apt/lists/* \
 <% end %>
  && rm -rf /tmp/* /var/tmp/* /usr/lib/ruby/gems/*/cache/*.gem /usr/lib/ruby/gems/3.*/gems/fluentd-*/test
