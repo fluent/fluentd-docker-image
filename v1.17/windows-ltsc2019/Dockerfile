@@ -15,9 +15,9 @@ RUN choco install -y ruby --version 3.2.4.1 --params "'/InstallDir:C:\ruby32'" \
 RUN refreshenv \
 && ridk install 3 \
 && echo gem: --no-document >> C:\ProgramData\gemrc \
-&& gem install oj -v 3.16.1 \
-&& gem install json -v 2.6.3 \
-&& gem install rexml -v 3.2.6 \
+&& gem install oj -v 3.16.5 \
+&& gem install json -v 2.7.2 \
+&& gem install rexml -v 3.3.5 \
 && gem install fluentd -v 1.17.0 \
 && gem install win32-service -v 2.3.2 \
 && gem install win32-ipc -v 0.7.0 \
