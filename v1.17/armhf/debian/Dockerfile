@@ -11,7 +11,7 @@ RUN curl -sL -o qemu-3.0.0+resin-arm.tar.gz https://github.com/balena-io/qemu/re
 FROM --platform=linux/arm/v7 arm32v7/ruby:3.2-slim-bookworm
 COPY --from=builder /go/qemu-arm-static /usr/bin/
 LABEL maintainer "Fluentd developers <fluentd@googlegroups.com>"
-LABEL Description="Fluentd docker image" Vendor="Fluent Organization" Version="1.17.0"
+LABEL Description="Fluentd docker image" Vendor="Fluent Organization" Version="1.17.1"
 ARG CROSS_BUILD_START="cross-build-start"
 ARG CROSS_BUILD_END="cross-build-end"
 RUN [ ${CROSS_BUILD_START} ]
@@ -34,7 +34,7 @@ RUN apt-get update \
  && gem install rexml -v 3.3.5 \
  && gem install async -v 1.32.1 \
  && gem install async-http -v 0.64.2 \
- && gem install fluentd -v 1.17.0 \
+ && gem install fluentd -v 1.17.1 \
  && dpkgArch="$(dpkg --print-architecture | awk -F- '{ print $NF }')" \
  && wget -O /usr/local/bin/tini "https://github.com/krallin/tini/releases/download/v$TINI_VERSION/tini-$dpkgArch" \
  && wget -O /usr/local/bin/tini.asc "https://github.com/krallin/tini/releases/download/v$TINI_VERSION/tini-$dpkgArch.asc" \
@@ -45,7 +45,7 @@ RUN apt-get update \
  && chmod +x /usr/local/bin/tini \
  && tini -h \
  && wget -O /tmp/jemalloc-5.3.0.tar.bz2 https://github.com/jemalloc/jemalloc/releases/download/5.3.0/jemalloc-5.3.0.tar.bz2 \
- && cd /tmp && tar -xjf jemalloc-5.3.0.tar.bz2 && cd jemalloc-5.3.0/ \
+ && cd /tmp && tar -xjf jemalloc-5.3.0.tar.bz2 --no-same-owner && cd jemalloc-5.3.0/ \
  # Don't use MADV_FREE to reduce memory usage and improve stability
  # https://github.com/fluent/fluentd-docker-image/pull/350
  && (echo "je_cv_madv_free=no" > config.cache) && ./configure -C && make \
