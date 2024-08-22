@@ -135,7 +135,7 @@ RUN apt-get update \
  && chmod +x /usr/local/bin/tini \
  && tini -h \
  && wget -O /tmp/jemalloc-5.3.0.tar.bz2 https://github.com/jemalloc/jemalloc/releases/download/5.3.0/jemalloc-5.3.0.tar.bz2 \
- && cd /tmp && tar -xjf jemalloc-5.3.0.tar.bz2 && cd jemalloc-5.3.0/ \
+ && cd /tmp && tar -xjf jemalloc-5.3.0.tar.bz2 --no-same-owner && cd jemalloc-5.3.0/ \
  # Don't use MADV_FREE to reduce memory usage and improve stability
  # https://github.com/fluent/fluentd-docker-image/pull/350
  && (echo "je_cv_madv_free=no" > config.cache) && ./configure -C && make \

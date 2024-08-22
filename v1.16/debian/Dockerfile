@@ -3,7 +3,7 @@
 
 FROM ruby:3.2-slim-bookworm
 LABEL maintainer "Fluentd developers <fluentd@googlegroups.com>"
-LABEL Description="Fluentd docker image" Vendor="Fluent Organization" Version="1.16.5"
+LABEL Description="Fluentd docker image" Vendor="Fluent Organization" Version="1.16.6"
 ENV TINI_VERSION=0.18.0
 
 # Do not split this into multiple RUN!
@@ -23,7 +23,7 @@ RUN apt-get update \
  && gem install rexml -v 3.2.6 \
  && gem install async -v 1.31.0 \
  && gem install async-http -v 0.60.2 \
- && gem install fluentd -v 1.16.5 \
+ && gem install fluentd -v 1.16.6 \
  && dpkgArch="$(dpkg --print-architecture | awk -F- '{ print $NF }')" \
  && wget -O /usr/local/bin/tini "https://github.com/krallin/tini/releases/download/v$TINI_VERSION/tini-$dpkgArch" \
  && wget -O /usr/local/bin/tini.asc "https://github.com/krallin/tini/releases/download/v$TINI_VERSION/tini-$dpkgArch.asc" \
@@ -34,7 +34,7 @@ RUN apt-get update \
  && chmod +x /usr/local/bin/tini \
  && tini -h \
  && wget -O /tmp/jemalloc-5.3.0.tar.bz2 https://github.com/jemalloc/jemalloc/releases/download/5.3.0/jemalloc-5.3.0.tar.bz2 \
- && cd /tmp && tar -xjf jemalloc-5.3.0.tar.bz2 && cd jemalloc-5.3.0/ \
+ && cd /tmp && tar -xjf jemalloc-5.3.0.tar.bz2 --no-same-owner && cd jemalloc-5.3.0/ \
  # Don't use MADV_FREE to reduce memory usage and improve stability
  # https://github.com/fluent/fluentd-docker-image/pull/350
  && (echo "je_cv_madv_free=no" > config.cache) && ./configure -C && make \
