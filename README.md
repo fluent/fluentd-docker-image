@@ -37,38 +37,10 @@ Current images use fluentd v1 series.
 - `v1.17.0-windows-ltsc2022-1.0`, `v1.17-windows-ltsc2022-1`
   [(v1.17/windows-ltsc2022/Dockerfile)][fluentd-1-ltsc2022-windows]
 
-### Old v1.4 images
-
-This is for backward compatibility. Use "Current images" instead.
-
-- `v1.4.2-2.0`, `v1.4-2`
-  [(v1.4/alpine/Dockerfile)][fluentd-1-4-alpine]
-- `v1.4.2-onbuild-2.0`, `v1.4-onbuild-2`
-  [(v1.4/alpine-onbuild/Dockerfile)][fluentd-1-4-alpine-onbuild]
-- `v1.4.2-debian-2.0`, `v1.4-debian-2`
-  [(v1.4/debian/Dockerfile)][fluentd-1-4-debian]
-- `v1.4.2-debian-onbuild-2.0`, `v1.4-debian-onbuild-2`, `edge-debian-onbuild`
-  [(v1.4/debian-onbuild/Dockerfile)][fluentd-1-4-debian-onbuild]
-- `v1.4.2-windows-2.0`, `v1.4-windows-2`
-  [(v1.4/windows/Dockerfile)][fluentd-1-4-windows]
-
-### v0.12 images
-
-Support of fluentd v0.12 has ended in 2019. We don't recommend v0.12 for new deployment.
-
-- `v0.12.43-2.0`, `v0.12-2`
-  [(v0.12/alpine/Dockerfile)][fluentd-0-12-alpine]
-- `v0.12.43-onbuild-2.0`, `v0.12-onbuild-2`
-  [(v0.12/alpine-onbuild/Dockerfile)][fluentd-0-12-alpine-onbuild]
-- `v0.12.43-debian-2.0`, `v0.12-debian-2`
-  [(v0.12/debian/Dockerfile)][fluentd-0-12-debian]
-- `v0.12.43-debian-onbuild-2.0`, `v0.12-debian-onbuild-2`
-  [(v0.12/debian-onbuild/Dockerfile)][fluentd-0-12-debian-onbuild]
-
-You can use older versions via tag. See [tag page on Docker Hub](https://hub.docker.com/r/fluent/fluentd/tags/).
+> [!TIP]
+> About deprecated old images, See [DEPRECATED](DEPRECATED.md)
 
 We recommend to use debian version for production because it uses jemalloc to mitigate memory fragmentation issue.
-
 
 ### Using Kubernetes?
 
@@ -76,8 +48,8 @@ Check [fluentd-kubernetes-daemonset](https://github.com/fluent/fluentd-kubernete
 
 ## The detail of image tag
 
-This image is based on the popular [Alpine Linux project][1], available in
-[the alpine official image][2], and Debian images.
+This image is based on the popular Debian images and [Alpine Linux project][1], available in
+[the alpine official image][2].
 
 ### For current images
 
@@ -178,187 +150,9 @@ Use `-u` option with `docker run`.
 
 `docker run -p 24224:24224 -u foo -v ...`
 
-## How to build your own image
+## How to build your own image?
 
-You can build a customized image based on Fluentd's image.
-Customized image can include plugins and `fluent.conf` file.
-
-### 1. Create a working directory
-
-We will use this directory to build a Docker image.
-Type following commands on a terminal to prepare a minimal project first:
-
-```bash
-# Create project directory.
-mkdir custom-fluentd
-cd custom-fluentd
-
-# Download default fluent.conf and entrypoint.sh. This file will be copied to the new image.
-# VERSION is v1.7 like fluentd version and OS is alpine or debian.
-# Full example is https://raw.githubusercontent.com/fluent/fluentd-docker-image/master/v1.10/debian/fluent.conf
-
-curl https://raw.githubusercontent.com/fluent/fluentd-docker-image/master/VERSION/OS/fluent.conf > fluent.conf
-
-curl https://raw.githubusercontent.com/fluent/fluentd-docker-image/master/VERSION/OS/entrypoint.sh > entrypoint.sh
-chmod +x entrypoint.sh
-
-# Create plugins directory. plugins scripts put here will be copied to the new image.
-mkdir plugins
-
-curl https://raw.githubusercontent.com/fluent/fluentd-docker-image/master/Dockerfile.sample > Dockerfile
-```
-
-### 2. Customize `fluent.conf`
-
-Documentation of `fluent.conf` is available at [docs.fluentd.org][3].
-
-### 3. Customize Dockerfile to install plugins (optional)
-
-You can install [Fluentd plugins][4] using Dockerfile.
-Sample Dockerfile installs `fluent-plugin-elasticsearch`.
-To add plugins, edit `Dockerfile` as following:
-
-### 3.1 For current images
-
-#### Alpine version
-
-```Dockerfile
-FROM fluent/fluentd:v1.17-1
-
-# Use root account to use apk
-USER root
-
-# below RUN includes plugin as examples elasticsearch is not required
-# you may customize including plugins as you wish
-RUN apk add --no-cache --update --virtual .build-deps \
-        sudo build-base ruby-dev \
- && sudo gem install fluent-plugin-elasticsearch \
- && sudo gem sources --clear-all \
- && apk del .build-deps \
- && rm -rf /tmp/* /var/tmp/* /usr/lib/ruby/gems/*/cache/*.gem
-
-COPY fluent.conf /fluentd/etc/
-COPY entrypoint.sh /bin/
-
-USER fluent
-```
-
-#### Debian version
-
-```Dockerfile
-FROM fluent/fluentd:v1.17-debian-1
-
-# Use root account to use apt
-USER root
-
-# below RUN includes plugin as examples elasticsearch is not required
-# you may customize including plugins as you wish
-RUN buildDeps="sudo make gcc g++ libc-dev" \
- && apt-get update \
- && apt-get install -y --no-install-recommends $buildDeps \
- && sudo gem install fluent-plugin-elasticsearch \
- && sudo gem sources --clear-all \
- && SUDO_FORCE_REMOVE=yes \
-    apt-get purge -y --auto-remove \
-                  -o APT::AutoRemove::RecommendsImportant=false \
-                  $buildDeps \
- && rm -rf /var/lib/apt/lists/* \
- && rm -rf /tmp/* /var/tmp/* /usr/lib/ruby/gems/*/cache/*.gem
-
-COPY fluent.conf /fluentd/etc/
-COPY entrypoint.sh /bin/
-
-USER fluent
-```
-
-#### Note
-
-These example run `apk add`/`apt-get install` to be able to install
-Fluentd plugins which require native extensions (they are removed immediately
-after plugin installation).
-If you're sure that plugins don't include native extensions, you can omit it
-to make image build faster.
-
-### 3.2 For older images
-
-This section is for existing users. Don't recommend for new deployment.
-
-#### Alpine version
-
-```Dockerfile
-FROM fluent/fluentd:v1.3-onbuild-1
-
-# below RUN includes plugin as examples elasticsearch is not required
-# you may customize including plugins as you wish
-
-RUN apk add --no-cache --update --virtual .build-deps \
-        sudo build-base ruby-dev \
- && sudo gem install \
-        fluent-plugin-elasticsearch \
- && sudo gem sources --clear-all \
- && apk del .build-deps \
- && rm -rf /tmp/* /var/tmp/* /usr/lib/ruby/gems/*/cache/*.gem
-```
-
-#### Debian version
-
-```Dockerfile
-FROM fluent/fluentd:v1.3-debian-onbuild-1
-
-# below RUN includes plugin as examples elasticsearch is not required
-# you may customize including plugins as you wish
-
-RUN buildDeps="sudo make gcc g++ libc-dev ruby-dev" \
- && apt-get update \
- && apt-get install -y --no-install-recommends $buildDeps \
- && sudo gem install \
-        fluent-plugin-elasticsearch \
- && sudo gem sources --clear-all \
- && SUDO_FORCE_REMOVE=yes \
-    apt-get purge -y --auto-remove \
-                  -o APT::AutoRemove::RecommendsImportant=false \
-                  $buildDeps \
- && rm -rf /var/lib/apt/lists/* \
- && rm -rf /tmp/* /var/tmp/* /usr/lib/ruby/gems/*/cache/*.gem
-```
-
-### 4. Build image
-
-Use `docker build` command to build the image.
-This example names the image as `custom-fluentd:latest`:
-
-```bash
-docker build -t custom-fluentd:latest ./
-```
-
-### 5. Test it
-
-Once the image is built, it's ready to run.
-Following commands run Fluentd sharing `./log` directory with the host machine:
-
-```bash
-mkdir -p log
-docker run -it --rm --name custom-docker-fluent-logger -v $(pwd)/log:/fluentd/log custom-fluentd:latest
-```
-
-Open another terminal and type following command to inspect IP address.
-Fluentd is running on this IP address:
-
-```bash
-docker inspect -f '{{.NetworkSettings.IPAddress}}' custom-docker-fluent-logger
-```
-
-Let's try to use another docker container to send its logs to Fluentd.
-
-```bash
-docker run --log-driver=fluentd --log-opt tag="docker.{{.ID}}" --log-opt fluentd-address=FLUENTD.ADD.RE.SS:24224 python:alpine echo Hello
-# and force flush buffered logs
-docker kill -s USR1 custom-docker-fluent-logger
-```
-(replace `FLUENTD.ADD.RE.SS` with actual IP address you inspected at
-the previous step)
-
-You will see some logs sent to Fluentd.
+Check [HOWTOBUILD](HOWTOBUILD.md) explanation.
 
 ### References
 
