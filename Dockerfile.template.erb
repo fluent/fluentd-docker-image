@@ -18,7 +18,7 @@ FROM mcr.microsoft.com/dotnet/framework/runtime:4.8-windowsservercore-<%= window
 <% if is_armhf %>
 FROM resin/armhf-alpine:3.7
 <% else %>
-FROM alpine:3.19
+FROM alpine:3.20
 <% end %>
 <% else %>
 <% if is_armhf %>
