@@ -10,14 +10,14 @@ LABEL Description="Fluentd docker image" Vendor="Fluent Organization" Version="1
 RUN powershell -Command "Set-ExecutionPolicy Bypass -Scope Process -Force; iex ((New-Object System.Net.WebClient).DownloadString('https://chocolatey.org/install.ps1'))"
 
 # NOTE: For avoiding stalling with docker build on windows, we must use latest version of msys2.
-RUN choco install -y ruby --version 3.2.4.1 --params "'/InstallDir:C:\ruby32'" \
-&& choco install -y msys2 --version 20240507.0.0 --params "'/NoPath /NoUpdate /InstallDir:C:\ruby32\msys64'"
+RUN choco install -y ruby --version 3.3.4.1 --params "'/InstallDir:C:\ruby32'" \
+&& choco install -y msys2 --version 20240727.0.0 --params "'/NoPath /NoUpdate /InstallDir:C:\ruby32\msys64'"
 RUN refreshenv \
 && ridk install 3 \
 && echo gem: --no-document >> C:\ProgramData\gemrc \
 && gem install oj -v 3.16.5 \
 && gem install json -v 2.7.2 \
-&& gem install rexml -v 3.3.5 \
+&& gem install rexml -v 3.3.7 \
 && gem install fluentd -v 1.17.1 \
 && gem install win32-service -v 2.3.2 \
 && gem install win32-ipc -v 0.7.0 \
@@ -25,7 +25,7 @@ RUN refreshenv \
 && gem sources --clear-all
 
 # Remove gem cache and chocolatey
-RUN powershell -Command "Remove-Item -Force C:\ruby32\lib\ruby\gems\3.2.0\cache\*.gem; Remove-Item -Recurse -Force 'C:\ProgramData\chocolatey'"
+RUN powershell -Command "Remove-Item -Force C:\ruby32\lib\ruby\gems\3.3.0\cache\*.gem; Remove-Item -Recurse -Force 'C:\ProgramData\chocolatey'"
 
 COPY fluent.conf /fluent/conf/fluent.conf
 

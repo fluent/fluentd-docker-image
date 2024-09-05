@@ -18,7 +18,7 @@ FROM mcr.microsoft.com/dotnet/framework/runtime:4.8-windowsservercore-<%= window
 <% if is_armhf %>
 FROM resin/armhf-alpine:3.7
 <% else %>
-FROM alpine:3.19
+FROM alpine:3.20
 <% end %>
 <% else %>
 <% if is_armhf %>
@@ -29,7 +29,7 @@ ENV QEMU_DOWNLOAD_SHA256 47ae430b0e7c25e1bde290ac447a720e2ea6c6e78cd84e44847edda
 RUN apk add curl --no-cache
 RUN curl -sL -o qemu-3.0.0+resin-arm.tar.gz https://github.com/balena-io/qemu/releases/download/v3.0.0%2Bresin/qemu-3.0.0+resin-arm.tar.gz && echo "$QEMU_DOWNLOAD_SHA256 *qemu-3.0.0+resin-arm.tar.gz" | sha256sum -c - | tar zxvf qemu-3.0.0+resin-arm.tar.gz -C . && mv qemu-3.0.0+resin-arm/qemu-arm-static .
 
-FROM --platform=linux/arm/v7 arm32v7/ruby:3.2-slim-bookworm
+FROM --platform=linux/arm/v7 arm32v7/ruby:3.3-slim-bookworm
 COPY --from=builder /go/qemu-arm-static /usr/bin/
 <% elsif is_arm64 %>
 # To set multiarch build for Docker hub automated build.
@@ -39,10 +39,10 @@ ENV QEMU_DOWNLOAD_SHA256 5db25cccb40ac7b1ca857653b883376b931d91b06ff34ffe70dcf61
 RUN apk add curl --no-cache
 RUN curl -sL -o qemu-6.0.0.balena1-aarch64.tar.gz https://github.com/balena-io/qemu/releases/download/v6.0.0%2Bbalena1/qemu-6.0.0.balena1-aarch64.tar.gz && echo "$QEMU_DOWNLOAD_SHA256 *qemu-6.0.0.balena1-aarch64.tar.gz" | sha256sum -c - | tar zxvf qemu-6.0.0.balena1-aarch64.tar.gz -C . && mv qemu-6.0.0+balena1-aarch64/qemu-aarch64-static .
 
-FROM --platform=linux/arm64 arm64v8/ruby:3.2-slim-bookworm
+FROM --platform=linux/arm64 arm64v8/ruby:3.3-slim-bookworm
 COPY --from=builder /go/qemu-aarch64-static /usr/bin/
 <% else %>
-FROM ruby:3.2-slim-bookworm
+FROM ruby:3.3-slim-bookworm
 <% end %>
 <% end %>
 <% end %>
@@ -73,14 +73,14 @@ ENV TINI_VERSION=0.18.0
 RUN powershell -Command "Set-ExecutionPolicy Bypass -Scope Process -Force; iex ((New-Object System.Net.WebClient).DownloadString('https://chocolatey.org/install.ps1'))"
 
 # NOTE: For avoiding stalling with docker build on windows, we must use latest version of msys2.
-RUN choco install -y ruby --version 3.2.4.1 --params "'/InstallDir:C:\ruby32'" \
-&& choco install -y msys2 --version 20240507.0.0 --params "'/NoPath /NoUpdate /InstallDir:C:\ruby32\msys64'"
+RUN choco install -y ruby --version 3.3.4.1 --params "'/InstallDir:C:\ruby32'" \
+&& choco install -y msys2 --version 20240727.0.0 --params "'/NoPath /NoUpdate /InstallDir:C:\ruby32\msys64'"
 RUN refreshenv \
 && ridk install 3 \
 && echo gem: --no-document >> C:\ProgramData\gemrc \
 && gem install oj -v 3.16.5 \
 && gem install json -v 2.7.2 \
-&& gem install rexml -v 3.3.5 \
+&& gem install rexml -v 3.3.7 \
 && gem install fluentd -v <%= fluentd_ver %> \
 && gem install win32-service -v 2.3.2 \
 && gem install win32-ipc -v 0.7.0 \
@@ -88,7 +88,7 @@ RUN refreshenv \
 && gem sources --clear-all
 
 # Remove gem cache and chocolatey
-RUN powershell -Command "Remove-Item -Force C:\ruby32\lib\ruby\gems\3.2.0\cache\*.gem; Remove-Item -Recurse -Force 'C:\ProgramData\chocolatey'"
+RUN powershell -Command "Remove-Item -Force C:\ruby32\lib\ruby\gems\3.3.0\cache\*.gem; Remove-Item -Recurse -Force 'C:\ProgramData\chocolatey'"
 
 COPY fluent.conf /fluent/conf/fluent.conf
 <% else %>

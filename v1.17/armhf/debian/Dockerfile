@@ -8,7 +8,7 @@ ENV QEMU_DOWNLOAD_SHA256 47ae430b0e7c25e1bde290ac447a720e2ea6c6e78cd84e44847edda
 RUN apk add curl --no-cache
 RUN curl -sL -o qemu-3.0.0+resin-arm.tar.gz https://github.com/balena-io/qemu/releases/download/v3.0.0%2Bresin/qemu-3.0.0+resin-arm.tar.gz && echo "$QEMU_DOWNLOAD_SHA256 *qemu-3.0.0+resin-arm.tar.gz" | sha256sum -c - | tar zxvf qemu-3.0.0+resin-arm.tar.gz -C . && mv qemu-3.0.0+resin-arm/qemu-arm-static .
 
-FROM --platform=linux/arm/v7 arm32v7/ruby:3.2-slim-bookworm
+FROM --platform=linux/arm/v7 arm32v7/ruby:3.3-slim-bookworm
 COPY --from=builder /go/qemu-arm-static /usr/bin/
 LABEL maintainer "Fluentd developers <fluentd@googlegroups.com>"
 LABEL Description="Fluentd docker image" Vendor="Fluent Organization" Version="1.17.1"
