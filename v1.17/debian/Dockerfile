@@ -4,14 +4,13 @@
 FROM ruby:3.2-slim-bookworm
 LABEL maintainer "Fluentd developers <fluentd@googlegroups.com>"
 LABEL Description="Fluentd docker image" Vendor="Fluent Organization" Version="1.17.1"
-ENV TINI_VERSION=0.18.0
 
 # Do not split this into multiple RUN!
 # Docker creates a layer for every RUN-Statement
 # therefore an 'apt-get purge' has no effect
 RUN apt-get update \
  && apt-get install -y --no-install-recommends \
-            ca-certificates \
+            ca-certificates tini \
  && buildDeps=" \
       make gcc g++ libc-dev \
       wget bzip2 gnupg dirmngr \
@@ -25,14 +24,6 @@ RUN apt-get update \
  && gem install async-http -v 0.64.2 \
  && gem install fluentd -v 1.17.1 \
  && dpkgArch="$(dpkg --print-architecture | awk -F- '{ print $NF }')" \
- && wget -O /usr/local/bin/tini "https://github.com/krallin/tini/releases/download/v$TINI_VERSION/tini-$dpkgArch" \
- && wget -O /usr/local/bin/tini.asc "https://github.com/krallin/tini/releases/download/v$TINI_VERSION/tini-$dpkgArch.asc" \
- && export GNUPGHOME="$(mktemp -d)" \
- && gpg --batch --keyserver hkp://keyserver.ubuntu.com:80 --recv-keys 6380DC428747F6C393FEACA59A84159D7001A4E5 \
- && gpg --batch --verify /usr/local/bin/tini.asc /usr/local/bin/tini \
- && rm -r /usr/local/bin/tini.asc \
- && chmod +x /usr/local/bin/tini \
- && tini -h \
  && wget -O /tmp/jemalloc-5.3.0.tar.bz2 https://github.com/jemalloc/jemalloc/releases/download/5.3.0/jemalloc-5.3.0.tar.bz2 \
  && cd /tmp && tar -xjf jemalloc-5.3.0.tar.bz2 --no-same-owner && cd jemalloc-5.3.0/ \
  # Don't use MADV_FREE to reduce memory usage and improve stability
