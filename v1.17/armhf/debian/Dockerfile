@@ -35,6 +35,11 @@ RUN apt-get update \
  && gem install async -v 1.32.1 \
  && gem install async-http -v 0.64.2 \
  && gem install fluentd -v 1.17.1 \
+ && export GEM_DIR=$(ruby -e 'puts Gem.dir') \
+ && echo GEM_DIR=$GEM_DIR \
+ && rm -rf $GEM_DIR/cache/*.gem \
+ && find $GEM_DIR -type d -name test -or -name ext -or -name spec -or -name benchmark | xargs -r rm -rf \
+ && find $GEM_DIR -name "*.so" | xargs -r strip \
  && dpkgArch="$(dpkg --print-architecture | awk -F- '{ print $NF }')" \
  && wget -O /usr/local/bin/tini "https://github.com/krallin/tini/releases/download/v$TINI_VERSION/tini-$dpkgArch" \
  && wget -O /usr/local/bin/tini.asc "https://github.com/krallin/tini/releases/download/v$TINI_VERSION/tini-$dpkgArch.asc" \
@@ -55,7 +60,7 @@ RUN apt-get update \
                   $buildDeps \
                   '*-dev' \
  && rm -rf /var/lib/apt/lists/* \
- && rm -rf /tmp/* /var/tmp/* /usr/lib/ruby/gems/*/cache/*.gem /usr/lib/ruby/gems/3.*/gems/fluentd-*/test
+ && rm -rf /tmp/* /var/tmp/*
 
 RUN groupadd -r fluent && useradd -r -g fluent fluent \
     # for log storage (maybe shared with host)
