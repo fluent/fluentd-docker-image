@@ -27,7 +27,7 @@ ARM_IMAGES := \
 
 # Define images for running on ARM64 platforms
 ARM64_IMAGES := \
-	v1.17/arm64/debian:v1.17.1-debian-arm64-1.0,v1.16-debian-arm64-1,edge-debian-arm64 \
+	v1.17/arm64/debian:v1.17.1-debian-arm64-1.0,v1.17-debian-arm64-1,edge-debian-arm64 \
 
 WINDOWS_IMAGES := \
 	v1.17/windows-ltsc2019:v1.17.1-windows-ltsc2019-1.0,v1.17-windows-ltsc2019-1 \
