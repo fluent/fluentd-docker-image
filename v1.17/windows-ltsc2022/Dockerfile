@@ -14,7 +14,9 @@ RUN choco install -y ruby --version 3.2.4.1 --params "'/InstallDir:C:\ruby32'" \
 && choco install -y msys2 --version 20240507.0.0 --params "'/NoPath /NoUpdate /InstallDir:C:\ruby32\msys64'"
 RUN refreshenv \
 && ridk install 3 \
-&& echo gem: --no-document >> C:\ProgramData\gemrc \
+&& type "c:\ProgramData\gemrc" \
+&& c:\ruby32\bin\ruby -r yaml -e "path = 'c:/ProgramData/gemrc'; yaml = YAML.safe_load(File.read(path)); yaml['install'] = '--no-document'; yaml['update'] = '--no-document'; File.write(path, YAML.dump(yaml))" \
+&& type "c:\ProgramData\gemrc" \
 && gem install oj -v 3.16.5 \
 && gem install json -v 2.7.2 \
 && gem install rexml -v 3.3.5 \
