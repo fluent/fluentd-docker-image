@@ -72,8 +72,8 @@ RUN refreshenv \
 && c:\ruby32\bin\ruby -r yaml -e "path = 'c:/ProgramData/gemrc'; yaml = YAML.safe_load(File.read(path)); yaml['install'] = '--no-document'; yaml['update'] = '--no-document'; File.write(path, YAML.dump(yaml))" \
 && type "c:\ProgramData\gemrc" \
 && gem install oj -v 3.16.5 \
-&& gem install json -v 2.7.2 \
-&& gem install rexml -v 3.3.5 \
+&& gem install json -v 2.7.4 \
+&& gem install rexml -v 3.3.9 \
 && gem install fluentd -v <%= fluentd_ver %> \
 && gem install win32-service -v 2.3.2 \
 && gem install win32-ipc -v 0.7.0 \
@@ -108,8 +108,8 @@ RUN apt-get update \
 <% end %>
  && echo 'gem: --no-document' >> /etc/gemrc \
  && gem install oj -v 3.16.5 \
- && gem install json -v 2.7.2 \
- && gem install rexml -v 3.3.5 \
+ && gem install json -v 2.7.4 \
+ && gem install rexml -v 3.3.9 \
  && gem install async -v 1.32.1 \
  && gem install async-http -v 0.64.2 \
  && gem install fluentd -v <%= fluentd_ver %> \
