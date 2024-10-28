@@ -18,8 +18,8 @@ RUN apk update \
         ruby-dev gnupg \
  && echo 'gem: --no-document' >> /etc/gemrc \
  && gem install oj -v 3.16.5 \
- && gem install json -v 2.7.2 \
- && gem install rexml -v 3.3.5 \
+ && gem install json -v 2.7.4 \
+ && gem install rexml -v 3.3.9 \
  && gem install async -v 1.32.1 \
  && gem install async-http -v 0.64.2 \
  && gem install fluentd -v 1.17.1 \
