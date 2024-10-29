@@ -18,8 +18,8 @@ RUN refreshenv \
 && c:\ruby32\bin\ruby -r yaml -e "path = 'c:/ProgramData/gemrc'; yaml = YAML.safe_load(File.read(path)); yaml['install'] = '--no-document'; yaml['update'] = '--no-document'; File.write(path, YAML.dump(yaml))" \
 && type "c:\ProgramData\gemrc" \
 && gem install oj -v 3.16.5 \
-&& gem install json -v 2.7.2 \
-&& gem install rexml -v 3.3.5 \
+&& gem install json -v 2.7.4 \
+&& gem install rexml -v 3.3.9 \
 && gem install fluentd -v 1.17.1 \
 && gem install win32-service -v 2.3.2 \
 && gem install win32-ipc -v 0.7.0 \
