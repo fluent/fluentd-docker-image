@@ -37,7 +37,8 @@ RUN apt-get update \
  && export GEM_DIR=$(ruby -e 'puts Gem.dir') \
  && echo GEM_DIR=$GEM_DIR \
  && rm -rf $GEM_DIR/cache/*.gem \
- && find $GEM_DIR -type d -name test -or -name ext -or -name spec -or -name benchmark | xargs -r rm -rf \
+ # Don't purge $GEM_DIR/gems/GEM/lib/GEM/ext because it might contain runtime .so (e.g json)
+ && find $GEM_DIR -maxdepth 3 -type d -name test -or -name ext -or -name spec -or -name benchmark | xargs -r rm -rfv \
  && find $GEM_DIR -name "*.so" | xargs -r strip \
  && dpkgArch="$(dpkg --print-architecture | awk -F- '{ print $NF }')" \
  && wget -O /tmp/jemalloc-5.3.0.tar.bz2 https://github.com/jemalloc/jemalloc/releases/download/5.3.0/jemalloc-5.3.0.tar.bz2 \
