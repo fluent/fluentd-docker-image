@@ -13,7 +13,7 @@ curl -Lo manifest-tool https://github.com/estesp/manifest-tool/releases/download
 chmod +x manifest-tool
 
 # Tag and push image for each additional tag
-for tag in {v1.17.1-debian-arm64-1.1,v1.17-debian-arm64-1,edge-debian-arm64}; do
+for tag in {v1.17.1-debian-arm64-1.2,v1.17-debian-arm64-1,edge-debian-arm64}; do
   docker tag $IMAGE_NAME ${repoName}:${tag}
   docker push ${repoName}:${tag}
 

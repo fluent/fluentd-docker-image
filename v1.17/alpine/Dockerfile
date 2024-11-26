@@ -26,7 +26,8 @@ RUN apk update \
  && export GEM_DIR=$(ruby -e 'puts Gem.dir') \
  && echo GEM_DIR=$GEM_DIR \
  && rm -rf $GEM_DIR/cache/*.gem \
- && find $GEM_DIR -type d -name test -or -name ext -or -name spec -or -name benchmark | xargs -r rm -rf \
+ # Don't purge $GEM_DIR/gems/GEM/lib/GEM/ext because it might contain runtime .so (e.g json)
+ && find $GEM_DIR -maxdepth 3 -type d -name test -or -name ext -or -name spec -or -name benchmark | xargs -r rm -rfv \
  && find $GEM_DIR -name "*.so" | xargs -r strip \
  && gem install bigdecimal -v 1.4.4 \
  && apk del .build-deps \
