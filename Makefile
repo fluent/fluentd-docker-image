@@ -44,7 +44,8 @@ TAGS ?= $(word 2,$(subst :, ,$(word 1,$(ALL_IMAGES))))
 
 no-cache ?= no
 
-
+echo-all-images:
+	@echo $(X86_IMAGES) $(ARM_IMAGES) $(ARM64_IMAGES)
 
 comma := ,
 empty :=
@@ -139,7 +140,7 @@ sbom-all:
 # Usage:
 #	make src [DOCKERFILE=] [VERSION=] [TAGS=t1,t2,...]
 
-src: dockerfile fluent.conf entrypoint.sh post-push-hook post-checkout-hook
+src: dockerfile fluent.conf entrypoint.sh post-checkout-hook
 
 
 
