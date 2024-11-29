@@ -2,6 +2,11 @@ name: Windows
 on:
   push:
   pull_request:
+
+concurrency:
+  group: ${{ github.head_ref || github.sha }}-${{ github.workflow }}
+  cancel-in-progress: true
+
 jobs:
   build:
     name: Build & Test
