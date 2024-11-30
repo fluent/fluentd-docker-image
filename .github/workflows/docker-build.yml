@@ -10,7 +10,7 @@ concurrency:
   cancel-in-progress: true
 
 env:
-  REPOSITORY: ${{ secrets.DOCKER_HUB_ORGS }}/fluentd-docker-image
+  REPOSITORY: ${{ secrets.DOCKER_HUB_ORGS }}/${{ secrets.DOCKER_HUB_REPOSITORY }}
 jobs:
   define-matrix:
     runs-on: ubuntu-latest
