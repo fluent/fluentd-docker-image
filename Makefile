@@ -17,21 +17,21 @@
 
 IMAGE_NAME := fluent/fluentd
 X86_IMAGES := \
-	v1.17/alpine:v1.17.1-1.2,v1.17-1,edge \
-	v1.17/debian:v1.17.1-debian-amd64-1.2,v1.17-debian-amd64-1,edge-debian-amd64
+	v1.18/alpine:v1.18.0-1.0,v1.18-1,edge \
+	v1.18/debian:v1.18.0-debian-amd64-1.0,v1.18-debian-amd64-1,edge-debian-amd64
 #	<Dockerfile>:<version>,<tag1>,<tag2>,...
 
 # Define images for running on ARM platforms
 ARM_IMAGES := \
-	v1.17/armhf/debian:v1.17.1-debian-armhf-1.2,v1.17-debian-armhf-1,edge-debian-armhf \
+	v1.18/armhf/debian:v1.18.0-debian-armhf-1.0,v1.18-debian-armhf-1,edge-debian-armhf \
 
 # Define images for running on ARM64 platforms
 ARM64_IMAGES := \
-	v1.17/arm64/debian:v1.17.1-debian-arm64-1.2,v1.17-debian-arm64-1,edge-debian-arm64 \
+	v1.18/arm64/debian:v1.18.0-debian-arm64-1.0,v1.18-debian-arm64-1,edge-debian-arm64 \
 
 WINDOWS_IMAGES := \
-	v1.17/windows-ltsc2019:v1.17.1-windows-ltsc2019-1.1,v1.17-windows-ltsc2019-1 \
-	v1.17/windows-ltsc2022:v1.17.1-windows-ltsc2022-1.1,v1.17-windows-ltsc2022-1
+	v1.18/windows-ltsc2019:v1.18.0-windows-ltsc2019-1.0,v1.18-windows-ltsc2019-1 \
+	v1.18/windows-ltsc2022:v1.18.0-windows-ltsc2022-1.0,v1.18-windows-ltsc2022-1
 
 LINUX_IMAGES := $(X86_IMAGES) $(ARM_IMAGES) $(ARM64_IMAGES)
 ALL_IMAGES := $(LINUX_IMAGES) $(WINDOWS_IMAGES)
@@ -43,9 +43,6 @@ VERSION ?=  $(word 1,$(subst $(comma), ,\
 TAGS ?= $(word 2,$(subst :, ,$(word 1,$(ALL_IMAGES))))
 
 no-cache ?= no
-
-echo-all-images:
-	@echo $(X86_IMAGES) $(ARM_IMAGES) $(ARM64_IMAGES)
 
 comma := ,
 empty :=
@@ -65,7 +62,8 @@ no-cache-arg = $(if $(call eq, $(no-cache), yes), --no-cache, $(empty))
 image:
 	docker build $(no-cache-arg) -t $(IMAGE_NAME):$(VERSION) $(DOCKERFILE) --build-arg VERSION=$(VERSION)
 
-
+echo-all-images:
+	@echo $(X86_IMAGES) $(ARM_IMAGES) $(ARM64_IMAGES)
 
 # Tag Docker image with given tags.
 #
@@ -140,7 +138,7 @@ sbom-all:
 # Usage:
 #	make src [DOCKERFILE=] [VERSION=] [TAGS=t1,t2,...]
 
-src: dockerfile fluent.conf entrypoint.sh post-checkout-hook
+src: dockerfile fluent.conf entrypoint.sh
 
 
 

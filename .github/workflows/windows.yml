@@ -14,9 +14,9 @@ jobs:
       fail-fast: false
       matrix:
         include:
-          - version: v1.17
+          - version: v1.18
             os-version: 2019
-          - version: v1.17
+          - version: v1.18
             os-version: 2022
     runs-on: windows-${{ matrix.os-version }}
     steps:
