@@ -64,8 +64,8 @@ RUN [ ${CROSS_BUILD_START} ]
 RUN powershell -Command "Set-ExecutionPolicy Bypass -Scope Process -Force; iex ((New-Object System.Net.WebClient).DownloadString('https://chocolatey.org/install.ps1'))"
 
 # NOTE: For avoiding stalling with docker build on windows, we must use latest version of msys2.
-RUN choco install -y ruby --version 3.2.4.1 --params "'/InstallDir:C:\ruby32'" \
-&& choco install -y msys2 --version 20240507.0.0 --params "'/NoPath /NoUpdate /InstallDir:C:\ruby32\msys64'"
+RUN choco install -y ruby --version 3.2.6.1 --params "'/InstallDir:C:\ruby32'" \
+&& choco install -y msys2 --version 20240727.0.0 --params "'/NoPath /NoUpdate /InstallDir:C:\ruby32\msys64'"
 RUN refreshenv \
 && ridk install 3 \
 && type "c:\ProgramData\gemrc" \
