@@ -140,7 +140,7 @@ sbom-all:
 # Usage:
 #	make src [DOCKERFILE=] [VERSION=] [TAGS=t1,t2,...]
 
-src: dockerfile fluent.conf entrypoint.sh post-checkout-hook
+src: dockerfile fluent.conf entrypoint.sh
 
 
 
