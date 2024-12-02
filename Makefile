@@ -64,7 +64,8 @@ no-cache-arg = $(if $(call eq, $(no-cache), yes), --no-cache, $(empty))
 image:
 	docker build $(no-cache-arg) -t $(IMAGE_NAME):$(VERSION) $(DOCKERFILE) --build-arg VERSION=$(VERSION)
 
-
+echo-all-images:
+	@echo $(X86_IMAGES) $(ARM_IMAGES) $(ARM64_IMAGES)
 
 # Tag Docker image with given tags.
 #
@@ -139,7 +140,7 @@ sbom-all:
 # Usage:
 #	make src [DOCKERFILE=] [VERSION=] [TAGS=t1,t2,...]
 
-src: dockerfile fluent.conf entrypoint.sh post-push-hook post-checkout-hook
+src: dockerfile fluent.conf entrypoint.sh
 
 
 
