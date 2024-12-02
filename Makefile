@@ -44,9 +44,6 @@ TAGS ?= $(word 2,$(subst :, ,$(word 1,$(ALL_IMAGES))))
 
 no-cache ?= no
 
-echo-all-images:
-	@echo $(X86_IMAGES) $(ARM_IMAGES) $(ARM64_IMAGES)
-
 comma := ,
 empty :=
 space := $(empty) $(empty)
@@ -65,7 +62,8 @@ no-cache-arg = $(if $(call eq, $(no-cache), yes), --no-cache, $(empty))
 image:
 	docker build $(no-cache-arg) -t $(IMAGE_NAME):$(VERSION) $(DOCKERFILE) --build-arg VERSION=$(VERSION)
 
-
+echo-all-images:
+	@echo $(X86_IMAGES) $(ARM_IMAGES) $(ARM64_IMAGES)
 
 # Tag Docker image with given tags.
 #
