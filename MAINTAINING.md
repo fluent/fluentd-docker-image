@@ -46,9 +46,13 @@ To update versions of images following steps are required:
 
 **Note:** This procedure requires `fluent/fluentd` repository's DockerHub `Admin` privileges.
 
-Go to [Build settings page](https://hub.docker.com/repository/docker/fluent/fluentd/builds) and then, push `[Trigger ▷]` buttons.
+1. Create access token with `Read & Write` permission on hub.docker.com.
+2. Set `DOCKER_HUB_ORGS`, `DOCKER_HUB_REPOSITORY`, `DOCKER_HUB_USERNAME` and `DOCKER_HUB_ACCESS_TOKEN` as GitHub repository secrets.
+   (e.g. `DOCKER_HUB_ORGS=fluent`, `DOCKER_HUB_REPOSITORY=fluentd` and so on)
 
-Built tags for debian and alpine images will be published at [TAGS page](https://hub.docker.com/r/fluent/fluentd-kubernetes-daemonset/tags).
+3. Create tag to release it! (e.g. v1.18.0-1.0 for alpine,amd64,arm64 and armhf)
+
+Built tags for debian and alpine images will be published at [TAGS page](https://hub.docker.com/r/fluent/fluentd/tags).
 
 ### Build and Publish Windows Server Core images
 
