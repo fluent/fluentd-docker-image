@@ -11,7 +11,7 @@ RUN curl -sL -o qemu-3.0.0+resin-arm.tar.gz https://github.com/balena-io/qemu/re
 FROM --platform=linux/arm/v7 arm32v7/ruby:3.2-slim-bookworm
 COPY --from=builder /go/qemu-arm-static /usr/bin/
 LABEL maintainer "Fluentd developers <fluentd@googlegroups.com>"
-LABEL Description="Fluentd docker image" Vendor="Fluent Organization" Version="1.16.6"
+LABEL Description="Fluentd docker image" Vendor="Fluent Organization" Version="1.16.7"
 ARG CROSS_BUILD_START="cross-build-start"
 ARG CROSS_BUILD_END="cross-build-end"
 RUN [ ${CROSS_BUILD_START} ]
@@ -31,10 +31,10 @@ RUN apt-get update \
  && echo 'gem: --no-document' >> /etc/gemrc \
  && gem install oj -v 3.16.1 \
  && gem install json -v 2.6.3 \
- && gem install rexml -v 3.2.6 \
+ && gem install rexml -v 3.4.0 \
  && gem install async -v 1.31.0 \
  && gem install async-http -v 0.60.2 \
- && gem install fluentd -v 1.16.6 \
+ && gem install fluentd -v 1.16.7 \
  && dpkgArch="$(dpkg --print-architecture | awk -F- '{ print $NF }')" \
  && wget -O /usr/local/bin/tini "https://github.com/krallin/tini/releases/download/v$TINI_VERSION/tini-$dpkgArch" \
  && wget -O /usr/local/bin/tini.asc "https://github.com/krallin/tini/releases/download/v$TINI_VERSION/tini-$dpkgArch.asc" \
