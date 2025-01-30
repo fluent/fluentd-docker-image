@@ -16,7 +16,9 @@ jobs:
         include:
           - dockerfile: v1.18/alpine
           - dockerfile: v1.18/debian
-    runs-on: ubuntu-latest
+          - dockerfile: v1.18/arm64/debian
+    runs-on: >-
+      ${{ (contains(matrix.dockerfile, 'arm64')) && 'ubuntu-24.04-arm' || 'ubuntu-latest' }}
     steps:
       - uses: actions/checkout@master
       - name: Build
