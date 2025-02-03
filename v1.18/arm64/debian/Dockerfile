@@ -3,18 +3,9 @@
 
 # To set multiarch build for Docker hub automated build.
 FROM golang:alpine AS builder
-WORKDIR /go
-ENV QEMU_DOWNLOAD_SHA256 5db25cccb40ac7b1ca857653b883376b931d91b06ff34ffe70dcf6180bd07bb8
-RUN apk add curl --no-cache
-RUN curl -sL -o qemu-6.0.0.balena1-aarch64.tar.gz https://github.com/balena-io/qemu/releases/download/v6.0.0%2Bbalena1/qemu-6.0.0.balena1-aarch64.tar.gz && echo "$QEMU_DOWNLOAD_SHA256 *qemu-6.0.0.balena1-aarch64.tar.gz" | sha256sum -c - | tar zxvf qemu-6.0.0.balena1-aarch64.tar.gz -C . && mv qemu-6.0.0+balena1-aarch64/qemu-aarch64-static .
-
 FROM --platform=linux/arm64 arm64v8/ruby:3.2-slim-bookworm
-COPY --from=builder /go/qemu-aarch64-static /usr/bin/
 LABEL maintainer "Fluentd developers <fluentd@googlegroups.com>"
 LABEL Description="Fluentd docker image" Vendor="Fluent Organization" Version="1.18.0"
-ARG CROSS_BUILD_START="cross-build-start"
-ARG CROSS_BUILD_END="cross-build-end"
-RUN [ ${CROSS_BUILD_START} ]
 
 # Do not split this into multiple RUN!
 # Docker creates a layer for every RUN-Statement
@@ -75,4 +66,3 @@ USER fluent
 ENTRYPOINT ["tini",  "--", "/bin/entrypoint.sh"]
 CMD ["fluentd"]
 
-RUN [ ${CROSS_BUILD_END} ]

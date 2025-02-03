@@ -39,7 +39,8 @@ jobs:
           done
   build:
     needs: define-matrix
-    runs-on: ubuntu-latest
+    runs-on: >-
+      ${{ (contains(matrix.component, 'arm64')) && 'ubuntu-24.04-arm' || 'ubuntu-latest' }}
     strategy:
       fail-fast: false
       matrix:
