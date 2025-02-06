@@ -39,12 +39,15 @@ jobs:
           done
   build:
     needs: define-matrix
-    runs-on: >-
-      ${{ (contains(matrix.component, 'arm64')) && 'ubuntu-24.04-arm' || 'ubuntu-latest' }}
     strategy:
       fail-fast: false
       matrix:
         component: ${{ fromJSON(needs.define-matrix.outputs.components) }}
+        include:
+          - runs-on: ubuntu-latest
+          - runs-on: ubuntu-24.04-arm
+            component: arm64
+    runs-on: ${{ matrix.runs-on }}
     steps:
       - uses: actions/checkout@v4
       - name: Set up Docker Buildx
