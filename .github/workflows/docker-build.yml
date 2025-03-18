@@ -195,12 +195,24 @@ jobs:
               ${{ env.REPOSITORY }}:${AMD64TAG} \
               ${{ env.REPOSITORY }}:${ARM64TAG} \
               ${{ env.REPOSITORY }}:${ARMHFTAG}
+            # v1.xx.y-debian (short alias without -1.x suffix)
+            MULTIARCH_SHORT_ALIAS=$(echo ${MULTIARCH_AMD64_TAG} | cut -d'-' -f1,2)
+            docker buildx imagetools create -t ${{ env.REPOSITORY }}:${MULTIARCH_SHORT_ALIAS} \
+              ${{ env.REPOSITORY }}:${AMD64TAG} \
+              ${{ env.REPOSITORY }}:${ARM64TAG} \
+              ${{ env.REPOSITORY }}:${ARMHFTAG}
           fi
           # v1.xx-debian-n.m
           if [ ${MULTIARCH_AMD64_SHORT_TAG} != ${MULTIARCH_ARM64_SHORT_TAG} -o ${MULTIARCH_AMD64_SHORT_TAG} != ${MULTIARCH_ARMHF_SHORT_TAG} -o ${MULTIARCH_ARM64_SHORT_TAG} != ${MULTIARCH_ARMHF_SHORT_TAG} ]; then
             echo "Multiarch tag (v1.xx-debian-n.m must be same for amd64, arm64 and armhf: ${MULTIARCH_AMD64_SHORT_TAG}, ${MULTIARCH_ARM64_SHORT_TAG}, ${MULTIARCH_ARMHF_SHORT_TAG}"
           else
             docker buildx imagetools create -t ${{ env.REPOSITORY }}:${MULTIARCH_AMD64_SHORT_TAG} \
+              ${{ env.REPOSITORY }}:${SHORT_AMD64TAG} \
+              ${{ env.REPOSITORY }}:${SHORT_ARM64TAG} \
+              ${{ env.REPOSITORY }}:${SHORT_ARMHFTAG}
+            # v1.xx-debian (short alias without -1 suffix)
+            MULTIARCH_SHORT_ALIAS=$(echo ${MULTIARCH_AMD64_SHORT_TAG} | cut -d'-' -f1,2)
+            docker buildx imagetools create -t ${{ env.REPOSITORY }}:${MULTIARCH_SHORT_ALIAS} \
               ${{ env.REPOSITORY }}:${SHORT_AMD64TAG} \
               ${{ env.REPOSITORY }}:${SHORT_ARM64TAG} \
               ${{ env.REPOSITORY }}:${SHORT_ARMHFTAG}
