@@ -201,6 +201,11 @@ jobs:
               ${{ env.REPOSITORY }}:${AMD64TAG} \
               ${{ env.REPOSITORY }}:${ARM64TAG} \
               ${{ env.REPOSITORY }}:${ARMHFTAG}
+            # latest
+            docker buildx imagetools create -t ${{ env.REPOSITORY }}:latest \
+              ${{ env.REPOSITORY }}:${AMD64TAG} \
+              ${{ env.REPOSITORY }}:${ARM64TAG} \
+              ${{ env.REPOSITORY }}:${ARMHFTAG}
           fi
           # v1.xx-debian-n.m
           if [ ${MULTIARCH_AMD64_SHORT_TAG} != ${MULTIARCH_ARM64_SHORT_TAG} -o ${MULTIARCH_AMD64_SHORT_TAG} != ${MULTIARCH_ARMHF_SHORT_TAG} -o ${MULTIARCH_ARM64_SHORT_TAG} != ${MULTIARCH_ARMHF_SHORT_TAG} ]; then
