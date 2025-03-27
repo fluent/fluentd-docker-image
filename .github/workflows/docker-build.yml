@@ -72,25 +72,30 @@ jobs:
             esac
             branch=$(echo $target | cut -d'/' -f1)
             tags=$(echo $target | cut -d':' -f2-)
-            tag1=$(echo $tags | cut -d',' -f1)
-            tag2=$(echo $tags | cut -d',' -f2)
-            tag3=$(echo $tags | cut -d',' -f3)
+            push_tags=""
+            for tag in $(echo "$tags" | tr , ' '); do
+              if [ -z "$push_tags" ]; then
+                push_tags="${{ env.REPOSITORY }}:$tag"
+              else
+                push_tags="$push_tags,${{ env.REPOSITORY }}:$tag"
+              fi
+            done
             case $component in
             *alpine*)
               echo "CONTEXT=${branch}/${component}" >> ${GITHUB_ENV}
-              echo "ALPINETAGS=${{ env.REPOSITORY }}:${tag1},${{ env.REPOSITORY }}:${tag2},${{ env.REPOSITORY }}:${tag3}" >> ${GITHUB_ENV}
+              echo "ALPINETAGS=$push_tags" >> ${GITHUB_ENV}
               ;;
             *arm64*)
               echo "CONTEXT=${branch}/${component}/debian" >> ${GITHUB_ENV}
-              echo "ARM64TAGS=${{ env.REPOSITORY }}:${tag1},${{ env.REPOSITORY }}:${tag2},${{ env.REPOSITORY }}:${tag3}" >> ${GITHUB_ENV}
+              echo "ARM64TAGS=$push_tags" >> ${GITHUB_ENV}
               ;;
             *armhf*)
               echo "CONTEXT=${branch}/${component}/debian" >> ${GITHUB_ENV}
-              echo "ARMHFTAGS=${{ env.REPOSITORY }}:${tag1},${{ env.REPOSITORY }}:${tag2},${{ env.REPOSITORY }}:${tag3}" >> ${GITHUB_ENV}
+              echo "ARMHFTAGS=$push_tags" >> ${GITHUB_ENV}
               ;;
             *amd64*)
               echo "CONTEXT=${branch}/debian" >> ${GITHUB_ENV}
-              echo "AMD64TAGS=${{ env.REPOSITORY }}:${tag1},${{ env.REPOSITORY }}:${tag2},${{ env.REPOSITORY }}:${tag3}" >> ${GITHUB_ENV}
+              echo "AMD64TAGS=$push_tags" >> ${GITHUB_ENV}
               ;;
             esac
           done
