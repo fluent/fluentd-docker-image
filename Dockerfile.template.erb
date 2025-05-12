@@ -54,7 +54,7 @@ RUN [ ${CROSS_BUILD_START} ]
 RUN powershell -Command "Set-ExecutionPolicy Bypass -Scope Process -Force; [System.Net.ServicePointManager]::SecurityProtocol = [System.Net.ServicePointManager]::SecurityProtocol -bor 3072; iex ((New-Object System.Net.WebClient).DownloadString('https://community.chocolatey.org/install.ps1'))"
 
 # NOTE: For avoiding stalling with docker build on windows, we must use latest version of msys2.
-RUN choco install -y ruby --version 3.2.6.1 --params "'/InstallDir:C:\ruby32'" \
+RUN choco install -y ruby --version 3.2.8.1 --params "'/InstallDir:C:\ruby32'" \
 && choco install -y msys2 --version 20240727.0.0 --params "'/NoPath /NoUpdate /InstallDir:C:\ruby32\msys64'"
 RUN refreshenv \
 && ridk install 3 \
