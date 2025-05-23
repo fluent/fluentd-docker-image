@@ -101,7 +101,6 @@ RUN apt-get update \
       make gcc g++ libc-dev \
       wget bzip2 gnupg dirmngr \
     " \
- && apt-get -V -y upgrade \
  && apt-get install -y --no-install-recommends $buildDeps \
 <% end %>
  && echo 'gem: --no-document' >> /etc/gemrc \

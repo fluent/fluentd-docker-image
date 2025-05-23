@@ -16,7 +16,6 @@ RUN apt-get update \
       make gcc g++ libc-dev \
       wget bzip2 gnupg dirmngr \
     " \
- && apt-get -V -y upgrade \
  && apt-get install -y --no-install-recommends $buildDeps \
  && echo 'gem: --no-document' >> /etc/gemrc \
  && gem install oj -v 3.16.1 \
