@@ -14,8 +14,9 @@ jobs:
       fail-fast: false
       matrix:
         include:
-          - version: v1.19
-            os-version: 2019
+          # Even though dropped from GitHub Actions, but LTSC2019 itself is still maintained
+          # - version: v1.19
+          #   os-version: 2019
           - version: v1.19
             os-version: 2022
     runs-on: windows-${{ matrix.os-version }}
