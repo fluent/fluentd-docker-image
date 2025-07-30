@@ -14,7 +14,6 @@ jobs:
       fail-fast: false
       matrix:
         include:
-          - dockerfile: v1.18/alpine
           - dockerfile: v1.18/debian
           - dockerfile: v1.18/arm64/debian
     runs-on: >-
