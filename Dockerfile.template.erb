@@ -36,7 +36,7 @@ COPY --from=builder /go/qemu-arm-static /usr/bin/
 FROM golang:alpine AS builder
 FROM --platform=linux/arm64 arm64v8/ruby:3.4-slim
 <% else %>
-FROM ruby:3.2-slim-bookworm
+FROM ruby:3.4-slim
 <% end %>
 <% end %>
 <% end %>
@@ -61,9 +61,9 @@ RUN refreshenv \
 && type "c:\ProgramData\gemrc" \
 && c:\ruby34\bin\ruby -r yaml -e "path = 'c:/ProgramData/gemrc'; yaml = YAML.safe_load(File.read(path)); yaml['install'] = '--no-document'; yaml['update'] = '--no-document'; File.write(path, YAML.dump(yaml))" \
 && type "c:\ProgramData\gemrc" \
-&& gem install oj -v 3.16.5 \
-&& gem install json -v 2.7.4 \
-&& gem install rexml -v 3.3.9 \
+&& gem install oj -v 3.16.11 \
+&& gem install json -v 2.13.2 \
+&& gem install rexml -v 3.4.1 \
 && gem install fluentd -v <%= fluentd_ver %> \
 && gem install win32-service -v 2.3.2 \
 && gem install win32-ipc -v 0.7.0 \
@@ -97,11 +97,11 @@ RUN apt-get update \
  && apt-get install -y --no-install-recommends $buildDeps \
 <% end %>
  && echo 'gem: --no-document' >> /etc/gemrc \
- && gem install oj -v 3.16.5 \
- && gem install json -v 2.7.4 \
- && gem install rexml -v 3.3.9 \
- && gem install async -v 1.32.1 \
- && gem install async-http -v 0.64.2 \
+ && gem install oj -v 3.16.11 \
+ && gem install json -v 2.13.2 \
+ && gem install rexml -v 3.4.1 \
+ && gem install async -v 2.24.0 \
+ && gem install async-http -v 0.89.0 \
  && gem install fluentd -v <%= fluentd_ver %> \
  && export GEM_DIR=$(ruby -e 'puts Gem.dir') \
  && echo GEM_DIR=$GEM_DIR \
@@ -110,7 +110,7 @@ RUN apt-get update \
  && find $GEM_DIR -maxdepth 3 -type d -name test -or -name ext -or -name spec -or -name benchmark | xargs -r rm -rfv \
  && find $GEM_DIR -name "*.so" | xargs -r strip \
 <% if is_alpine %>
- && gem install bigdecimal -v 1.4.4 \
+ && gem install bigdecimal -v 3.2.2 \
  && apk del .build-deps \
  && rm -rf /var/cache/apk/* \
 <% else %>
