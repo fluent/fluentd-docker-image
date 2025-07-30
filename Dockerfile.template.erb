@@ -29,12 +29,12 @@ ENV QEMU_DOWNLOAD_SHA256 47ae430b0e7c25e1bde290ac447a720e2ea6c6e78cd84e44847edda
 RUN apk add curl --no-cache
 RUN curl -sL -o qemu-3.0.0+resin-arm.tar.gz https://github.com/balena-io/qemu/releases/download/v3.0.0%2Bresin/qemu-3.0.0+resin-arm.tar.gz && echo "$QEMU_DOWNLOAD_SHA256 *qemu-3.0.0+resin-arm.tar.gz" | sha256sum -c - | tar zxvf qemu-3.0.0+resin-arm.tar.gz -C . && mv qemu-3.0.0+resin-arm/qemu-arm-static .
 
-FROM --platform=linux/arm/v7 arm32v7/ruby:3.2-slim-bookworm
+FROM --platform=linux/arm/v7 arm32v7/ruby:3.4-slim
 COPY --from=builder /go/qemu-arm-static /usr/bin/
 <% elsif is_arm64 %>
 # To set multiarch build for Docker hub automated build.
 FROM golang:alpine AS builder
-FROM --platform=linux/arm64 arm64v8/ruby:3.2-slim-bookworm
+FROM --platform=linux/arm64 arm64v8/ruby:3.4-slim
 <% else %>
 FROM ruby:3.2-slim-bookworm
 <% end %>
@@ -54,12 +54,12 @@ RUN [ ${CROSS_BUILD_START} ]
 RUN powershell -Command "Set-ExecutionPolicy Bypass -Scope Process -Force; [System.Net.ServicePointManager]::SecurityProtocol = [System.Net.ServicePointManager]::SecurityProtocol -bor 3072; iex ((New-Object System.Net.WebClient).DownloadString('https://community.chocolatey.org/install.ps1'))"
 
 # NOTE: For avoiding stalling with docker build on windows, we must use latest version of msys2.
-RUN choco install -y ruby --version 3.2.8.1 --params "'/InstallDir:C:\ruby32'" \
-&& choco install -y msys2 --version 20240727.0.0 --params "'/NoPath /NoUpdate /InstallDir:C:\ruby32\msys64'"
+RUN choco install -y ruby --version 3.4.5.1 --params "'/InstallDir:C:\ruby34'" \
+&& choco install -y msys2 --version 20250622.0.0 --params "'/NoPath /NoUpdate /InstallDir:C:\ruby34\msys64'"
 RUN refreshenv \
 && ridk install 3 \
 && type "c:\ProgramData\gemrc" \
-&& c:\ruby32\bin\ruby -r yaml -e "path = 'c:/ProgramData/gemrc'; yaml = YAML.safe_load(File.read(path)); yaml['install'] = '--no-document'; yaml['update'] = '--no-document'; File.write(path, YAML.dump(yaml))" \
+&& c:\ruby34\bin\ruby -r yaml -e "path = 'c:/ProgramData/gemrc'; yaml = YAML.safe_load(File.read(path)); yaml['install'] = '--no-document'; yaml['update'] = '--no-document'; File.write(path, YAML.dump(yaml))" \
 && type "c:\ProgramData\gemrc" \
 && gem install oj -v 3.16.5 \
 && gem install json -v 2.7.4 \
