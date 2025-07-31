@@ -17,7 +17,6 @@ jobs:
     env:
       ALL_COMPONENTS: >
         [
-        "alpine",
         "arm64",
         "armhf",
         "amd64",
@@ -81,10 +80,6 @@ jobs:
               fi
             done
             case $component in
-            *alpine*)
-              echo "CONTEXT=${branch}/${component}" >> ${GITHUB_ENV}
-              echo "ALPINETAGS=$push_tags" >> ${GITHUB_ENV}
-              ;;
             *arm64*)
               echo "CONTEXT=${branch}/${component}/debian" >> ${GITHUB_ENV}
               echo "ARM64TAGS=$push_tags" >> ${GITHUB_ENV}
@@ -99,17 +94,6 @@ jobs:
               ;;
             esac
           done
-      - name: Build and push for alpine
-        if: ${{ env.ALPINETAGS }}
-        uses: docker/build-push-action@v6
-        with:
-          context: ${{ env.CONTEXT }}
-          provenance: false
-          push: true
-          platforms: linux/amd64
-          tags: ${{ env.ALPINETAGS }}
-          # dare to use old mediatype (application/vnd.docker.distribution.manifest.v2+json)
-          outputs: oci-mediatypes=false
       - name: Build and push for amd64
         if: ${{ env.AMD64TAGS }}
         uses: docker/build-push-action@v6
@@ -161,7 +145,6 @@ jobs:
           username: ${{ secrets.DOCKER_HUB_USERNAME }}
           password: ${{ secrets.DOCKER_HUB_ACCESS_TOKEN }}
       - name: Create manifest
-        if: ${{ matrix.component }} != "alpine"
         run: |
           component=${{ matrix.component }}
           for target in $(make echo-all-images); do
@@ -188,8 +171,6 @@ jobs:
                 ARMHFTAG=${tag1}
                 SHORT_ARMHFTAG=${tag2}
                 ;;
-              *alpine*)
-                ;;
             esac
           done
           # v1.xx.y-debian-n.m
@@ -203,6 +184,18 @@ jobs:
             # v1.xx.y-debian (short alias without -1.x suffix)
             MULTIARCH_SHORT_ALIAS=$(echo ${MULTIARCH_AMD64_TAG} | cut -d'-' -f1,2)
             docker buildx imagetools create -t ${{ env.REPOSITORY }}:${MULTIARCH_SHORT_ALIAS} \
+              ${{ env.REPOSITORY }}:${AMD64TAG} \
+              ${{ env.REPOSITORY }}:${ARM64TAG} \
+              ${{ env.REPOSITORY }}:${ARMHFTAG}
+            # v1.xx.y-n.m
+            VERSION_WITH_SUFFIX=${MULTIARCH_SHORT_ALIAS/debian-/}
+            docker buildx imagetools create -t ${{ env.REPOSITORY }}:${VERSION_WITH_SUFFIX} \
+              ${{ env.REPOSITORY }}:${AMD64TAG} \
+              ${{ env.REPOSITORY }}:${ARM64TAG} \
+              ${{ env.REPOSITORY }}:${ARMHFTAG}
+            # v1.xx-n
+            VERSION_WITH_SUFFIX=${MULTIARCH_AMD64_SHORT_TAG/debian-/}
+            docker buildx imagetools create -t ${{ env.REPOSITORY }}:${VERSION_WITH_SUFFIX} \
               ${{ env.REPOSITORY }}:${AMD64TAG} \
               ${{ env.REPOSITORY }}:${ARM64TAG} \
               ${{ env.REPOSITORY }}:${ARMHFTAG}
