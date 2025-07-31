@@ -188,7 +188,7 @@ jobs:
               ${{ env.REPOSITORY }}:${ARM64TAG} \
               ${{ env.REPOSITORY }}:${ARMHFTAG}
             # v1.xx.y-n.m
-            VERSION_WITH_SUFFIX=${MULTIARCH_SHORT_ALIAS/debian-/}
+            VERSION_WITH_SUFFIX=${MULTIARCH_AMD64_TAG/debian-/}
             docker buildx imagetools create -t ${{ env.REPOSITORY }}:${VERSION_WITH_SUFFIX} \
               ${{ env.REPOSITORY }}:${AMD64TAG} \
               ${{ env.REPOSITORY }}:${ARM64TAG} \
