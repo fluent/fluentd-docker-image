@@ -22,20 +22,20 @@ These tags have image version postfix. This updates many places so we need feedb
 
 Current images use fluentd v1 series.
 
-- `v1.18.0-1.3`, `v1.18-1`, `edge`
-  [(v1.18/alpine/Dockerfile)][fluentd-1-alpine] (Deprecated)
-- `v1.18.0-debian-1.3`, `v1.18-debian-1`, `edge-debian`
-  (multiarch image for arm64(AArch64) and amd64(x86_64))
-- `v1.18.0-debian-amd64-1.3`, `v1.18-debian-amd64-1`, `edge-debian-amd64`
-  [(v1.18/debian/Dockerfile)][fluentd-1-debian]
-- `v1.18.0-debian-arm64-1.3`, `v1.18-debian-arm64-1`, `edge-debian-arm64`
-  [(v1.18/arm64/debian/Dockerfile)][fluentd-1-debian-arm64]
-- `v1.18.0-debian-armhf-1.3`, `v1.18-debian-armhf-1`, `edge-debian-armhf`
-  [(v1.18/armhf/debian/Dockerfile)][fluentd-1-debian-armhf]
-- `v1.18.0-windows-ltsc2019-1.3`, `v1.18-windows-ltsc2019-1`
-  [(v1.18/windows-ltsc2019/Dockerfile)][fluentd-1-ltsc2019-windows]
-- `v1.18.0-windows-ltsc2022-1.3`, `v1.18-windows-ltsc2022-1`
-  [(v1.18/windows-ltsc2022/Dockerfile)][fluentd-1-ltsc2022-windows]
+- `v1.19.0-1.0`, `v1.19-1`, `edge`
+  [(v1.19/debian/Dockerfile)][fluentd-1-debian] (Since v1.19.0, alpine image will not be shipped anymore.)
+- `v1.19.0-debian-1.0`, `v1.19-debian-1`, `edge-debian`
+  (multiarch image for arm64(AArch64), armhf and amd64(x86_64))
+- `v1.19.0-debian-amd64-1.0`, `v1.19-debian-amd64-1`, `edge-debian-amd64`
+  [(v1.19/debian/Dockerfile)][fluentd-1-debian]
+- `v1.19.0-debian-arm64-1.0`, `v1.19-debian-arm64-1`, `edge-debian-arm64`
+  [(v1.19/arm64/debian/Dockerfile)][fluentd-1-debian-arm64]
+- `v1.19.0-debian-armhf-1.0`, `v1.19-debian-armhf-1`, `edge-debian-armhf`
+  [(v1.19/armhf/debian/Dockerfile)][fluentd-1-debian-armhf]
+- `v1.19.0-windows-ltsc2019-1.0`, `v1.19-windows-ltsc2019-1`
+  [(v1.19/windows-ltsc2019/Dockerfile)][fluentd-1-ltsc2019-windows]
+- `v1.19.0-windows-ltsc2022-1.0`, `v1.19-windows-ltsc2022-1`
+  [(v1.19/windows-ltsc2022/Dockerfile)][fluentd-1-ltsc2022-windows]
 
 > [!TIP]
 > About deprecated old images, See [DEPRECATED](DEPRECATED.md)
@@ -183,9 +183,8 @@ through a [GitHub issue](https://github.com/fluent/fluentd-docker-image/issues).
 [fluentd-1-4-debian]: https://github.com/fluent/fluentd-docker-image/blob/master/v1.4/debian/Dockerfile
 [fluentd-1-4-debian-onbuild]: https://github.com/fluent/fluentd-docker-image/blob/master/v1.4/debian-onbuild/Dockerfile
 [fluentd-1-4-windows]: https://github.com/fluent/fluentd-docker-image/blob/master/v1.4/windows/Dockerfile
-[fluentd-1-alpine]: https://github.com/fluent/fluentd-docker-image/blob/master/v1.18/alpine/Dockerfile
-[fluentd-1-debian]: https://github.com/fluent/fluentd-docker-image/blob/master/v1.18/debian/Dockerfile
-[fluentd-1-debian-arm64]: https://github.com/fluent/fluentd-docker-image/blob/master/v1.18/arm64/debian/Dockerfile
-[fluentd-1-debian-armhf]: https://github.com/fluent/fluentd-docker-image/blob/master/v1.18/armhf/debian/Dockerfile
-[fluentd-1-ltsc2019-windows]: https://github.com/fluent/fluentd-docker-image/blob/master/v1.18/windows-ltsc2019/Dockerfile
-[fluentd-1-ltsc2022-windows]: https://github.com/fluent/fluentd-docker-image/blob/master/v1.18/windows-ltsc2019/Dockerfile
+[fluentd-1-debian]: https://github.com/fluent/fluentd-docker-image/blob/master/v1.19/debian/Dockerfile
+[fluentd-1-debian-arm64]: https://github.com/fluent/fluentd-docker-image/blob/master/v1.19/arm64/debian/Dockerfile
+[fluentd-1-debian-armhf]: https://github.com/fluent/fluentd-docker-image/blob/master/v1.19/armhf/debian/Dockerfile
+[fluentd-1-ltsc2019-windows]: https://github.com/fluent/fluentd-docker-image/blob/master/v1.19/windows-ltsc2019/Dockerfile
+[fluentd-1-ltsc2022-windows]: https://github.com/fluent/fluentd-docker-image/blob/master/v1.19/windows-ltsc2019/Dockerfile
