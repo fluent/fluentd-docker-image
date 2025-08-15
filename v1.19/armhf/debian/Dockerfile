@@ -28,12 +28,14 @@ RUN apt-get update \
     " \
  && apt-get install -y --no-install-recommends $buildDeps \
  && echo 'gem: --no-document' >> /etc/gemrc \
+ && export MAKEFLAGS=-j$(nproc) \
  && gem install oj -v 3.16.11 \
  && gem install json -v 2.13.2 \
  && gem install rexml -v 3.4.1 \
  && gem install async -v 2.24.0 \
  && gem install async-http -v 0.89.0 \
  && gem install fluentd -v 1.19.0 \
+ && unset MAKEFLAGS \
  && export GEM_DIR=$(ruby -e 'puts Gem.dir') \
  && echo GEM_DIR=$GEM_DIR \
  && rm -rf $GEM_DIR/cache/*.gem \
