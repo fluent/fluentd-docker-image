@@ -5,7 +5,7 @@
 FROM golang:alpine AS builder
 FROM --platform=linux/arm64 arm64v8/ruby:3.4-slim
 LABEL maintainer "Fluentd developers <fluentd@googlegroups.com>"
-LABEL Description="Fluentd docker image" Vendor="Fluent Organization" Version="1.19.0"
+LABEL Description="Fluentd docker image" Vendor="Fluent Organization" Version="1.19.1"
 
 # Do not split this into multiple RUN!
 # Docker creates a layer for every RUN-Statement
@@ -25,7 +25,7 @@ RUN apt-get update \
  && gem install rexml -v 3.4.1 \
  && gem install async -v 2.24.0 \
  && gem install async-http -v 0.89.0 \
- && gem install fluentd -v 1.19.0 \
+ && gem install fluentd -v 1.19.1 \
  && unset MAKEFLAGS \
  && export GEM_DIR=$(ruby -e 'puts Gem.dir') \
  && echo GEM_DIR=$GEM_DIR \
