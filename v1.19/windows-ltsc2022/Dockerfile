@@ -19,7 +19,7 @@ RUN refreshenv \
 && type "c:\ProgramData\gemrc" \
 && gem install oj -v 3.16.11 \
 && gem install json -v 2.13.2 \
-&& gem install rexml -v 3.4.1 \
+&& gem install rexml -v 3.4.4 \
 && gem install fluentd -v 1.19.1 \
 && gem install win32-service -v 2.3.2 \
 && gem install win32-ipc -v 0.7.0 \

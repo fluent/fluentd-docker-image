@@ -63,7 +63,7 @@ RUN refreshenv \
 && type "c:\ProgramData\gemrc" \
 && gem install oj -v 3.16.11 \
 && gem install json -v 2.13.2 \
-&& gem install rexml -v 3.4.1 \
+&& gem install rexml -v 3.4.4 \
 && gem install fluentd -v <%= fluentd_ver %> \
 && gem install win32-service -v 2.3.2 \
 && gem install win32-ipc -v 0.7.0 \
@@ -100,7 +100,7 @@ RUN apt-get update \
  && export MAKEFLAGS=-j$(nproc) \
  && gem install oj -v 3.16.11 \
  && gem install json -v 2.13.2 \
- && gem install rexml -v 3.4.1 \
+ && gem install rexml -v 3.4.4 \
  && gem install async -v 2.24.0 \
  && gem install async-http -v 0.89.0 \
  && gem install fluentd -v <%= fluentd_ver %> \
