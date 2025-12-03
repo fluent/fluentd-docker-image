@@ -188,3 +188,14 @@ through a [GitHub issue](https://github.com/fluent/fluentd-docker-image/issues).
 [fluentd-1-debian-armhf]: https://github.com/fluent/fluentd-docker-image/blob/master/v1.19/armhf/debian/Dockerfile
 [fluentd-1-ltsc2019-windows]: https://github.com/fluent/fluentd-docker-image/blob/master/v1.19/windows-ltsc2019/Dockerfile
 [fluentd-1-ltsc2022-windows]: https://github.com/fluent/fluentd-docker-image/blob/master/v1.19/windows-ltsc2019/Dockerfile
+
+
+## FAQ
+
+### Permission Issues with v1.19+
+
+Due to a change in the default UID in `vX.Y-A` and `vX.Y.Z-A.B` images since v1.19,
+you may encount permission errors when writing to mounted volumes.
+To resolve this, please chown your data directories to the new UID.
+
+For more details, please refer to [#448](https://github.com/fluent/fluentd-docker-image/issues/448).
