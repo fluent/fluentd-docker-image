@@ -23,7 +23,7 @@ FROM alpine:3.19
 <% else %>
 <% if is_armhf %>
 # To set multiarch build for Docker hub automated build.
-FROM golang:alpine AS builder
+FROM --platform=$BUILDPLATFORM golang:alpine AS builder
 WORKDIR /go
 ENV QEMU_DOWNLOAD_SHA256 47ae430b0e7c25e1bde290ac447a720e2ea6c6e78cd84e44847edda289e020a8
 RUN apk add curl --no-cache
