@@ -16,10 +16,16 @@ jobs:
         include:
           - dockerfile: v1.19/debian
           - dockerfile: v1.19/arm64/debian
+          - dockerfile: v1.19/armhf/debian
     runs-on: >-
       ${{ (contains(matrix.dockerfile, 'arm64')) && 'ubuntu-24.04-arm' || 'ubuntu-latest' }}
     steps:
       - uses: actions/checkout@master
+      - name: Setup
+        if: ${{ (contains(matrix.dockerfile, 'armhf')) }}
+        run: |
+          sudo apt install -y qemu-user-binfmt binfmt-support qemu-system-arm
+          sudo dpkg --add-architecture armhf
       - name: Build
         run: make image DOCKERFILE=${{ matrix.dockerfile }} VERSION=test
       - name: Test
