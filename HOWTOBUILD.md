@@ -35,7 +35,7 @@ Documentation of `fluent.conf` is available at [docs.fluentd.org][3].
 ### 3. Customize Dockerfile to install plugins (optional)
 
 You can install [Fluentd plugins][4] using Dockerfile.
-Sample Dockerfile installs `fluent-plugin-elasticsearch`.
+Sample Dockerfile installs `fluent-plugin-concat`.
 To add plugins, edit `Dockerfile` as following:
 
 About deprecated old images, see [DEPRECATED](DEPRECATED.md).
@@ -43,7 +43,7 @@ About deprecated old images, see [DEPRECATED](DEPRECATED.md).
 #### Debian version
 
 ```Dockerfile
-FROM fluent/fluentd:v1.17-debian-1
+FROM fluent/fluentd:v1.19-debian
 
 # Use root account to use apt
 USER root
@@ -53,7 +53,7 @@ USER root
 RUN buildDeps="sudo make gcc g++ libc-dev" \
  && apt-get update \
  && apt-get install -y --no-install-recommends $buildDeps \
- && sudo gem install fluent-plugin-elasticsearch \
+ && sudo gem install fluent-plugin-concat \
  && sudo gem sources --clear-all \
  && SUDO_FORCE_REMOVE=yes \
     apt-get purge -y --auto-remove \
@@ -70,7 +70,7 @@ USER fluent
 
 #### Note
 
-These example run `apk add`/`apt-get install` to be able to install
+These example run `apt-get install` to be able to install
 Fluentd plugins which require native extensions (they are removed immediately
 after plugin installation).
 If you're sure that plugins don't include native extensions, you can omit it
