@@ -1,0 +1,60 @@
+name: Scan image vulnerability
+
+on:
+  workflow_dispatch:
+  schedule:
+    # Sunday, 18:00 JST
+    - cron:  '0 9 * * 0'
+
+concurrency:
+  group: ${{ github.head_ref || github.sha }}-${{ github.workflow }}
+  cancel-in-progress: true
+
+jobs:
+  debian:
+    name: Scan debian image with grype
+    strategy:
+      fail-fast: false
+    runs-on: ubuntu-latest
+    steps:
+      - name: Pull and scan upstream trixie image
+        run: |
+          docker pull debian:trixie
+          echo "# Scan debian image with grype (filter)" >> $GITHUB_STEP_SUMMARY
+          docker run --rm anchore/grype:latest debian:trixie --ignore-states wont-fix | grep -v Negligible >> $GITHUB_STEP_SUMMARY
+          echo "# Scan debian image with grype (details)" >> $GITHUB_STEP_SUMMARY
+          echo "|NAME | INSTALLED | FIXED | IN | TYPE | VULNERABILITY | SEVERITY | EPSS | RISK | |" >> $GITHUB_STEP_SUMMARY
+          echo "|---| ---|---|---|----|---|---|---|---|---|" >> $GITHUB_STEP_SUMMARY
+          docker run --rm anchore/grype:latest debian:trixie | sed -e "s/won't fix/won'tfix/g" | grep -v "^NAME" | sed 's/^/|/; s/  */ | /g; s/$/ |/' >> $GITHUB_STEP_SUMMARY
+  ruby:
+    name: Scan Ruby image with grype
+    strategy:
+      fail-fast: false
+    runs-on: ubuntu-latest
+    steps:
+      - name: Pull and scan upstream Ruby image
+        run: |
+          docker pull ruby:3.4-slim
+          echo "# Scan Ruby image with grype (filter)" >> $GITHUB_STEP_SUMMARY
+          docker run --rm anchore/grype:latest ruby:3.4-slim --ignore-states wont-fix | grep -v Negligible >> $GITHUB_STEP_SUMMARY
+          echo "# Scan Ruby image with grype (details)" >> $GITHUB_STEP_SUMMARY
+          echo "|NAME | INSTALLED | FIXED | IN | TYPE | VULNERABILITY | SEVERITY | EPSS | RISK | |" >> $GITHUB_STEP_SUMMARY
+          echo "|---| ---|---|---|----|---|---|---|---|---|" >> $GITHUB_STEP_SUMMARY
+          docker run --rm anchore/grype:latest ruby:3.4-slim | sed -e "s/won't fix/won'tfix/g" | grep -v "^NAME" | sed 's/^/|/; s/  */ | /g; s/$/ |/' >> $GITHUB_STEP_SUMMARY
+  fluentd:
+    name: Scan Fluentd image with grype
+    strategy:
+      fail-fast: false
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v6
+      - name: Pull and scan Fluentd image
+        run: |
+          # v1.19.1-debian-amd64
+          IMAGE=$(make echo-all-images | cut -d' ' -f1|cut -d',' -f3)
+          echo "# Scan Fluentd image with grype (filter)" >> $GITHUB_STEP_SUMMARY
+          docker run --rm anchore/grype:latest fluent/fluentd:$IMAGE --ignore-states wont-fix | grep -v Negligible >> $GITHUB_STEP_SUMMARY
+          echo "# Scan Fluentd image with grype (details)" >> $GITHUB_STEP_SUMMARY
+          echo "|NAME | INSTALLED | FIXED | IN | TYPE | VULNERABILITY | SEVERITY | EPSS | RISK | |" >> $GITHUB_STEP_SUMMARY
+          echo "|---| ---|---|---|----|---|---|---|---|---|" >> $GITHUB_STEP_SUMMARY
+          docker run --rm anchore/grype:latest fluent/fluentd:$IMAGE | sed -e "s/won't fix/won'tfix/g" | grep -v "^NAME" | sed 's/^/|/; s/  */ | /g; s/$/ |/' >> $GITHUB_STEP_SUMMARY
