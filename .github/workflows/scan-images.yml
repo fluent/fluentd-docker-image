@@ -11,6 +11,21 @@ concurrency:
   cancel-in-progress: true
 
 jobs:
+  gem:
+    name: Show bundled gems
+    strategy:
+      fail-fast: false
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v6
+      - name: Show bundled gems in Fluentd image
+        run: |
+          # v1.19.1-debian-amd64
+          IMAGE=$(make echo-all-images | cut -d' ' -f1|cut -d',' -f3)
+          echo "# Show bundled gems in Fluentd image (filter)" >> $GITHUB_STEP_SUMMARY
+          docker run --rm fluent/fluentd:$IMAGE gem list | grep "," >> $GITHUB_STEP_SUMMARY
+          echo "# Show all bundled gems in Fluentd image (details)" >> $GITHUB_STEP_SUMMARY
+          docker run --rm fluent/fluentd:$IMAGE gem list >> $GITHUB_STEP_SUMMARY
   fluentd:
     name: Scan Fluentd image with grype
     strategy:
