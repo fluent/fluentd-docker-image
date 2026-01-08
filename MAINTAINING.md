@@ -3,10 +3,9 @@ How to use and maintain this project
 
 All operations are automated as much as possible.
 
-- [Travis CI][3] is used only for tests.
 - Generation of each `Dockerfile` and its context is automated via `Makefile`.
-
-
+- Maintain vX.Y branch for LTS
+- Deploy container images via GitHub Actions (except Windows container images)
 
 ## Updating
 
@@ -24,12 +23,7 @@ To update versions of images following steps are required:
     ```bash
     make src-all
     ```
-5.  If `Dockerfile`s layout was changed somehow (major version change, for
-    example), you should check [build triggers on Docker Hub][2] and
-    [Travis CI configuration](.travis.yml), modify them as required
-    BEFORE push to `master` branch.
-6.  Push changes to `master` branch.
-
+5.  Push changes to `master` branch.
 
 ### Image versioning convensions
 
@@ -50,9 +44,11 @@ To update versions of images following steps are required:
 2. Set `DOCKER_HUB_ORGS`, `DOCKER_HUB_REPOSITORY`, `DOCKER_HUB_USERNAME` and `DOCKER_HUB_ACCESS_TOKEN` as GitHub repository secrets.
    (e.g. `DOCKER_HUB_ORGS=fluent`, `DOCKER_HUB_REPOSITORY=fluentd` and so on)
 
-3. Create tag to release it! (e.g. v1.18.0-1.0 for alpine,amd64,arm64 and armhf)
+3. Create tag to release it! (e.g. v1.18.0-1.0 for amd64,arm64 and armhf)
+   1. If you deploy all images, tag `v<Fluentd version>-<image major version>.<image minor version>` (e.g. v1.19.1-1.0).
+   2. If you deploy specific architecture image, tag `v<Fluentd version>-debian-[arm64(for aarch64 image)]-<image major version>.<image minor version>` (e.g. v1.19.1-debian-arm64-1.0).
 
-Built tags for debian and alpine images will be published at [TAGS page](https://hub.docker.com/r/fluent/fluentd/tags).
+Built tags for debian images will be published at [TAGS page](https://hub.docker.com/r/fluent/fluentd/tags).
 
 ### Build and Publish Windows Server Core images
 
@@ -109,7 +105,7 @@ make release-all
 ```
 
 It will build all existing `Dockerfile`s, tag them with proper tags
-([as `README.md` requires][4]) and push them to Docker Hub.
+([as `README.md` requires][3]) and push them to Docker Hub.
 
 
 
@@ -117,5 +113,4 @@ It will build all existing `Dockerfile`s, tag them with proper tags
 
 [1]: https://hub.docker.com/r/fluent/fluentd/tags
 [2]: https://hub.docker.com/r/fluent/fluentd/~/settings/automated-builds
-[3]: https://travis-ci.org/fluent/fluentd-docker-image
-[4]: README.md#supported-tags-and-respective-dockerfile-links
+[3]: README.md#supported-tags-and-respective-dockerfile-links
