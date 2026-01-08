@@ -38,11 +38,20 @@ jobs:
           # v1.19.1-debian-amd64
           IMAGE=$(make echo-all-images | cut -d' ' -f1|cut -d',' -f3)
           echo "# Scan Fluentd image with grype (filter)" >> $GITHUB_STEP_SUMMARY
-          docker run --rm anchore/grype:latest fluent/fluentd:$IMAGE --ignore-states wont-fix | grep -v Negligible >> $GITHUB_STEP_SUMMARY
+          docker run --rm anchore/grype:latest fluent/fluentd:$IMAGE --ignore-states wont-fix --output json | jq --raw-output '
+            (["NAME","INSTALLED","FIXED IN","TYPE","VULNERABILITY","SEVERITY"] | join(" | ") | "| " + . + " |"),
+            (["---","---","---","---","---","---"] | join(" | ") | "| " + . + " |"),
+            (.matches[]
+            | select(.vulnerability.severity != "Negligible")
+            | "| \(.artifact.name) | \(.artifact.version) | \(.vulnerability.fix.versions[0] // (if .vulnerability.fix.state == "not-fixed" then "" else "(" + .vulnerability.fix.state + ")" end)) | \(.artifact.type) | \(.vulnerability.id) | \(.vulnerability.severity)|")
+            ' >> $GITHUB_STEP_SUMMARY
           echo "# Scan Fluentd image with grype (details)" >> $GITHUB_STEP_SUMMARY
-          echo "|NAME | INSTALLED | FIXED | IN | TYPE | VULNERABILITY | SEVERITY | EPSS | RISK | |" >> $GITHUB_STEP_SUMMARY
-          echo "|---| ---|---|---|----|---|---|---|---|---|" >> $GITHUB_STEP_SUMMARY
-          docker run --rm anchore/grype:latest fluent/fluentd:$IMAGE | sed -e "s/won't fix/won'tfix/g" | grep -v "^NAME" | sed 's/^/|/; s/  */ | /g; s/$/ |/' >> $GITHUB_STEP_SUMMARY
+          docker run --rm anchore/grype:latest fluent/fluentd:$IMAGE --output json | jq --raw-output '
+            (["NAME","INSTALLED","FIXED IN","TYPE","VULNERABILITY","SEVERITY"] | join(" | ") | "| " + . + " |"),
+            (["---","---","---","---","---","---"] | join(" | ") | "| " + . + " |"),
+            (.matches[]
+            | "| \(.artifact.name) | \(.artifact.version) | \(.vulnerability.fix.versions[0] // (if .vulnerability.fix.state == "not-fixed" then "" else "(" + .vulnerability.fix.state + ")" end)) | \(.artifact.type) | \(.vulnerability.id) | \(.vulnerability.severity)|")
+            ' >> $GITHUB_STEP_SUMMARY
   ruby:
     name: Scan Ruby image with grype
     strategy:
@@ -53,11 +62,20 @@ jobs:
         run: |
           docker pull ruby:3.4-slim
           echo "# Scan Ruby image with grype (filter)" >> $GITHUB_STEP_SUMMARY
-          docker run --rm anchore/grype:latest ruby:3.4-slim --ignore-states wont-fix | grep -v Negligible >> $GITHUB_STEP_SUMMARY
+          docker run --rm anchore/grype:latest ruby:3.4-slim --ignore-states wont-fix --format json | jq --raw-output '
+            (["NAME","INSTALLED","FIXED IN","TYPE","VULNERABILITY","SEVERITY"] | join(" | ") | "| " + . + " |"),
+            (["---","---","---","---","---","---"] | join(" | ") | "| " + . + " |"),
+            (.matches[]
+            | select(.vulnerability.severity != "Negligible")
+            | "| \(.artifact.name) | \(.artifact.version) | \(.vulnerability.fix.versions[0] // (if .vulnerability.fix.state == "not-fixed" then "" else "(" + .vulnerability.fix.state + ")" end)) | \(.artifact.type) | \(.vulnerability.id) | \(.vulnerability.severity)|")
+            ' >> $GITHUB_STEP_SUMMARY
           echo "# Scan Ruby image with grype (details)" >> $GITHUB_STEP_SUMMARY
-          echo "|NAME | INSTALLED | FIXED | IN | TYPE | VULNERABILITY | SEVERITY | EPSS | RISK | |" >> $GITHUB_STEP_SUMMARY
-          echo "|---| ---|---|---|----|---|---|---|---|---|" >> $GITHUB_STEP_SUMMARY
-          docker run --rm anchore/grype:latest ruby:3.4-slim | sed -e "s/won't fix/won'tfix/g" | grep -v "^NAME" | sed 's/^/|/; s/  */ | /g; s/$/ |/' >> $GITHUB_STEP_SUMMARY
+          docker run --rm anchore/grype:latest ruby:3.4-slim --output json | jq --raw-output '
+            (["NAME","INSTALLED","FIXED IN","TYPE","VULNERABILITY","SEVERITY"] | join(" | ") | "| " + . + " |"),
+            (["---","---","---","---","---","---"] | join(" | ") | "| " + . + " |"),
+            (.matches[]
+            | "| \(.artifact.name) | \(.artifact.version) | \(.vulnerability.fix.versions[0] // (if .vulnerability.fix.state == "not-fixed" then "" else "(" + .vulnerability.fix.state + ")" end)) | \(.artifact.type) | \(.vulnerability.id) | \(.vulnerability.severity)|")
+            ' >> $GITHUB_STEP_SUMMARY
   debian:
     name: Scan debian image with grype
     strategy:
@@ -68,8 +86,17 @@ jobs:
         run: |
           docker pull debian:trixie
           echo "# Scan debian image with grype (filter)" >> $GITHUB_STEP_SUMMARY
-          docker run --rm anchore/grype:latest debian:trixie --ignore-states wont-fix | grep -v Negligible >> $GITHUB_STEP_SUMMARY
+          docker run --rm anchore/grype:latest debian:trixie --ignore-states wont-fix --output json | jq --raw-output '
+            (["NAME","INSTALLED","FIXED IN","TYPE","VULNERABILITY","SEVERITY"] | join(" | ") | "| " + . + " |"),
+            (["---","---","---","---","---","---"] | join(" | ") | "| " + . + " |"),
+            (.matches[]
+            | select(.vulnerability.severity != "Negligible")
+            | "| \(.artifact.name) | \(.artifact.version) | \(.vulnerability.fix.versions[0] // (if .vulnerability.fix.state == "not-fixed" then "" else "(" + .vulnerability.fix.state + ")" end)) | \(.artifact.type) | \(.vulnerability.id) | \(.vulnerability.severity)|")
+            ' >> $GITHUB_STEP_SUMMARY
           echo "# Scan debian image with grype (details)" >> $GITHUB_STEP_SUMMARY
-          echo "|NAME | INSTALLED | FIXED | IN | TYPE | VULNERABILITY | SEVERITY | EPSS | RISK | |" >> $GITHUB_STEP_SUMMARY
-          echo "|---| ---|---|---|----|---|---|---|---|---|" >> $GITHUB_STEP_SUMMARY
-          docker run --rm anchore/grype:latest debian:trixie | sed -e "s/won't fix/won'tfix/g" | grep -v "^NAME" | sed 's/^/|/; s/  */ | /g; s/$/ |/' >> $GITHUB_STEP_SUMMARY
+          docker run --rm anchore/grype:latest debian:trixie --output json | jq --raw-output '
+            (["NAME","INSTALLED","FIXED IN","TYPE","VULNERABILITY","SEVERITY"] | join(" | ") | "| " + . + " |"),
+            (["---","---","---","---","---","---"] | join(" | ") | "| " + . + " |"),
+            (.matches[]
+            | "| \(.artifact.name) | \(.artifact.version) | \(.vulnerability.fix.versions[0] // (if .vulnerability.fix.state == "not-fixed" then "" else "(" + .vulnerability.fix.state + ")" end)) | \(.artifact.type) | \(.vulnerability.id) | \(.vulnerability.severity)|")
+            ' >> $GITHUB_STEP_SUMMARY
