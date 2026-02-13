@@ -17,19 +17,19 @@
 
 IMAGE_NAME := fluent/fluentd
 X86_IMAGES := \
-	v1.19/debian:v1.19.1-debian-amd64-2.1,v1.19-debian-amd64-2,v1.19.1-debian-amd64,edge-debian-amd64
+	v1.19/debian:v1.19.2-debian-amd64-2.0,v1.19-debian-amd64-2,v1.19.2-debian-amd64,edge-debian-amd64
 #	<Dockerfile>:<version>,<tag1>,<tag2>,...
 
 # Define images for running on ARM platforms
 ARM_IMAGES := \
-	v1.19/armhf/debian:v1.19.1-debian-armhf-2.1,v1.19-debian-armhf-2,v1.19.1-debian-armhf,edge-debian-armhf
+	v1.19/armhf/debian:v1.19.2-debian-armhf-2.0,v1.19-debian-armhf-2,v1.19.2-debian-armhf,edge-debian-armhf
 
 # Define images for running on ARM64 platforms
 ARM64_IMAGES := \
-	v1.19/arm64/debian:v1.19.1-debian-arm64-2.1,v1.19-debian-arm64-2,v1.19.1-debian-arm64,edge-debian-arm64
+	v1.19/arm64/debian:v1.19.2-debian-arm64-2.0,v1.19-debian-arm64-2,v1.19.2-debian-arm64,edge-debian-arm64
 WINDOWS_IMAGES := \
-	v1.19/windows-ltsc2019:v1.19.1-windows-ltsc2019-1.1,v1.19-windows-ltsc2019-1 \
-	v1.19/windows-ltsc2022:v1.19.1-windows-ltsc2022-1.1,v1.19-windows-ltsc2022-1
+	v1.19/windows-ltsc2019:v1.19.2-windows-ltsc2019-1.0,v1.19-windows-ltsc2019-1 \
+	v1.19/windows-ltsc2022:v1.19.2-windows-ltsc2022-1.0,v1.19-windows-ltsc2022-1
 
 LINUX_IMAGES := $(X86_IMAGES) $(ARM_IMAGES) $(ARM64_IMAGES)
 ALL_IMAGES := $(LINUX_IMAGES) $(WINDOWS_IMAGES)
