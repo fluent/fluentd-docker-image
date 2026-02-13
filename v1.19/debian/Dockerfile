@@ -3,7 +3,7 @@
 
 FROM ruby:3.4-slim
 LABEL maintainer "Fluentd developers <fluentd@googlegroups.com>"
-LABEL Description="Fluentd docker image" Vendor="Fluent Organization" Version="1.19.1"
+LABEL Description="Fluentd docker image" Vendor="Fluent Organization" Version="1.19.2"
 
 # Do not split this into multiple RUN!
 # Docker creates a layer for every RUN-Statement
@@ -23,7 +23,7 @@ RUN apt-get update \
  && gem install rexml -v 3.4.4 \
  && gem install async -v 2.24.0 \
  && gem install async-http -v 0.89.0 \
- && gem install fluentd -v 1.19.1 \
+ && gem install fluentd -v 1.19.2 \
  && unset MAKEFLAGS \
  && export GEM_DIR=$(ruby -e 'puts Gem.dir') \
  && echo GEM_DIR=$GEM_DIR \

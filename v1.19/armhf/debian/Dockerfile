@@ -11,7 +11,7 @@ RUN curl -sL -o qemu-3.0.0+resin-arm.tar.gz https://github.com/balena-io/qemu/re
 FROM --platform=linux/arm/v7 arm32v7/ruby:3.4-slim
 COPY --from=builder /go/qemu-arm-static /usr/bin/
 LABEL maintainer "Fluentd developers <fluentd@googlegroups.com>"
-LABEL Description="Fluentd docker image" Vendor="Fluent Organization" Version="1.19.1"
+LABEL Description="Fluentd docker image" Vendor="Fluent Organization" Version="1.19.2"
 ARG CROSS_BUILD_START="cross-build-start"
 ARG CROSS_BUILD_END="cross-build-end"
 RUN [ ${CROSS_BUILD_START} ]
@@ -34,7 +34,7 @@ RUN apt-get update \
  && gem install rexml -v 3.4.4 \
  && gem install async -v 2.24.0 \
  && gem install async-http -v 0.89.0 \
- && gem install fluentd -v 1.19.1 \
+ && gem install fluentd -v 1.19.2 \
  && unset MAKEFLAGS \
  && export GEM_DIR=$(ruby -e 'puts Gem.dir') \
  && echo GEM_DIR=$GEM_DIR \
