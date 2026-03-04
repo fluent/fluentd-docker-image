@@ -6,6 +6,9 @@ on:
     # Sunday, 18:00 JST
     - cron:  '0 9 * * 0'
 
+permissions:
+  contents: read
+
 concurrency:
   group: ${{ github.head_ref || github.sha }}-${{ github.workflow }}
   cancel-in-progress: true
