@@ -3,4 +3,21 @@ updates:
   - package-ecosystem: 'github-actions'
     directory: '/'
     schedule:
-      interval: 'weekly'
+      interval: 'daily'
+    groups:
+      # PR: "Security update [package] from [old] to [new]"
+      # This PR should be merged in hurry
+      security-updates:
+        applies-to: security-updates
+        patterns:
+          - '*'
+
+      # PR: "Bump [package] from [old] to [new]"
+      # No need to be merged this PR in hurry. It is enough to merge
+      # once in a month.
+      monthly-updates:
+        applies-to: version-updates
+        patterns:
+          - '*'
+    # Allow to create PR both of security and normal updates.
+    open-pull-requests-limit: 1
