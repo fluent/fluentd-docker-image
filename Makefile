@@ -28,8 +28,8 @@ ARM_IMAGES := \
 ARM64_IMAGES := \
 	v1.19/arm64/debian:v1.19.3-debian-arm64-2.0,v1.19-debian-arm64-2,v1.19.3-debian-arm64,edge-debian-arm64
 WINDOWS_IMAGES := \
-	v1.19/windows-ltsc2019:v1.19.3-windows-ltsc2019-1.0,v1.19-windows-ltsc2019-1 \
-	v1.19/windows-ltsc2022:v1.19.3-windows-ltsc2022-1.0,v1.19-windows-ltsc2022-1
+	v1.19/windows-ltsc2019:v1.19.3-windows-ltsc2019-1.1,v1.19-windows-ltsc2019-1 \
+	v1.19/windows-ltsc2022:v1.19.3-windows-ltsc2022-1.1,v1.19-windows-ltsc2022-1
 
 LINUX_IMAGES := $(X86_IMAGES) $(ARM_IMAGES) $(ARM64_IMAGES)
 ALL_IMAGES := $(LINUX_IMAGES) $(WINDOWS_IMAGES)

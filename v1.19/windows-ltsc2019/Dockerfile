@@ -9,9 +9,8 @@ LABEL Description="Fluentd docker image" Vendor="Fluent Organization" Version="1
 # Docker creates a layer for every RUN-Statement
 RUN powershell -Command "Set-ExecutionPolicy Bypass -Scope Process -Force; [System.Net.ServicePointManager]::SecurityProtocol = [System.Net.ServicePointManager]::SecurityProtocol -bor 3072; iex ((New-Object System.Net.WebClient).DownloadString('https://community.chocolatey.org/install.ps1'))"
 
-# NOTE: For avoiding stalling with docker build on windows, we must use latest version of msys2.
-RUN choco install -y ruby --version 3.4.5.1 --params "'/InstallDir:C:\ruby34'" \
-&& choco install -y msys2 --version 20250622.0.0 --params "'/NoPath /NoUpdate /InstallDir:C:\ruby34\msys64'"
+RUN choco install -y ruby --version 3.4.9.1 --params "'/InstallDir:C:\ruby34'" \
+&& choco install -y msys2 --version 20260611.0.0 --params "'/NoPath /NoUpdate /InstallDir:C:\ruby34\msys64'"
 RUN refreshenv \
 && ridk install 3 \
 && type "c:\ProgramData\gemrc" \
