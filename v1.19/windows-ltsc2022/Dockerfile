@@ -3,7 +3,7 @@
 
 FROM mcr.microsoft.com/dotnet/framework/runtime:4.8-windowsservercore-ltsc2022
 LABEL maintainer "Fluentd developers <fluentd@googlegroups.com>"
-LABEL Description="Fluentd docker image" Vendor="Fluent Organization" Version="1.19.2"
+LABEL Description="Fluentd docker image" Vendor="Fluent Organization" Version="1.19.3"
 
 # Do not split this into multiple RUN!
 # Docker creates a layer for every RUN-Statement
@@ -17,10 +17,10 @@ RUN refreshenv \
 && type "c:\ProgramData\gemrc" \
 && c:\ruby34\bin\ruby -r yaml -e "path = 'c:/ProgramData/gemrc'; yaml = YAML.safe_load(File.read(path)); yaml['install'] = '--no-document'; yaml['update'] = '--no-document'; File.write(path, YAML.dump(yaml))" \
 && type "c:\ProgramData\gemrc" \
-&& gem install oj -v 3.16.11 \
+&& gem install oj -v 3.17.3 \
 && gem install json -v 2.13.2 \
 && gem install rexml -v 3.4.4 \
-&& gem install fluentd -v 1.19.2 \
+&& gem install fluentd -v 1.19.3 \
 && gem install win32-service -v 2.3.2 \
 && gem install win32-ipc -v 0.7.0 \
 && gem install win32-event -v 0.6.3 \
