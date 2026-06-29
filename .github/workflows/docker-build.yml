@@ -103,6 +103,7 @@ jobs:
         with:
           context: ${{ env.CONTEXT }}
           provenance: false
+          pull: true
           push: true
           platforms: linux/amd64
           tags: ${{ env.AMD64TAGS }}
@@ -114,6 +115,7 @@ jobs:
         with:
           context: ${{ env.CONTEXT }}
           provenance: false
+          pull: true
           push: true
           platforms: linux/arm64
           cache-from: type=gha
@@ -127,6 +129,7 @@ jobs:
         with:
           context: ${{ env.CONTEXT }}
           provenance: false
+          pull: true
           push: true
           platforms: linux/arm/v7
           cache-from: type=gha
