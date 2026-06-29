@@ -32,9 +32,9 @@ Current images use fluentd v1 series.
   [(v1.19/arm64/debian/Dockerfile)][fluentd-1-debian-arm64]
 - `v1.19.3-debian-armhf-2.0`, `v1.19-debian-armhf-2`, `edge-debian-armhf`
   [(v1.19/armhf/debian/Dockerfile)][fluentd-1-debian-armhf]
-- `v1.19.3-windows-ltsc2019-1.0`, `v1.19-windows-ltsc2019-1`
+- `v1.19.3-windows-ltsc2019-1.1`, `v1.19-windows-ltsc2019-1`
   [(v1.19/windows-ltsc2019/Dockerfile)][fluentd-1-ltsc2019-windows]
-- `v1.19.3-windows-ltsc2022-1.0`, `v1.19-windows-ltsc2022-1`
+- `v1.19.3-windows-ltsc2022-1.1`, `v1.19-windows-ltsc2022-1`
   [(v1.19/windows-ltsc2022/Dockerfile)][fluentd-1-ltsc2022-windows]
 
 > [!TIP]
