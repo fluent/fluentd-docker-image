@@ -1,0 +1,49 @@
+name: Grype Scan
+description: Scan image with Anchore/Grype
+
+inputs:
+  image_name:
+    description: 'Specify target docker image'
+    required: true
+
+runs:
+  using: "composite"
+  steps:
+    - name: Scan Given image with grype (filter)
+      shell: bash
+      run: |
+        docker pull ${{ inputs.image_name }}
+        echo "# Scan ${{ inputs.image_name }} image with grype (filter)" >> $GITHUB_STEP_SUMMARY
+        docker run --rm anchore/grype:latest ${{ inputs.image_name }} --ignore-states wont-fix --output json | jq --raw-output '
+          (["NAME","INSTALLED","FIXED IN","TYPE","VULNERABILITY","SEVERITY"] | join(" | ") | "| " + . + " |"),
+          (["---","---","---","---","---","---"] | join(" | ") | "| " + . + " |"),
+          (
+            .matches
+            | map(select(.vulnerability.severity != "Negligible" and .vulnerability.severity != "negligible"))
+            | sort_by([
+                -(.vulnerability.severity | ascii_upcase | {"CRITICAL": 4,"HIGH": 3,"MEDIUM": 2,"LOW": 1}[.] // 0),
+                .vulnerability.id,
+                .artifact.name
+              ])
+            | .[]
+            | "| \(.artifact.name) | \(.artifact.version) | \(.vulnerability.fix.versions[0] // (if .vulnerability.fix.state == "not-fixed" then "" else "(" + .vulnerability.fix.state + ")" end)) | \(.artifact.type) | \(.vulnerability.id) | \(.vulnerability.severity) |"
+          )
+        ' >> $GITHUB_STEP_SUMMARY
+    - name: Scan Given image with grype
+      shell: bash
+      run: |
+        echo "# Scan ${{ inputs.image_name }} image with grype" >> $GITHUB_STEP_SUMMARY
+        docker run --rm anchore/grype:latest ${{ inputs.image_name }} --ignore-states wont-fix --output json | jq --raw-output '
+          (["NAME","INSTALLED","FIXED IN","TYPE","VULNERABILITY","SEVERITY"] | join(" | ") | "| " + . + " |"),
+          (["---","---","---","---","---","---"] | join(" | ") | "| " + . + " |"),
+          (
+            .matches
+            | sort_by([
+                -(.vulnerability.severity | ascii_upcase | {"CRITICAL": 4,"HIGH": 3,"MEDIUM": 2,"LOW": 1}[.] // 0),
+                .vulnerability.id,
+                .artifact.name
+              ])
+            | .[]
+            | "| \(.artifact.name) | \(.artifact.version) | \(.vulnerability.fix.versions[0] // (if .vulnerability.fix.state == "not-fixed" then "" else "(" + .vulnerability.fix.state + ")" end)) | \(.artifact.type) | \(.vulnerability.id) | \(.vulnerability.severity) |"
+          )
+        ' >> $GITHUB_STEP_SUMMARY

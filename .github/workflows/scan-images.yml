@@ -36,70 +36,36 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@9c091bb21b7c1c1d1991bb908d89e4e9dddfe3e0 # v7.0.0
-      - name: Pull and scan Fluentd image
+      - name: Get Target Image Name
+        id: set_image_name
         run: |
-          # v1.19.1-debian-amd64
-          IMAGE=$(make echo-all-images | cut -d' ' -f1|cut -d',' -f3)
-          echo "# Scan Fluentd image with grype (filter)" >> $GITHUB_STEP_SUMMARY
-          docker run --rm anchore/grype:latest fluent/fluentd:$IMAGE --ignore-states wont-fix --output json | jq --raw-output '
-            (["NAME","INSTALLED","FIXED IN","TYPE","VULNERABILITY","SEVERITY"] | join(" | ") | "| " + . + " |"),
-            (["---","---","---","---","---","---"] | join(" | ") | "| " + . + " |"),
-            (.matches[]
-            | select(.vulnerability.severity != "Negligible")
-            | "| \(.artifact.name) | \(.artifact.version) | \(.vulnerability.fix.versions[0] // (if .vulnerability.fix.state == "not-fixed" then "" else "(" + .vulnerability.fix.state + ")" end)) | \(.artifact.type) | \(.vulnerability.id) | \(.vulnerability.severity)|")
-            ' >> $GITHUB_STEP_SUMMARY
-          echo "# Scan Fluentd image with grype (details)" >> $GITHUB_STEP_SUMMARY
-          docker run --rm anchore/grype:latest fluent/fluentd:$IMAGE --output json | jq --raw-output '
-            (["NAME","INSTALLED","FIXED IN","TYPE","VULNERABILITY","SEVERITY"] | join(" | ") | "| " + . + " |"),
-            (["---","---","---","---","---","---"] | join(" | ") | "| " + . + " |"),
-            (.matches[]
-            | "| \(.artifact.name) | \(.artifact.version) | \(.vulnerability.fix.versions[0] // (if .vulnerability.fix.state == "not-fixed" then "" else "(" + .vulnerability.fix.state + ")" end)) | \(.artifact.type) | \(.vulnerability.id) | \(.vulnerability.severity)|")
-            ' >> $GITHUB_STEP_SUMMARY
+          IMAGE=$(make echo-all-images | cut -d' ' -f1 | cut -d',' -f3)
+          echo "IMAGE_NAME=$IMAGE" >> $GITHUB_OUTPUT
+      - name: Scan Fluentd image
+        uses: ./.github/actions/grype-scan
+        with:
+          image_name: fluent/fluentd:${{ steps.set_image_name.outputs.IMAGE_NAME }}
+  # See https://github.com/docker-library/official-images/blob/master/library/ruby
   ruby:
     name: Scan Ruby image with grype
     strategy:
       fail-fast: false
     runs-on: ubuntu-latest
     steps:
-      - name: Pull and scan upstream Ruby image
-        run: |
-          docker pull ruby:3.4-slim
-          echo "# Scan Ruby image with grype (filter)" >> $GITHUB_STEP_SUMMARY
-          docker run --rm anchore/grype:latest ruby:3.4-slim --ignore-states wont-fix --format json | jq --raw-output '
-            (["NAME","INSTALLED","FIXED IN","TYPE","VULNERABILITY","SEVERITY"] | join(" | ") | "| " + . + " |"),
-            (["---","---","---","---","---","---"] | join(" | ") | "| " + . + " |"),
-            (.matches[]
-            | select(.vulnerability.severity != "Negligible")
-            | "| \(.artifact.name) | \(.artifact.version) | \(.vulnerability.fix.versions[0] // (if .vulnerability.fix.state == "not-fixed" then "" else "(" + .vulnerability.fix.state + ")" end)) | \(.artifact.type) | \(.vulnerability.id) | \(.vulnerability.severity)|")
-            ' >> $GITHUB_STEP_SUMMARY
-          echo "# Scan Ruby image with grype (details)" >> $GITHUB_STEP_SUMMARY
-          docker run --rm anchore/grype:latest ruby:3.4-slim --output json | jq --raw-output '
-            (["NAME","INSTALLED","FIXED IN","TYPE","VULNERABILITY","SEVERITY"] | join(" | ") | "| " + . + " |"),
-            (["---","---","---","---","---","---"] | join(" | ") | "| " + . + " |"),
-            (.matches[]
-            | "| \(.artifact.name) | \(.artifact.version) | \(.vulnerability.fix.versions[0] // (if .vulnerability.fix.state == "not-fixed" then "" else "(" + .vulnerability.fix.state + ")" end)) | \(.artifact.type) | \(.vulnerability.id) | \(.vulnerability.severity)|")
-            ' >> $GITHUB_STEP_SUMMARY
+      - uses: actions/checkout@9c091bb21b7c1c1d1991bb908d89e4e9dddfe3e0 # v7.0.0
+      - name: Scan Ruby image
+        uses: ./.github/actions/grype-scan
+        with:
+          image_name: ruby:3.4-slim
+  # See https://github.com/docker-library/ruby/blob/master/3.4/slim-trixie/Dockerfile
   debian:
     name: Scan debian image with grype
     strategy:
       fail-fast: false
     runs-on: ubuntu-latest
     steps:
-      - name: Pull and scan upstream trixie image
-        run: |
-          docker pull debian:trixie
-          echo "# Scan debian image with grype (filter)" >> $GITHUB_STEP_SUMMARY
-          docker run --rm anchore/grype:latest debian:trixie --ignore-states wont-fix --output json | jq --raw-output '
-            (["NAME","INSTALLED","FIXED IN","TYPE","VULNERABILITY","SEVERITY"] | join(" | ") | "| " + . + " |"),
-            (["---","---","---","---","---","---"] | join(" | ") | "| " + . + " |"),
-            (.matches[]
-            | select(.vulnerability.severity != "Negligible")
-            | "| \(.artifact.name) | \(.artifact.version) | \(.vulnerability.fix.versions[0] // (if .vulnerability.fix.state == "not-fixed" then "" else "(" + .vulnerability.fix.state + ")" end)) | \(.artifact.type) | \(.vulnerability.id) | \(.vulnerability.severity)|")
-            ' >> $GITHUB_STEP_SUMMARY
-          echo "# Scan debian image with grype (details)" >> $GITHUB_STEP_SUMMARY
-          docker run --rm anchore/grype:latest debian:trixie --output json | jq --raw-output '
-            (["NAME","INSTALLED","FIXED IN","TYPE","VULNERABILITY","SEVERITY"] | join(" | ") | "| " + . + " |"),
-            (["---","---","---","---","---","---"] | join(" | ") | "| " + . + " |"),
-            (.matches[]
-            | "| \(.artifact.name) | \(.artifact.version) | \(.vulnerability.fix.versions[0] // (if .vulnerability.fix.state == "not-fixed" then "" else "(" + .vulnerability.fix.state + ")" end)) | \(.artifact.type) | \(.vulnerability.id) | \(.vulnerability.severity)|")
-            ' >> $GITHUB_STEP_SUMMARY
+      - uses: actions/checkout@9c091bb21b7c1c1d1991bb908d89e4e9dddfe3e0 # v7.0.0
+      - name: Scan Debian Trixie image
+        uses: ./.github/actions/grype-scan
+        with:
+          image_name: debian:trixie-slim
