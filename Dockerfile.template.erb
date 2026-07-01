@@ -1,7 +1,6 @@
 <% fluentd_ver = version.split("-").first[1..-1] %>
 <% fluentd_tag = version.dup; fluentd_tag.slice!('-onbuild') %>
 <% is_onbuild = (version.include?("onbuild")) %>
-<% is_alpine = (dockerfile.split("/").last.split("-").first == "alpine") %>
 <% is_debian = (dockerfile.split("/").last.split("-").first == "debian") %>
 <% is_armhf = (dockerfile.split("/")[1] == "armhf") %>
 <% is_arm64 = (dockerfile.split("/")[1] == "arm64") %>
@@ -13,13 +12,6 @@
 <% if is_windows %>
 FROM mcr.microsoft.com/dotnet/framework/runtime:4.8-windowsservercore-<%= windows_ver %>
 
-<% else %>
-<% if is_alpine %>
-<% if is_armhf %>
-FROM resin/armhf-alpine:3.7
-<% else %>
-FROM alpine:3.19
-<% end %>
 <% else %>
 <% if is_armhf %>
 # To set multiarch build for Docker hub automated build.
@@ -37,7 +29,6 @@ FROM golang:alpine AS builder
 FROM --platform=linux/arm64 arm64v8/ruby:3.4-slim
 <% else %>
 FROM ruby:3.4-slim
-<% end %>
 <% end %>
 <% end %>
 LABEL maintainer "Fluentd developers <fluentd@googlegroups.com>"
@@ -74,17 +65,6 @@ RUN powershell -Command "Remove-Item -Force C:\ruby34\lib\ruby\gems\3.4.0\cache\
 
 COPY fluent.conf /fluent/conf/fluent.conf
 <% else %>
-<% if is_alpine %>
-# therefore an 'apk delete' has no effect
-RUN apk update \
- && apk add --no-cache \
-        ca-certificates \
-        ruby ruby-irb ruby-etc ruby-webrick \
-        tini \
- && apk add --no-cache --virtual .build-deps \
-        build-base linux-headers \
-        ruby-dev gnupg \
-<% else %>
 # therefore an 'apt-get purge' has no effect
 RUN apt-get update \
  && apt-get install -y --no-install-recommends \
@@ -94,7 +74,6 @@ RUN apt-get update \
       wget bzip2 gnupg dirmngr \
     " \
  && apt-get install -y --no-install-recommends $buildDeps \
-<% end %>
  && echo 'gem: --no-document' >> /etc/gemrc \
  && export MAKEFLAGS=-j$(nproc) \
  && gem install oj -v 3.17.3 \
@@ -110,11 +89,6 @@ RUN apt-get update \
  # Don't purge $GEM_DIR/gems/GEM/lib/GEM/ext because it might contain runtime .so (e.g json)
  && find $GEM_DIR -maxdepth 3 -type d -name test -or -name ext -or -name spec -or -name benchmark | xargs -r rm -rfv \
  && find $GEM_DIR -name "*.so" | xargs -r strip \
-<% if is_alpine %>
- && gem install bigdecimal -v 3.2.2 \
- && apk del .build-deps \
- && rm -rf /var/cache/apk/* \
-<% else %>
  && dpkgArch="$(dpkg --print-architecture | awk -F- '{ print $NF }')" \
  && wget -O /tmp/jemalloc-5.3.0.tar.bz2 https://github.com/jemalloc/jemalloc/releases/download/5.3.0/jemalloc-5.3.0.tar.bz2 \
  && cd /tmp && tar -xjf jemalloc-5.3.0.tar.bz2 --no-same-owner && cd jemalloc-5.3.0/ \
@@ -127,24 +101,14 @@ RUN apt-get update \
                   $buildDeps \
                   '*-dev' \
  && rm -rf /var/lib/apt/lists/* \
-<% end %>
  && rm -rf /tmp/* /var/tmp/*
 
-<% if is_alpine %>
-RUN addgroup -S fluent && adduser -S -G fluent fluent \
-    # for log storage (maybe shared with host)
-    && mkdir -p /fluentd/log \
-    # configuration/plugins path (default: copied from .)
-    && mkdir -p /fluentd/etc /fluentd/plugins \
-    && chown -R fluent /fluentd && chgrp -R fluent /fluentd
-<% else %>
 RUN groupadd -r fluent && useradd -r -g fluent fluent \
     # for log storage (maybe shared with host)
     && mkdir -p /fluentd/log \
     # configuration/plugins path (default: copied from .)
     && mkdir -p /fluentd/etc /fluentd/plugins \
     && chown -R fluent /fluentd && chgrp -R fluent /fluentd
-<% end %>
 
 
 COPY fluent.conf /fluentd/etc/
@@ -159,11 +123,7 @@ ONBUILD COPY plugins /fluentd/plugins/
 ENV FLUENTD_CONF="fluent.conf"
 
 <% if not is_windows %>
-<% if is_alpine %>
-ENV LD_PRELOAD=""
-<% else %>
 ENV LD_PRELOAD="/usr/lib/libjemalloc.so.2"
-<% end %>
 <% end %>
 EXPOSE 24224 5140
 
