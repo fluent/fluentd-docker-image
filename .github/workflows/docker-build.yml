@@ -99,7 +99,7 @@ jobs:
           done
       - name: Build and push for amd64
         if: ${{ env.AMD64TAGS }}
-        uses: docker/build-push-action@f9f3042f7e2789586610d6e8b85c8f03e5195baf # v7.2.0
+        uses: docker/build-push-action@53b7df96c91f9c12dcc8a07bcb9ccacbed38856a # v7.3.0
         with:
           context: ${{ env.CONTEXT }}
           provenance: false
@@ -111,7 +111,7 @@ jobs:
           outputs: oci-mediatypes=false
       - name: Build and push for arm64
         if: ${{ env.ARM64TAGS }}
-        uses: docker/build-push-action@f9f3042f7e2789586610d6e8b85c8f03e5195baf # v7.2.0
+        uses: docker/build-push-action@53b7df96c91f9c12dcc8a07bcb9ccacbed38856a # v7.3.0
         with:
           context: ${{ env.CONTEXT }}
           provenance: false
@@ -125,7 +125,7 @@ jobs:
           outputs: oci-mediatypes=false
       - name: Build and push for armhf
         if: ${{ env.ARMHFTAGS }}
-        uses: docker/build-push-action@f9f3042f7e2789586610d6e8b85c8f03e5195baf # v7.2.0
+        uses: docker/build-push-action@53b7df96c91f9c12dcc8a07bcb9ccacbed38856a # v7.3.0
         with:
           context: ${{ env.CONTEXT }}
           provenance: false
