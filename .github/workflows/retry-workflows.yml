@@ -1,0 +1,36 @@
+name: Retry Workflows
+
+run-name: Retry ${{ github.event.workflow_run.name }} (Run Attempt ${{ github.event.workflow_run.run_attempt }})
+
+on:
+  workflow_run:
+    workflows:
+      - Linux
+      - Windows
+      - Publish Docker Image
+    types:
+      - completed
+
+permissions:
+  actions: write
+  contents: read
+
+jobs:
+  retry:
+    # Retry only twice
+    if: >-
+      contains(
+        fromJSON('["failure", "timed_out"]'),
+        github.event.workflow_run.conclusion
+      ) && github.event.workflow_run.run_attempt < 3
+    runs-on: ubuntu-latest
+    steps:
+      - name: Re-run failed jobs
+        env:
+          GH_TOKEN: ${{ github.token }}
+          GH_REPO: ${{ github.repository }}
+          RUN_ID: ${{ github.event.workflow_run.id }}
+          RUN_ATTEMPT: ${{ github.event.workflow_run.run_attempt }}
+        run: |
+          echo "(${RUN_ATTEMPT}/2) Re-running failed jobs for run ${RUN_ID}"
+          gh run rerun "${RUN_ID}" --failed
