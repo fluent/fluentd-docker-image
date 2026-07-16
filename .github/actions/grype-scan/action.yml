@@ -13,8 +13,20 @@ runs:
       shell: bash
       run: |
         docker pull ${{ inputs.image_name }}
+        docker run --rm anchore/grype:latest ${{ inputs.image_name }} --ignore-states wont-fix --output json > output.json
+        echo "# Scan Summary" >> $GITHUB_STEP_SUMMARY
+        jq -r '
+          .matches as $m
+          | [
+          "* Critical: \([$m[] | select(.vulnerability.severity == "Critical")] | length)",
+          "* High: \([$m[] | select(.vulnerability.severity == "High")] | length)",
+          "* Medium: \([$m[] | select(.vulnerability.severity == "Medium")] | length)",
+          "* Unknown: \([$m[] | select(.vulnerability.severity == "Unknown")] | length)"
+          ]
+          | .[]
+        ' output.json >> $GITHUB_STEP_SUMMARY
         echo "# Scan ${{ inputs.image_name }} image with grype (filter)" >> $GITHUB_STEP_SUMMARY
-        docker run --rm anchore/grype:latest ${{ inputs.image_name }} --ignore-states wont-fix --output json | jq --raw-output '
+        jq --raw-output '
           (["NAME","INSTALLED","FIXED IN","TYPE","VULNERABILITY","SEVERITY"] | join(" | ") | "| " + . + " |"),
           (["---","---","---","---","---","---"] | join(" | ") | "| " + . + " |"),
           (
@@ -28,12 +40,12 @@ runs:
             | .[]
             | "| \(.artifact.name) | \(.artifact.version) | \(.vulnerability.fix.versions[0] // (if .vulnerability.fix.state == "not-fixed" then "" else "(" + .vulnerability.fix.state + ")" end)) | \(.artifact.type) | \(.vulnerability.id) | \(.vulnerability.severity) |"
           )
-        ' >> $GITHUB_STEP_SUMMARY
+        ' output.json >> $GITHUB_STEP_SUMMARY
     - name: Scan Given image with grype
       shell: bash
       run: |
         echo "# Scan ${{ inputs.image_name }} image with grype" >> $GITHUB_STEP_SUMMARY
-        docker run --rm anchore/grype:latest ${{ inputs.image_name }} --ignore-states wont-fix --output json | jq --raw-output '
+        jq --raw-output '
           (["NAME","INSTALLED","FIXED IN","TYPE","VULNERABILITY","SEVERITY"] | join(" | ") | "| " + . + " |"),
           (["---","---","---","---","---","---"] | join(" | ") | "| " + . + " |"),
           (
@@ -46,4 +58,4 @@ runs:
             | .[]
             | "| \(.artifact.name) | \(.artifact.version) | \(.vulnerability.fix.versions[0] // (if .vulnerability.fix.state == "not-fixed" then "" else "(" + .vulnerability.fix.state + ")" end)) | \(.artifact.type) | \(.vulnerability.id) | \(.vulnerability.severity) |"
           )
-        ' >> $GITHUB_STEP_SUMMARY
+        ' output.json >> $GITHUB_STEP_SUMMARY
