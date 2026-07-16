@@ -41,6 +41,25 @@ runs:
             | "| \(.artifact.name) | \(.artifact.version) | \(.vulnerability.fix.versions[0] // (if .vulnerability.fix.state == "not-fixed" then "" else "(" + .vulnerability.fix.state + ")" end)) | \(.artifact.type) | \(.vulnerability.id) | \(.vulnerability.severity) |"
           )
         ' output.json >> $GITHUB_STEP_SUMMARY
+    - name: Add link to security-tracker.debian.org
+      shell: bash
+      run: |
+        echo "# Link to security-tracker.debian.org about ${{ inputs.image_name }} image (filter)" >> $GITHUB_STEP_SUMMARY
+        jq --raw-output '
+          (["NAME","INSTALLED","FIXED IN","VULNERABILITY"] | join(" | ") | "| " + . + " |"),
+          (["---","---","---","---"] | join(" | ") | "| " + . + " |"),
+          (
+            .matches
+            | map(select(.artifact.type == "deb" and .vulnerability.severity != "Negligible" and .vulnerability.severity != "negligible"))
+            | sort_by([
+                -(.vulnerability.severity | ascii_upcase | {"CRITICAL": 4,"HIGH": 3,"MEDIUM": 2,"LOW": 1}[.] // 0),
+                .vulnerability.id,
+                .artifact.name
+              ])
+            | .[]
+            | "| \(.artifact.name) | \(.artifact.version) | \(.vulnerability.fix.versions[0] // (if .vulnerability.fix.state == "not-fixed" then "" else "(" + .vulnerability.fix.state + ")" end)) | https://security-tracker.debian.org/tracker/\(.vulnerability.id) |"
+          )
+        ' output.json >> $GITHUB_STEP_SUMMARY
     - name: Scan Given image with grype
       shell: bash
       run: |
