@@ -50,7 +50,7 @@ runs:
           (["---","---","---","---"] | join(" | ") | "| " + . + " |"),
           (
             .matches
-            | map(select(.vulnerability.severity != "Negligible" and .vulnerability.severity != "negligible"))
+            | map(select(.artifact.type == "deb" and .vulnerability.severity != "Negligible" and .vulnerability.severity != "negligible"))
             | sort_by([
                 -(.vulnerability.severity | ascii_upcase | {"CRITICAL": 4,"HIGH": 3,"MEDIUM": 2,"LOW": 1}[.] // 0),
                 .vulnerability.id,
