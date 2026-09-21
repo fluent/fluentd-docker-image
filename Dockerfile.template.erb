@@ -52,7 +52,7 @@ RUN refreshenv \
 && c:\ruby34\bin\ruby -r yaml -e "path = 'c:/ProgramData/gemrc'; yaml = YAML.safe_load(File.read(path)); yaml['install'] = '--no-document'; yaml['update'] = '--no-document'; File.write(path, YAML.dump(yaml))" \
 && type "c:\ProgramData\gemrc" \
 && gem install oj -v 3.17.3 \
-&& gem install json -v 2.13.2 \
+&& gem install json -v 2.19.9 \
 && gem install rexml -v 3.4.4 \
 && gem install fluentd -v <%= fluentd_ver %> \
 && gem install win32-service -v 2.3.2 \
@@ -77,7 +77,7 @@ RUN apt-get update \
  && echo 'gem: --no-document' >> /etc/gemrc \
  && export MAKEFLAGS=-j$(nproc) \
  && gem install oj -v 3.17.3 \
- && gem install json -v 2.13.2 \
+ && gem install json -v 2.19.9 \
  && gem install rexml -v 3.4.4 \
  && gem install async -v 2.24.0 \
  && gem install async-http -v 0.89.0 \
