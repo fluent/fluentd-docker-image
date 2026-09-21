@@ -19,7 +19,7 @@ RUN apt-get update \
  && echo 'gem: --no-document' >> /etc/gemrc \
  && export MAKEFLAGS=-j$(nproc) \
  && gem install oj -v 3.17.3 \
- && gem install json -v 2.13.2 \
+ && gem install json -v 2.19.9 \
  && gem install rexml -v 3.4.4 \
  && gem install async -v 2.24.0 \
  && gem install async-http -v 0.89.0 \
