@@ -31,7 +31,7 @@ FROM --platform=linux/arm64 arm64v8/ruby:3.4-slim
 FROM ruby:3.4-slim
 <% end %>
 <% end %>
-LABEL maintainer "Fluentd developers <fluentd@googlegroups.com>"
+LABEL maintainer "Fluentd developers <cncf-fluentd-maintainers@lists.cncf.io>"
 LABEL Description="Fluentd docker image" Vendor="Fluent Organization" Version="<%= fluentd_ver %>"
 <% if is_armhf %>
 ARG CROSS_BUILD_START="cross-build-start"
