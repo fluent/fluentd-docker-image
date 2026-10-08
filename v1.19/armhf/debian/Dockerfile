@@ -10,7 +10,7 @@ RUN curl -sL -o qemu-3.0.0+resin-arm.tar.gz https://github.com/balena-io/qemu/re
 
 FROM --platform=linux/arm/v7 arm32v7/ruby:3.4-slim
 COPY --from=builder /go/qemu-arm-static /usr/bin/
-LABEL maintainer "Fluentd developers <fluentd@googlegroups.com>"
+LABEL maintainer "Fluentd developers <cncf-fluentd-maintainers@lists.cncf.io>"
 LABEL Description="Fluentd docker image" Vendor="Fluent Organization" Version="1.19.4"
 ARG CROSS_BUILD_START="cross-build-start"
 ARG CROSS_BUILD_END="cross-build-end"
@@ -43,11 +43,11 @@ RUN apt-get update \
  && find $GEM_DIR -maxdepth 3 -type d -name test -or -name ext -or -name spec -or -name benchmark | xargs -r rm -rfv \
  && find $GEM_DIR -name "*.so" | xargs -r strip \
  && dpkgArch="$(dpkg --print-architecture | awk -F- '{ print $NF }')" \
- && wget -O /tmp/jemalloc-5.3.0.tar.bz2 https://github.com/jemalloc/jemalloc/releases/download/5.3.0/jemalloc-5.3.0.tar.bz2 \
- && cd /tmp && tar -xjf jemalloc-5.3.0.tar.bz2 --no-same-owner && cd jemalloc-5.3.0/ \
+ && wget -O /tmp/jemalloc-5.4.0.tar.bz2 https://github.com/jemalloc/jemalloc/releases/download/5.4.0/jemalloc-5.4.0.tar.bz2 \
+ && cd /tmp && tar -xjf jemalloc-5.4.0.tar.bz2 --no-same-owner && cd jemalloc-5.4.0/ \
  # Don't use MADV_FREE to reduce memory usage and improve stability
  # https://github.com/fluent/fluentd-docker-image/pull/350
- && (echo "je_cv_madv_free=no" > config.cache) && ./configure -C && make \
+ && (echo "je_cv_madv_free=no" > config.cache) && ./configure -C --with-lg-page=16 && make \
  && mv lib/libjemalloc.so.2 /usr/lib \
  && apt-get purge -y --auto-remove \
                   -o APT::AutoRemove::RecommendsImportant=false \
@@ -71,6 +71,7 @@ COPY entrypoint.sh /bin/
 ENV FLUENTD_CONF="fluent.conf"
 
 ENV LD_PRELOAD="/usr/lib/libjemalloc.so.2"
+ENV MALLOC_CONF="dirty_decay_ms:400,muzzy_decay_ms:0,narenas:2,background_thread:true,thp:never,abort_conf:true"
 EXPOSE 24224 5140
 
 USER fluent
