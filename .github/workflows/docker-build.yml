@@ -50,6 +50,9 @@ jobs:
           - runs-on: ubuntu-24.04-arm
             component: arm64
     runs-on: ${{ matrix.runs-on }}
+    # Default 360 min is too long to wait for a stuck QEMU build.
+    # Retry Workflows re-runs the failed job, so give up early instead.
+    timeout-minutes: 90
     steps:
       - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
       - name: Set up Docker Buildx
@@ -125,6 +128,8 @@ jobs:
           outputs: oci-mediatypes=false
       - name: Build and push for armhf
         if: ${{ env.ARMHFTAGS }}
+        # armhf runs under QEMU and sometimes never finishes
+        timeout-minutes: 60
         uses: docker/build-push-action@c3c9e263c25d99ce0380d002d59b67737d91b0dc # v7.4.0
         with:
           context: ${{ env.CONTEXT }}
