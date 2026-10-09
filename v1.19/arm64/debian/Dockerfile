@@ -38,7 +38,7 @@ RUN apt-get update \
  && cd /tmp && tar -xjf jemalloc-5.4.0.tar.bz2 --no-same-owner && cd jemalloc-5.4.0/ \
  # Don't use MADV_FREE to reduce memory usage and improve stability
  # https://github.com/fluent/fluentd-docker-image/pull/350
- && (echo "je_cv_madv_free=no" > config.cache) && ./configure -C --with-lg-page=16 && make \
+ && (echo "je_cv_madv_free=no" > config.cache) && ./configure -C --with-lg-page=16 --disable-cxx && make \
  && mv lib/libjemalloc.so.2 /usr/lib \
  && apt-get purge -y --auto-remove \
                   -o APT::AutoRemove::RecommendsImportant=false \
