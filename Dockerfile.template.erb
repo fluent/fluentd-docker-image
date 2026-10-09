@@ -14,18 +14,8 @@ FROM mcr.microsoft.com/dotnet/framework/runtime:4.8-windowsservercore-<%= window
 
 <% else %>
 <% if is_armhf %>
-# To set multiarch build for Docker hub automated build.
-FROM golang:alpine AS builder
-WORKDIR /go
-ENV QEMU_DOWNLOAD_SHA256 47ae430b0e7c25e1bde290ac447a720e2ea6c6e78cd84e44847edda289e020a8
-RUN apk add curl --no-cache
-RUN curl -sL -o qemu-3.0.0+resin-arm.tar.gz https://github.com/balena-io/qemu/releases/download/v3.0.0%2Bresin/qemu-3.0.0+resin-arm.tar.gz && echo "$QEMU_DOWNLOAD_SHA256 *qemu-3.0.0+resin-arm.tar.gz" | sha256sum -c - | tar zxvf qemu-3.0.0+resin-arm.tar.gz -C . && mv qemu-3.0.0+resin-arm/qemu-arm-static .
-
 FROM --platform=linux/arm/v7 arm32v7/ruby:3.4-slim
-COPY --from=builder /go/qemu-arm-static /usr/bin/
 <% elsif is_arm64 %>
-# To set multiarch build for Docker hub automated build.
-FROM golang:alpine AS builder
 FROM --platform=linux/arm64 arm64v8/ruby:3.4-slim
 <% else %>
 FROM ruby:3.4-slim
@@ -33,11 +23,6 @@ FROM ruby:3.4-slim
 <% end %>
 LABEL maintainer "Fluentd developers <cncf-fluentd-maintainers@lists.cncf.io>"
 LABEL Description="Fluentd docker image" Vendor="Fluent Organization" Version="<%= fluentd_ver %>"
-<% if is_armhf %>
-ARG CROSS_BUILD_START="cross-build-start"
-ARG CROSS_BUILD_END="cross-build-end"
-RUN [ ${CROSS_BUILD_START} ]
-<% end %>
 
 # Do not split this into multiple RUN!
 # Docker creates a layer for every RUN-Statement
@@ -141,7 +126,4 @@ USER fluent
 ENTRYPOINT ["tini",  "--", "/bin/entrypoint.sh"]
 CMD ["fluentd"]
 
-<% if is_armhf %>
-RUN [ ${CROSS_BUILD_END} ]
-<% end %>
 <% end %>
