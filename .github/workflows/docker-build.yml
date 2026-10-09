@@ -49,6 +49,8 @@ jobs:
           - runs-on: ubuntu-latest
           - runs-on: ubuntu-24.04-arm
             component: arm64
+          - runs-on: ubuntu-24.04-arm
+            component: armhf
     runs-on: ${{ matrix.runs-on }}
     # Default 360 min is too long to wait for a stuck QEMU build.
     # Retry Workflows re-runs the failed job, so give up early instead.
