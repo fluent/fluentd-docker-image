@@ -71,7 +71,9 @@ COPY entrypoint.sh /bin/
 ENV FLUENTD_CONF="fluent.conf"
 
 ENV LD_PRELOAD="/usr/lib/libjemalloc.so.2"
-ENV MALLOC_CONF="dirty_decay_ms:400,muzzy_decay_ms:0,narenas:2,background_thread:true,thp:never,abort_conf:true"
+# Don't set thp:never because jemalloc has no THP support on 32-bit ARM,
+# and abort_conf:true makes every process abort with it.
+ENV MALLOC_CONF="dirty_decay_ms:400,muzzy_decay_ms:0,narenas:2,background_thread:true,abort_conf:true"
 EXPOSE 24224 5140
 
 USER fluent
