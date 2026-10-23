@@ -3,7 +3,7 @@ name: Publish Docker Image
 on:
   push:
     tags:
-      - v1.*
+      - v1.19*
 
 permissions:
   contents: read
