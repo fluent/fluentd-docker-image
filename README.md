@@ -23,7 +23,7 @@ These tags have image version postfix. This updates many places so we need feedb
 Current images use fluentd v1 series.
 
 - `v1.20.0-1.0`, `v1.20-1`, `edge`, `latest`
-  [(v1.19/debian/Dockerfile)][fluentd-1-debian] (Since v1.19.0, alpine image will not be shipped anymore.)
+  [(v1.20/debian/Dockerfile)][fluentd-1-debian] (Since v1.19.0, alpine image will not be shipped anymore.)
 - `v1.20.0-debian-1.0`, `v1.20-debian-1`, `edge-debian`
   (multiarch image for arm64(AArch64), armhf and amd64(x86_64))
 - `v1.20.0-debian-amd64-1.0`, `v1.20-debian-amd64-1`, `edge-debian-amd64`
@@ -114,11 +114,11 @@ through a [GitHub issue](https://github.com/fluent/fluentd-docker-image/issues).
 [fluentd-1-4-debian]: https://github.com/fluent/fluentd-docker-image/blob/master/v1.4/debian/Dockerfile
 [fluentd-1-4-debian-onbuild]: https://github.com/fluent/fluentd-docker-image/blob/master/v1.4/debian-onbuild/Dockerfile
 [fluentd-1-4-windows]: https://github.com/fluent/fluentd-docker-image/blob/master/v1.4/windows/Dockerfile
-[fluentd-1-debian]: https://github.com/fluent/fluentd-docker-image/blob/master/v1.19/debian/Dockerfile
-[fluentd-1-debian-arm64]: https://github.com/fluent/fluentd-docker-image/blob/master/v1.19/arm64/debian/Dockerfile
-[fluentd-1-debian-armhf]: https://github.com/fluent/fluentd-docker-image/blob/master/v1.19/armhf/debian/Dockerfile
-[fluentd-1-ltsc2019-windows]: https://github.com/fluent/fluentd-docker-image/blob/master/v1.19/windows-ltsc2019/Dockerfile
-[fluentd-1-ltsc2022-windows]: https://github.com/fluent/fluentd-docker-image/blob/master/v1.19/windows-ltsc2019/Dockerfile
+[fluentd-1-debian]: https://github.com/fluent/fluentd-docker-image/blob/master/v1.20/debian/Dockerfile
+[fluentd-1-debian-arm64]: https://github.com/fluent/fluentd-docker-image/blob/master/v1.20/arm64/debian/Dockerfile
+[fluentd-1-debian-armhf]: https://github.com/fluent/fluentd-docker-image/blob/master/v1.20/armhf/debian/Dockerfile
+[fluentd-1-ltsc2019-windows]: https://github.com/fluent/fluentd-docker-image/blob/master/v1.20/windows-ltsc2019/Dockerfile
+[fluentd-1-ltsc2022-windows]: https://github.com/fluent/fluentd-docker-image/blob/master/v1.20/windows-ltsc2019/Dockerfile
 
 
 ## FAQ
