@@ -22,19 +22,19 @@ These tags have image version postfix. This updates many places so we need feedb
 
 Current images use fluentd v1 series.
 
-- `v1.20.0-1.0`, `v1.20-1`, `edge`, `latest`
+- `v1.20.1-1.0`, `v1.20-1`, `edge`, `latest`
   [(v1.20/debian/Dockerfile)][fluentd-1-debian] (Since v1.19.0, alpine image will not be shipped anymore.)
-- `v1.20.0-debian-1.0`, `v1.20-debian-1`, `edge-debian`
+- `v1.20.1-debian-1.0`, `v1.20-debian-1`, `edge-debian`
   (multiarch image for arm64(AArch64), armhf and amd64(x86_64))
-- `v1.20.0-debian-amd64-1.0`, `v1.20-debian-amd64-1`, `edge-debian-amd64`
+- `v1.20.1-debian-amd64-1.0`, `v1.20-debian-amd64-1`, `edge-debian-amd64`
   [(v1.20/debian/Dockerfile)][fluentd-1-debian]
-- `v1.20.0-debian-arm64-1.0`, `v1.20-debian-arm64-1`, `edge-debian-arm64`
+- `v1.20.1-debian-arm64-1.0`, `v1.20-debian-arm64-1`, `edge-debian-arm64`
   [(v1.20/arm64/debian/Dockerfile)][fluentd-1-debian-arm64]
-- `v1.20.0-debian-armhf-1.0`, `v1.20-debian-armhf-1`, `edge-debian-armhf`
+- `v1.20.1-debian-armhf-1.0`, `v1.20-debian-armhf-1`, `edge-debian-armhf`
   [(v1.20/armhf/debian/Dockerfile)][fluentd-1-debian-armhf]
-- `v1.20.0-windows-ltsc2019-1.0`, `v1.20-windows-ltsc2019-1`
+- `v1.20.1-windows-ltsc2019-1.0`, `v1.20-windows-ltsc2019-1`
   [(v1.20/windows-ltsc2019/Dockerfile)][fluentd-1-ltsc2019-windows]
-- `v1.20.0-windows-ltsc2022-1.0`, `v1.20-windows-ltsc2022-1`
+- `v1.20.1-windows-ltsc2022-1.0`, `v1.20-windows-ltsc2022-1`
   [(v1.20/windows-ltsc2022/Dockerfile)][fluentd-1-ltsc2022-windows]
 
 > [!TIP]
