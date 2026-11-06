@@ -118,7 +118,7 @@ through a [GitHub issue](https://github.com/fluent/fluentd-docker-image/issues).
 [fluentd-1-debian-arm64]: https://github.com/fluent/fluentd-docker-image/blob/master/v1.20/arm64/debian/Dockerfile
 [fluentd-1-debian-armhf]: https://github.com/fluent/fluentd-docker-image/blob/master/v1.20/armhf/debian/Dockerfile
 [fluentd-1-ltsc2019-windows]: https://github.com/fluent/fluentd-docker-image/blob/master/v1.20/windows-ltsc2019/Dockerfile
-[fluentd-1-ltsc2022-windows]: https://github.com/fluent/fluentd-docker-image/blob/master/v1.20/windows-ltsc2019/Dockerfile
+[fluentd-1-ltsc2022-windows]: https://github.com/fluent/fluentd-docker-image/blob/master/v1.20/windows-ltsc2022/Dockerfile
 
 
 ## FAQ
