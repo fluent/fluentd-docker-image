@@ -28,7 +28,34 @@ jobs:
       components: >
         ${{ steps.arrange-components.outputs.for_all == 'true' && env.ALL_COMPONENTS
         || format('["{0}"]', steps.arrange-components.outputs.component) }}
+      latest: ${{ steps.check-latest.outputs.latest }}
     steps:
+      # Do not decide by branch name. This file is shared with
+      # maintenance branches (e.g. v1.19), so compare with all release tags.
+      - id: check-latest
+        env:
+          GH_TOKEN: ${{ github.token }}
+          REF_NAME: ${{ github.ref_name }}
+        run: |
+          # Fail loudly if listing tags fails: silently falling back to
+          # latest=false would skip latest, v1 and edge tags without any error.
+          set -o pipefail
+          normalize() {
+            sed --regexp-extended 's/-debian(-(amd64|arm64|armhf))?-/-/' | grep --extended-regexp '^v1\.[0-9]+\.[0-9]+-[0-9]+\.[0-9]+$'
+          }
+          current=$(echo "$REF_NAME" | normalize || true)
+          newest=$(gh api --paginate "repos/${GITHUB_REPOSITORY}/tags?per_page=100" --jq '.[].name' \
+                     | normalize | sort --version-sort | tail --lines=1)
+          if [ -z "$newest" ]; then
+            echo "::error::failed to get the newest release tag from the tag list"
+            exit 1
+          fi
+          echo "current=$current newest=$newest"
+          if [ -n "$current" ] && [ "$current" = "$newest" ]; then
+            echo "latest=true" >> "$GITHUB_OUTPUT"
+          else
+            echo "latest=false" >> "$GITHUB_OUTPUT"
+          fi
       - id: arrange-components
         run: |
           echo "for_all=true" >> "$GITHUB_OUTPUT"
@@ -66,6 +93,8 @@ jobs:
           username: ${{ secrets.DOCKER_HUB_USERNAME }}
           password: ${{ secrets.DOCKER_HUB_ACCESS_TOKEN }}
       - name: Setup tags
+        env:
+          IS_LATEST: ${{ needs.define-matrix.outputs.latest }}
         run: |
           set -x
           component=${{ matrix.component }}
@@ -81,6 +110,13 @@ jobs:
             tags=$(echo $target | cut -d':' -f2-)
             push_tags=""
             for tag in $(echo "$tags" | tr , ' '); do
+              if [ "$IS_LATEST" != "true" ]; then
+                case $tag in
+                  edge-*)
+                    continue
+                    ;;
+                esac
+              fi
               if [ -z "$push_tags" ]; then
                 push_tags="${{ env.REPOSITORY }}:$tag"
               else
@@ -158,6 +194,8 @@ jobs:
           username: ${{ secrets.DOCKER_HUB_USERNAME }}
           password: ${{ secrets.DOCKER_HUB_ACCESS_TOKEN }}
       - name: Create manifest
+        env:
+          IS_LATEST: ${{ needs.define-matrix.outputs.latest }}
         run: |
           component=${{ matrix.component }}
           for target in $(make echo-all-images); do
@@ -212,16 +250,18 @@ jobs:
               ${{ env.REPOSITORY }}:${AMD64TAG} \
               ${{ env.REPOSITORY }}:${ARM64TAG} \
               ${{ env.REPOSITORY }}:${ARMHFTAG}
-            # latest
-            docker buildx imagetools create -t ${{ env.REPOSITORY }}:latest \
-              ${{ env.REPOSITORY }}:${AMD64TAG} \
-              ${{ env.REPOSITORY }}:${ARM64TAG} \
-              ${{ env.REPOSITORY }}:${ARMHFTAG}
-            # v1
-            docker buildx imagetools create -t ${{ env.REPOSITORY }}:v1 \
-              ${{ env.REPOSITORY }}:${AMD64TAG} \
-              ${{ env.REPOSITORY }}:${ARM64TAG} \
-              ${{ env.REPOSITORY }}:${ARMHFTAG}
+            if [ "$IS_LATEST" = "true" ]; then
+              # latest
+              docker buildx imagetools create -t ${{ env.REPOSITORY }}:latest \
+                ${{ env.REPOSITORY }}:${AMD64TAG} \
+                ${{ env.REPOSITORY }}:${ARM64TAG} \
+                ${{ env.REPOSITORY }}:${ARMHFTAG}
+              # v1
+              docker buildx imagetools create -t ${{ env.REPOSITORY }}:v1 \
+                ${{ env.REPOSITORY }}:${AMD64TAG} \
+                ${{ env.REPOSITORY }}:${ARM64TAG} \
+                ${{ env.REPOSITORY }}:${ARMHFTAG}
+            fi
           fi
           # v1.xx-debian-n.m
           if [ ${MULTIARCH_AMD64_SHORT_TAG} != ${MULTIARCH_ARM64_SHORT_TAG} -o ${MULTIARCH_AMD64_SHORT_TAG} != ${MULTIARCH_ARMHF_SHORT_TAG} -o ${MULTIARCH_ARM64_SHORT_TAG} != ${MULTIARCH_ARMHF_SHORT_TAG} ]; then
@@ -238,11 +278,13 @@ jobs:
               ${{ env.REPOSITORY }}:${SHORT_ARM64TAG} \
               ${{ env.REPOSITORY }}:${SHORT_ARMHFTAG}
           fi
-          # edge-debian
-          docker buildx imagetools create -t ${{ env.REPOSITORY }}:edge-debian \
-              ${{ env.REPOSITORY }}:edge-debian-amd64 \
-              ${{ env.REPOSITORY }}:edge-debian-arm64 \
-              ${{ env.REPOSITORY }}:edge-debian-armhf
+          if [ "$IS_LATEST" = "true" ]; then
+            # edge-debian
+            docker buildx imagetools create -t ${{ env.REPOSITORY }}:edge-debian \
+                ${{ env.REPOSITORY }}:edge-debian-amd64 \
+                ${{ env.REPOSITORY }}:edge-debian-arm64 \
+                ${{ env.REPOSITORY }}:edge-debian-armhf
+          fi
           echo "MULTIARCH_AMD64_TAG=${MULTIARCH_AMD64_TAG}" >> ${GITHUB_ENV}
           echo "MULTIARCH_AMD64_SHORT_TAG=${MULTIARCH_AMD64_SHORT_TAG}" >> ${GITHUB_ENV}
           echo "AMD64TAG=${AMD64TAG}" >> ${GITHUB_ENV}
